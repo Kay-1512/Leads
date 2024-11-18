@@ -12,7 +12,7 @@ class LeadController extends Controller
      */
     public function index()
     {
-        //
+        return view("pages.leads.index");
     }
 
     /**

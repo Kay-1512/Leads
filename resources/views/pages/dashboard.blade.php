@@ -1,16 +1,50 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-</head>
-<body>
-    @role('admin')
-    <h1>We've landed</h1>
-    @else
-    <h1>We've landed</h1>
-    @endrole
+@extends('layouts.app')
+@section('title')
+    Dashboard
+@endsection
 
-</body>
-</html>
+@section('content')
+<div class="row">
+<div class="table-responsive">
+                <table class="table table-bordered table-striped table-vcenter">
+                  <thead>
+                    <tr>
+
+                      <th>Name</th>
+                      <th style="width: 30%;">Number of Conversions</th>
+                      <th style="width: 15%;">Number of Users</th>
+                      <th style="width: 15%;">Turnover</th>
+                      <th class="text-center" style="width: 100px;">Actions</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    @foreach ($users as $user)
+                    <tr>
+                      <td class="fw-semibold fs-sm">
+                        <a href="be_pages_generic_profile.html">{{ $user->first_name}} {{ $user->last_name}}</a>
+                      </td>
+                      <td class="fs-sm">{{ $user->getRoleNames()->first() }}</td>
+                      <td>
+                        <span class="fs-xs fw-semibold d-inline-block py-1 px-3 rounded-pill bg-warning-light text-warning">Trial</span>
+                      </td>
+                      <td></td>
+                      <td class="text-center">
+                        <div class="btn-group">
+                          <button type="button" class="btn btn-sm btn-alt-secondary" data-bs-toggle="tooltip" title="Edit">
+                            <i class="fa fa-fw fa-pencil-alt"></i>
+                          </button>
+                          <button type="button" class="btn btn-sm btn-alt-secondary" data-bs-toggle="tooltip" title="Delete">
+                            <i class="fa fa-fw fa-times"></i>
+                          </button>
+                        </div>
+                      </td>
+                    </tr>
+                    @endforeach
+
+                  </tbody>
+                </table>
+
+                {{ $users->links() }}
+              </div>
+              </div>
+@endsection

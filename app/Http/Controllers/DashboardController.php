@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\User;
+use Auth;
 
 class DashboardController extends Controller
 {
@@ -11,17 +13,12 @@ class DashboardController extends Controller
      */
     public function show()
     {
-        // $user = Auth::user();
+        $user = Auth::user()->get();
 
-        return view("pages.dashboard");
+        $users = User::paginate(10);
 
-        if (auth()->user()->hasRole("admin")) {
-            return view("");
-        } elseif (auth()->user()->hasRole("")) {
-            return view("");
-        } elseif (auth()->user()->hasRole("")) {
-            return view("");
-        }
-
+        // dd($user);
+        
+        return view("pages.dashboard", compact("users", "user"));
     }
 }
