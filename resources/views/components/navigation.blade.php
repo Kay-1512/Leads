@@ -20,11 +20,12 @@
                       <span class="nav-main-link-name">Leads</span>
                     </a>
                   </li>
-
+                  <div id="main-navigation" class="d-none d-lg-block mt-2 mt-lg-0">
+                <ul class="nav-main nav-main-dark nav-main-horizontal nav-main-hover">
                   <li class="nav-main-item">
-                    <a class="nav-main-link active" href="bd_dashboard.html">
+                    <a class="nav-main-link active" href="{{route("clients")}}">
                       <i class="nav-main-link-icon si si-compass"></i>
-                      <span class="nav-main-link-name">New Lead</span>
+                      <span class="nav-main-link-name">Clients</span>
                     </a>
                   </li>
 

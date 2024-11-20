@@ -20,6 +20,7 @@ class UserSeeder extends Seeder
             'last_name' => 'McRowdie',
             'email' => 'michaela@connecthr.co.za',
             'email_verified_at' => now(),
+            'phone' => '3',
             'password' => bcrypt('June1676!'),
             'remember_token' => Str::random(10)
         ]);
@@ -31,6 +32,7 @@ class UserSeeder extends Seeder
             'last_name' => 'Mupariwa',
             'email' => 'anna@connecthr.co.za',
             'email_verified_at' => now(),
+            'phone' => '1',
             'password' => bcrypt('June1676!'),
             'remember_token' => Str::random(10)
         ]);
@@ -41,6 +43,7 @@ class UserSeeder extends Seeder
             'first_name' => 'Floyd',
             'last_name' => 'Mazibuko',
             'email' => 'floyd@skillspanda.co.za',
+            'phone' => '2',
             'email_verified_at' => now(),
             'password' => bcrypt('June1676!'),
             'remember_token' => Str::random(10)

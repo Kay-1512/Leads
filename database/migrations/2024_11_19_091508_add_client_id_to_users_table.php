@@ -4,18 +4,14 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-return new class extends Migration
-{
+return new class extends Migration {
     /**
      * Run the migrations.
      */
     public function up(): void
     {
-        Schema::create('lead_stages', function (Blueprint $table) {
-            $table->id();
-            $table->string('title');
-            $table->integer('order')->default(0);
-            $table->timestamps();
+        Schema::table('users', function (Blueprint $table) {
+            $table->foreignId('client_id')->nullable()->constrained('clients', 'id')->cascadeOnDelete();
         });
     }
 
@@ -24,6 +20,8 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('lead_stages');
+        Schema::table('users', function (Blueprint $table) {
+            //
+        });
     }
 };

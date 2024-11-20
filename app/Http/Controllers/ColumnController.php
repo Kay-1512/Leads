@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Columns;
+use App\Models\Column;
 use Illuminate\Http\Request;
 
-class ColumnsController extends Controller
+class ColumnController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -34,7 +34,7 @@ class ColumnsController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Columns $columns)
+    public function show(Column $column)
     {
         //
     }
@@ -42,7 +42,7 @@ class ColumnsController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Columns $columns)
+    public function edit(Column $column)
     {
         //
     }
@@ -50,7 +50,7 @@ class ColumnsController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Columns $columns)
+    public function update(Request $request, Column $column)
     {
         //
     }
@@ -58,7 +58,7 @@ class ColumnsController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Columns $columns)
+    public function destroy(Column $column)
     {
         //
     }

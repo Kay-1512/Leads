@@ -13,8 +13,7 @@ return new class extends Migration
     {
         Schema::create('program_stages', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('board_id')->constrained('boards')->onDelete('cascade');
-            $table->string('name');
+            $table->string('title');
             $table->integer('order')->default(0);
             $table->timestamps();
         });

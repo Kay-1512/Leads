@@ -23,6 +23,7 @@ class User extends Authenticatable
         'phone',
         'email',
         'password',
+        'client_id'
     ];
 
     /**
@@ -50,6 +51,21 @@ class User extends Authenticatable
 
     public function leads()
     {
-        return $this->hasMany(related: Leads::class, );
+        return $this->hasMany(related: Lead::class);
+    }
+
+    public function programs()
+    {
+        return $this->hasMany(related: Program::class);
+    }
+
+    public function client()
+    {
+        return $this->belongsTo(Client::class, 'client_id');
+    }
+
+    public function province()
+    {
+        return $this->belongsTo(Province::class, );
     }
 }

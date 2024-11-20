@@ -8,15 +8,14 @@ class Program extends Model
 {
    protected $fillable = [
         'order',
-        'due_date',
+        'start_date',
+        'end_date',
         'title',
         'description',
-        'assigned_user_id',
         'program_stage_id',
     ];
 
-
-    public function column(){
-        return $this->belongsTo(Column::class);
+    public function programStage(){
+        return $this->belongsTo(ProgramStage::class);
     }
 }

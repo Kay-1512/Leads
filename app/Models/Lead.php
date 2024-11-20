@@ -12,6 +12,27 @@ class Lead extends Model
      * @var array<int, string>
      */
     protected $fillable = [
-        'name',
+        
+        'description',
+        'is_referral',
+        'referrer',
+        'revenue',
+        'potential_users',
+        'user_id',
+        'client_id',
+        'lead_stage_id',
+        'order',
     ];
-}
+
+    public function leadStage(){
+        return $this->belongsTo(LeadStage::class);
+    }
+
+    public function user(){
+        return $this->belongsTo(User::class);
+    }
+    
+
+    public function client(){
+        return $this->belongsTo(Client::class);
+    }}

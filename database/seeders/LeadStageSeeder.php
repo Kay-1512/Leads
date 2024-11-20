@@ -13,11 +13,11 @@ class LeadStageSeeder extends Seeder
      */
     public function run(): void
     {
-        LeadStage::create(['name' => 'Prospecting']);
-        LeadStage::create(['name' => 'Demo']);
-        LeadStage::create(['name' => 'Proposal']);
-        LeadStage::create(['name' => 'Negotiation']);
-        LeadStage::create(['name' => 'Conversion']);
-        LeadStage::create(['name' => 'Loss']);
+        LeadStage::create(['title' => 'Prospecting']);
+        LeadStage::create(['title' => 'Demo']);
+        LeadStage::create(['title' => 'Proposal']);
+        LeadStage::create(['title' => 'Negotiation']);
+        LeadStage::create(['title' => 'Conversion']);
+        LeadStage::create(['title' => 'Loss']);
     }
 }

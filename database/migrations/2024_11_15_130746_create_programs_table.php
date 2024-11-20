@@ -13,13 +13,12 @@ return new class extends Migration
     {
         Schema::create('programs', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('column_id')->constrained('columns')->onDelete('cascade');
-            $table->foreignId('assigned_user_id')->constrained('users')->onDelete('cascade');
+            $table->foreignId('program_stage_id')->constrained()->onDelete('cascade');
             $table->string('title');
             $table->text('description');
-            $table->date('due_date');
-            $table->integer('order')->default(0);
-
+            $table->date('start_date');
+            $table->date('end_date')->nullable();            
+            $table->integer('order')->default(value: 0);
             $table->timestamps();
         });
     }

@@ -9,14 +9,18 @@
                 <table class="table table-bordered table-striped table-vcenter">
                   <thead>
                     <tr>
-
                       <th>Name</th>
-                      <th style="width: 30%;">Number of Conversions</th>
+                      <th style="width: 15%;">Roles</th>
+                      <th style="width: 20%;">Number of Conversions</th>
                       <th style="width: 15%;">Number of Users</th>
                       <th style="width: 15%;">Turnover</th>
-                      <th class="text-center" style="width: 100px;">Actions</th>
+
+                      @role('Admin')
+                        <th class="text-center" style="width: 100px;">Actions</th>
+                      @endrole
                     </tr>
                   </thead>
+
                   <tbody>
                     @foreach ($users as $user)
                     <tr>
@@ -27,17 +31,21 @@
                       <td>
                         <span class="fs-xs fw-semibold d-inline-block py-1 px-3 rounded-pill bg-warning-light text-warning">Trial</span>
                       </td>
+                      <td></td>                      
                       <td></td>
-                      <td class="text-center">
-                        <div class="btn-group">
-                          <button type="button" class="btn btn-sm btn-alt-secondary" data-bs-toggle="tooltip" title="Edit">
-                            <i class="fa fa-fw fa-pencil-alt"></i>
-                          </button>
-                          <button type="button" class="btn btn-sm btn-alt-secondary" data-bs-toggle="tooltip" title="Delete">
-                            <i class="fa fa-fw fa-times"></i>
-                          </button>
-                        </div>
-                      </td>
+
+                      @role('Admin')
+                        <td class="text-center">
+                          <div class="btn-group">
+                            <button type="button" class="btn btn-sm btn-alt-secondary" data-bs-toggle="tooltip" title="Edit">
+                              <i class="fa fa-fw fa-pencil-alt"></i>
+                            </button>
+                            <button type="button" class="btn btn-sm btn-alt-secondary" data-bs-toggle="tooltip" title="Delete">
+                              <i class="fa fa-fw fa-times"></i>
+                            </button>
+                          </div>
+                        </td>
+                      @endrole
                     </tr>
                     @endforeach
 

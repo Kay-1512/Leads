@@ -11,7 +11,7 @@
                     <tr>
 
                       
-                      <th style="width: 9.4%;">Prospecting</th>
+                      <th style="width: 9.4%;">Prospect</th>
                       <th style="width: 9.4%;">Demo</th>
                       <th style="width: 9.4%;">Proposal</th>
                       <th style="width: 9.4%;">Negotiation</th>

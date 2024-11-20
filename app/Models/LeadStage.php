@@ -6,5 +6,17 @@ use Illuminate\Database\Eloquent\Model;
 
 class LeadStage extends Model
 {
-    //
+    protected $fillable = [
+        "name","order","board_id",
+    ];
+
+    public function leads()
+    {
+        return $this->hasMany(Lead::class);
+    }
+
+    public function board()
+    {
+        return $this->belongsTo(Board::class);
+    }
 }
