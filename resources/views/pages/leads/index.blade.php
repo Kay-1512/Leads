@@ -9,24 +9,24 @@
                 <table class="table table-bordered table-striped table-vcenter">
                   <thead>
                     <tr>
-                      <th style="width: 9.4%;">Prospect</th>
-                      <th style="width: 9.4%;">Demo</th>
-                      <th style="width: 9.4%;">Proposal</th>
-                      <th style="width: 9.4%;">Negotiation</th>
-                      <th style="width: 9.4%;">Conversion</th>
-                      <th style="width: 9.4%;">Loss</th>                     
+                      <th>Title</th>
+                      <th>Is Referral</th>
+                      <th>Referrer</th>
+                      <th>Revenue</th>
+                      <th>Potential Users</th>
                     </tr>
                   </thead>
                   <tbody>
+
+                  @foreach($leads as $lead)
                   <tr>
-                     <td></td>
+                     <td>{{ $lead->title }}</td>
                     <td></td>
-                    <td></td>
-                    <td></td>
+                    <td>{{ $lead->potential_revenue }}</td>
                     <td></td>
                     <td></td>
                   </tr>
-
+                  @endforeach
                   </tbody>
                 </table>
               </div>
