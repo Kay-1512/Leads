@@ -17,7 +17,7 @@ class ClientController extends Controller
         // dd(Client::all());
         $clients = Client::all();
 
-        return view("pages.clients.index", compact("clients"));
+        return view("pages.clients.inndex", compact("clients"));
     }
 
     /**
@@ -67,6 +67,7 @@ class ClientController extends Controller
         $lead->potential_revenue = $validated['potential_revenue'] ?? null;
         $lead->referral = $validated['referral'] == '1' ? 'Yes' : 'No';
         $lead->referrer_name = $referrer_name;
+        $lead->description = $validated['description'] ?? null;
         $lead->save();
     
         // Redirect with success message

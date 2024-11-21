@@ -1,7 +1,7 @@
 @extends('layouts.app') 
 @section('title')
- Add Lead
- @endsection
+Add Lead
+@endsection
 
 @section('content')
 <div class="row">
@@ -26,7 +26,7 @@
                             value="{{$client->id}}" />
 
                         <div class="form-floating mb-4">
-                            <select class="form-select" id="example-select-floating" name="example-select-floating"
+                            <select class="form-select" id="example-select-floating" name="referral"
                                 aria-label="Floating label select example">
                                 <option selected>Select an option</option>
                                 <option value="1">Yes</option>
@@ -35,25 +35,22 @@
                             <label for="example-select-floating">Referral</label>
                         </div>
                         <div class="form-floating mb-4" id="referrerNameDiv" style="display: none;">
-                            <input type="text" class="form-control" id="referrerName" name="referrerName"
-                                placeholder="Referrer Name">
-                            <label for="referrerName">Name of Referrer</label>
+                            <input type="text" class="form-control" id="referrer_name" name="referrer_name">
+                            <label for="referrer_name">Name of Referrer</label>
                         </div>
                         <div class="form-floating mb-4">
-                            <textarea class="form-control" id="Description"
-                                name="Description" style="height: 200px"
+                            <textarea class="form-control" id="Description" name="Description" style="height: 200px"
                                 placeholder="Leave a comment here"></textarea>
                             <label for="Description">Description of Lead</label>
                         </div>
                         <div class="form-floating mb-4">
-                            <input type="text" class="form-control" id="contactPerson" name="contactPerson"
-                                placeholder="John Doe">
-                            <label for="contactPerson">Number of users</label>
+                            <input type="text" class="form-control" id="number_of_users" name="number_of_users">
+                            <label for="number_of_users">Number of users</label>
                         </div>
                         <div class="form-floating mb-4">
-                            <input type="text" class="form-control" id="contactPerson" name="contactPerson"
+                            <input type="text" class="form-control" id="potential_revenue" name="potential_revenue"
                                 placeholder="John Doe">
-                            <label for="contactPerson">Potential Revenue</label>
+                            <label for="potential_revenue">Potential Revenue</label>
                         </div>
                         <button type="submit" class="btn btn-primary w-100">Add Lead</button>
                     </div>
@@ -63,7 +60,7 @@
 
             </div>
     </form>
-    
+
 </div>
 
 <!-- JavaScript for dynamic field visibility -->

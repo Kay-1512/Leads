@@ -15,7 +15,9 @@ class LeadController extends Controller
      */
     public function index()
     {
-        return view("pages.leads.index");
+
+        $leads = Lead::all();
+        return view("pages.leads.index", compact('leads'));
     }
 
     /**
@@ -36,12 +38,23 @@ class LeadController extends Controller
     {
         // Create the lead
         dd($request->all());
-        // $request->validate([
-        //     'first_name' => ['required', 'string', 'max:255'],
-        //     'last_name' => ['required', 'string', 'max:255'],
-        //     'phone' => ['string', 'max:255'],
-        //     'email' => ['required', 'string', 'lowercase', 'email', 'max:255', 'unique:'.User::class],
-        // ]);
+        $validated = $request->validate([
+
+            'number_of_users' => 'nullable|integer',
+            'potential_revenue' => 'nullable|numeric',
+            'referral' => 'nullable|in:1,2', 
+            'referrer_name' => 'nullable|string',
+            'description' => 'nullable|string',
+        ]);
+
+        $lead = Lead::create([
+            'number_of_users'=> $validated['number_of_users'],
+            'potential_revenue'=> $validated['potential_revenue'],
+            'referral'=> $validated['referral'],
+            'referrer_name'=> $validated['referrer_name'],
+            'description'=> $validated['description'],
+
+        ]);
 
         return view('pages.leads')->with('success');
     }
