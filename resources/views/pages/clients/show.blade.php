@@ -5,6 +5,36 @@ Clients - {{ $client->name }}
 @endsection
 
 @section('content')
+<script src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js" defer></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Sortable/1.15.0/Sortable.min.js"></script>
+    <style>
+        .kanban-board {
+            display: flex;
+            gap: 16px;
+            justify-content: center;
+        }
+        .kanban-column {
+            background-color: #f3f3f3;
+            border-radius: 8px;
+            padding: 16px;
+            width: 300px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        .kanban-column h3 {
+            margin-bottom: 16px;
+            text-align: center;
+            color: #333;
+        }
+        .kanban-card {
+            background-color: #ffffff;
+            border-radius: 8px;
+            padding: 12px;
+            margin-bottom: 12px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            cursor: grab;
+        }
+    </style>
+
 <div class="row">
     <div class="col-6">
         <a class="btn btn-primary text-center" href="{{ route('lead.new-lead', $client)}}">
