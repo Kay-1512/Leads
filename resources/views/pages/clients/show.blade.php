@@ -6,34 +6,37 @@ Clients - {{ $client->name }}
 
 @section('content')
 <script src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js" defer></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/Sortable/1.15.0/Sortable.min.js"></script>
-    <style>
-        .kanban-board {
-            display: flex;
-            gap: 16px;
-            justify-content: center;
-        }
-        .kanban-column {
-            background-color: #f3f3f3;
-            border-radius: 8px;
-            padding: 16px;
-            width: 300px;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-        }
-        .kanban-column h3 {
-            margin-bottom: 16px;
-            text-align: center;
-            color: #333;
-        }
-        .kanban-card {
-            background-color: #ffffff;
-            border-radius: 8px;
-            padding: 12px;
-            margin-bottom: 12px;
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-            cursor: grab;
-        }
-    </style>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Sortable/1.15.0/Sortable.min.js"></script>
+<style>
+    .kanban-board {
+        display: flex;
+        gap: 16px;
+        justify-content: center;
+    }
+
+    .kanban-column {
+        background-color: #f3f3f3;
+        border-radius: 8px;
+        padding: 16px;
+        width: 300px;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    }
+
+    .kanban-column h3 {
+        margin-bottom: 16px;
+        text-align: center;
+        color: #333;
+    }
+
+    .kanban-card {
+        background-color: #ffffff;
+        border-radius: 8px;
+        padding: 12px;
+        margin-bottom: 12px;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        cursor: grab;
+    }
+</style>
 
 <div class="row">
     <div class="col-6">
@@ -74,22 +77,26 @@ Clients - {{ $client->name }}
         <h3 class="block-title">Current Leads</h3>
     </div>
     <div class="block-content">
-    <div x-data="kanbanBoard" x-init="initializeBoard()" class="kanban-board">
-        <template x-for="stage in stages" :key="stage.id">
-            <div class="kanban-column">
-                <h3 x-text="stage.name"></h3>
-                <div :id="'stage-' + stage.id" class="kanban-cards" x-data="sortable(stage.id)" x-init="initSortable()">
-                    <template x-for="lead in stage.leads" :key="lead.id">
-                        <div class="kanban-card" :data-id="lead.id">
-                            <h4 x-text="lead.title" class="font-bold"></h4>
-                            <p x-text="lead.description" class="text-sm text-gray-600"></p>
-                        </div>
-                    </template>
+        <div x-data="kanbanBoard" x-init="initializeBoard()" class="kanban-board">
+            <template x-for="stage in stages" :key="stage . id">
+                <div class="kanban-column">
+                    <!-- Stage Title -->
+                    <h3 x-text="stage.title" class="text-xl font-bold text-center text-gray-800"></h3>
+                    <!-- Leads within the Stage -->
+                    <div :id="'stage-' + stage . id" class="kanban-cards" x-data="sortable(stage.id)"
+                        x-init="initSortable()">
+                        <template x-for="lead in stage.leads" :key="lead . id">
+                            <div class="kanban-card" :data-id="lead.id">
+                                <!-- Lead Title -->
+                                <h4 x-text="lead.title" class="font-semibold"></h4>
+                                <!-- Lead Description -->
+                                <p x-text="lead.description" class="text-sm text-gray-600"></p>
+                            </div>
+                        </template>
+                    </div>
                 </div>
-            </div>
-        </template>
-    </div>
-
+            </template>
+        </div>
         <!-- <div class="table-responsive">
             <table class="table table-borderless table-striped table-vcenter">
                 <thead>
@@ -222,58 +229,53 @@ Clients - {{ $client->name }}
 <!-- END Private Notes -->
 
 <script>
-        document.addEventListener('alpine:init', () => {
-            Alpine.data('kanbanBoard', () => ({
-                stages: [],
+    document.addEventListener('alpine:init', () => {
+        Alpine.data('kanbanBoard', () => ({
+            stages: [],
 
-                async initializeBoard() {
-                    // Fetch stages and leads from the backend
-                    const response = await fetch('/api/stages-with-leads');
-                    this.stages = await response.json();
-                },
+            async initializeBoard() {
+                // Fetch stages and leads from the backend
+                const response = await fetch('/api/leads');
+                this.stages = await response.json();
+            },
 
-                async updateOrder(leadUpdates) {
-                    // Send updates to the backend
-                    await fetch('/leads/update-order', {
-                        method: 'POST',
-                        headers: { 'Content-Type': 'application/json' },
-                        body: JSON.stringify({ leads: leadUpdates }),
-                    });
-                },
-            }));
+            async updateOrder(leadUpdates) {
+                // Send updates to the backend
+                await fetch('/lead/stage/update', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ leads: leadUpdates }),
+                });
+            },
+        }));
 
-            Alpine.data('sortable', (stageId) => ({
-                stageId,
+        Alpine.data('sortable', (stageId) => ({
+            stageId,
 
-                initSortable() {
-                    const container = document.getElementById(`stage-${this.stageId}`);
-                    new Sortable(container, {
-                        group: {
-                            name: 'kanban',
-                            pull: true,
-                            put: true,
-                        },
-                        animation: 150,
-                        onEnd: (evt) => {
-                            const updatedLeads = Array.from(evt.to.children).map((child, index) => ({
-                                id: child.dataset.id,
-                                lead_stage_id: evt.to.id.split('-')[1], // Extract stage ID from container ID
-                                order: index,
-                            }));
+            initSortable() {
+                const container = document.getElementById(`stage-${this.stageId}`);
+                new Sortable(container, {
+                    group: {
+                        name: 'kanban',
+                        pull: true,
+                        put: true,
+                    },
+                    animation: 150,
+                    onEnd: (evt) => {
+                        const updatedLeads = Array.from(evt.to.children).map((child, index) => ({
+                            id: child.dataset.id,
+                            lead_stage_id: evt.to.id.split('-')[1], // Extract stage ID from container ID
+                            order: index,
+                        }));
 
-                            console.log('Updated Leads:', updatedLeads);
+                        console.log('Updated Leads:', updatedLeads);
 
-                            // Update the backend
-                            document.querySelector('[x-data="kanbanBoard"]').__x.$data.updateOrder(updatedLeads);
-                        },
-                    });
-                },
-            }));
-        });
-    </script>
+                        // Update the backend
+                        document.querySelector('[x-data="kanbanBoard"]').__x.$data.updateOrder(updatedLeads);
+                    },
+                });
+            },
+        }));
+    });
+</script>
 @endsection
-
-
-
-
-

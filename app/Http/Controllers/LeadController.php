@@ -37,10 +37,12 @@ class LeadController extends Controller
      */
     public function store(Request $request, Client $client)
     {
+
+        
         $validated = $request->validate([
             'title' => 'required|string|max:255',
             'description' => 'nullable|string',
-            'lead_stage_id' => 'required|exists:lead_stages,id',
+            'lead_stage_id' => 'nullable|exists:lead_stages,id',
             'is_referral' => 'boolean',
             'referrer' => 'nullable|string',
             'revenue' => 'nullable|numeric',

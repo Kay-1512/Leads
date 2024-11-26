@@ -25,6 +25,12 @@ Add Lead
                         <input type="hidden"  class="form-control" id="example-password-input-floating" name="client_id"
                             value="{{$client->id}}" />
 
+                        <input type="hidden"  class="form-control" id="example-password-input-floating" name="user_id"
+                        value="{{auth()->user()->id}}" />
+
+                        <input type="hidden"  class="form-control" id="example-password-input-floating" name="lead_stage_id"
+                        value="1" />
+
                         <div class="form-floating mb-4">
                             <input type="text" class="form-control" id="title" name="title"
                                 placeholder="John Doe">

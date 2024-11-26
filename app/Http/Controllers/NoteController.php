@@ -28,7 +28,9 @@ class NoteController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $validated = $request->validate([
+            "content"=> "string",
+        ]);
     }
 
     /**
