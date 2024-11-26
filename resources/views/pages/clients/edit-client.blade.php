@@ -31,7 +31,7 @@
                         </div>
                         <div class="col-12 mb-3">
                             <div class="form-floating">
-                                <input type="text" class="form-control" id="contactPerson" name="contactPerson" placeholder="Contact Person" value="{{ old('contactPerson', $client->id) }}" required>
+                                <input type="text" class="form-control" id="contactPerson" name="contactPerson" placeholder="Contact Person" value="{{ old('contactPerson', $client->contact_person->first_name) }}" required>
                                 <label for="contactPerson">Contact Person</label>
                             </div>
                         </div>

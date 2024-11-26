@@ -22,35 +22,41 @@ Add Lead
                 <div class="block-content block-content-full">
                     <div class="row">
 
-                        <input type="hidden" class="form-control" id="example-password-input-floating" name="client_id"
+                        <input type="hidden"  class="form-control" id="example-password-input-floating" name="client_id"
                             value="{{$client->id}}" />
 
                         <div class="form-floating mb-4">
-                            <select class="form-select" id="example-select-floating" name="referral"
+                            <input type="text" class="form-control" id="title" name="title"
+                                placeholder="John Doe">
+                            <label for="title"> Title</label>
+                        </div>
+
+                        <div class="form-floating mb-4">
+                            <select class="form-select" id="example-select-floating" name="is_referral"
                                 aria-label="Floating label select example">
                                 <option selected>Select an option</option>
                                 <option value="1">Yes</option>
-                                <option value="2">No</option>
+                                <option value="0">No</option>
                             </select>
                             <label for="example-select-floating">Referral</label>
                         </div>
                         <div class="form-floating mb-4" id="referrerNameDiv" style="display: none;">
-                            <input type="text" class="form-control" id="referrer_name" name="referrer_name">
-                            <label for="referrer_name">Name of Referrer</label>
+                            <input type="text" class="form-control" id="referrer" name="referrer">
+                            <label for="referrer">Name of Referrer</label>
                         </div>
                         <div class="form-floating mb-4">
-                            <textarea class="form-control" id="Description" name="Description" style="height: 200px"
+                            <textarea class="form-control" id="description" name="description" style="height: 200px"
                                 placeholder="Leave a comment here"></textarea>
-                            <label for="Description">Description of Lead</label>
+                            <label for="description">Description of Lead</label>
                         </div>
                         <div class="form-floating mb-4">
-                            <input type="text" class="form-control" id="number_of_users" name="number_of_users">
-                            <label for="number_of_users">Number of users</label>
+                            <input type="number" class="form-control" id="potential_users" name="potential_users">
+                            <label for="potential_users">Number of users</label>
                         </div>
                         <div class="form-floating mb-4">
-                            <input type="text" class="form-control" id="potential_revenue" name="potential_revenue"
+                            <input type="number" class="form-control" id="revenue" name="revenue"
                                 placeholder="John Doe">
-                            <label for="potential_revenue">Potential Revenue</label>
+                            <label for="revenue">Potential Revenue</label>
                         </div>
                         <button type="submit" class="btn btn-primary w-100">Add Lead</button>
                     </div>

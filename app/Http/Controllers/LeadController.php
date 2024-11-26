@@ -6,6 +6,7 @@ use App\Models\Lead;
 use App\Models\Client;
 use Illuminate\Http\Request;
 use Spatie\Permission\Models\Role;
+use Auth;
 
 
 class LeadController extends Controller
@@ -37,36 +38,45 @@ class LeadController extends Controller
     public function store(Request $request, Client $client)
     {
         // Create the lead
-        dd($request->all());
+        // dd($request->all());
         $validated = $request->validate([
-
-            'number_of_users' => 'nullable|integer',
-            'potential_revenue' => 'nullable|numeric',
-            'referral' => 'nullable|in:1,2', 
-            'referrer_name' => 'nullable|string',
+            'title' => 'string',
+            'potential_users' => 'nullable|integer',
+            'revenue' => 'nullable|numeric',
+            'is_referral' => 'nullable|in:1,0',
+            'referrer' => 'nullable|string',
             'description' => 'nullable|string',
         ]);
 
         $lead = Lead::create([
-            'number_of_users'=> $validated['number_of_users'],
-            'potential_revenue'=> $validated['potential_revenue'],
-            'referral'=> $validated['referral'],
-            'referrer_name'=> $validated['referrer_name'],
-            'description'=> $validated['description'],
-
+            'title' => $validated['title'],
+            'potential_users' => $validated['potential_users'],
+            'revenue' => $validated['revenue'],
+            'is_referral' => $validated['is_referral'],
+            'referrer' => $validated['referrer'],
+            'description' => $validated['description'],
+            'client_id' => $request['client_id'],
+            'lead_stage_id' => 1,
+            'user_id' => Auth::id(),
         ]);
 
-        return view('pages.leads')->with('success');
+        return redirect()->route('leads')->with('success','');
     }
 
     /**
      * Display the specified resource.
      */
-    public function show(Lead $lead)
+    public function show($clientId)
     {
-        //
-    }
+        // Fetch the client by ID
+        $client = Client::findOrFail($clientId);
 
+        // Fetch the leads related to this client
+        $leads = Lead::where('client_id', $clientId)->get();
+
+        // Pass client and leads to the view
+        return view('pages.clients.show', compact('client', 'leads'));
+    }
     /**
      * Show the form for editing the specified resource.
      */

@@ -13,6 +13,7 @@ class Lead extends Model
      */
     protected $fillable = [
         
+        'title',
         'description',
         'is_referral',
         'referrer',
