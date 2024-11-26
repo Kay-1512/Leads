@@ -12,39 +12,11 @@ class LeadStageController extends Controller
      */
     public function index()
     {
-        //
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(Request $request)
-    {
-        //
-    }
-
-    /**
-     * Display the specified resource.
-     */
-    public function show(LeadStage $leadStage)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(LeadStage $leadStage)
-    {
-        //
+        $stages = LeadStage::with(['leads' => function ($query) {
+            $query->orderBy('order');
+        }])->orderBy('order')->get();
+    
+        return response()->json($stages);
     }
 
     /**
@@ -52,14 +24,20 @@ class LeadStageController extends Controller
      */
     public function update(Request $request, LeadStage $leadStage)
     {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(LeadStage $leadStage)
-    {
-        //
+        $validated = $request->validate([
+            'leads' => 'required|array',
+            'leads.*.id' => 'required|exists:leads,id',
+            'leads.*.lead_stage_id' => 'required|exists:lead_stages,id',
+            'leads.*.order' => 'required|integer',
+        ]);
+    
+        foreach ($validated['leads'] as $lead) {
+            Lead::where('id', $lead['id'])->update([
+                'lead_stage_id' => $lead['lead_stage_id'],
+                'order' => $lead['order'],
+            ]);
+        }
+    
+        return response()->json(['message' => 'Order updated successfully.']);
     }
 }

@@ -24,9 +24,10 @@ class Lead extends Model
         'lead_stage_id',
         'order',
     ];
-
-    public function leadStage(){
-        return $this->belongsTo(LeadStage::class);
+    
+    public function stage()
+    {
+        return $this->belongsTo(LeadStage::class, 'lead_stage_id');
     }
 
     public function user(){

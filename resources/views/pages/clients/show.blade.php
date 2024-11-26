@@ -44,7 +44,23 @@ Clients - {{ $client->name }}
         <h3 class="block-title">Current Leads</h3>
     </div>
     <div class="block-content">
-        <div class="table-responsive">
+    <div x-data="kanbanBoard" x-init="initializeBoard()" class="kanban-board">
+        <template x-for="stage in stages" :key="stage.id">
+            <div class="kanban-column">
+                <h3 x-text="stage.name"></h3>
+                <div :id="'stage-' + stage.id" class="kanban-cards" x-data="sortable(stage.id)" x-init="initSortable()">
+                    <template x-for="lead in stage.leads" :key="lead.id">
+                        <div class="kanban-card" :data-id="lead.id">
+                            <h4 x-text="lead.title" class="font-bold"></h4>
+                            <p x-text="lead.description" class="text-sm text-gray-600"></p>
+                        </div>
+                    </template>
+                </div>
+            </div>
+        </template>
+    </div>
+
+        <!-- <div class="table-responsive">
             <table class="table table-borderless table-striped table-vcenter">
                 <thead>
                     <tr>
@@ -90,7 +106,7 @@ Clients - {{ $client->name }}
 
                 </tbody>
             </table>
-        </div>
+        </div> -->
     </div>
 </div>
 <!-- END Shopping Cart -->
@@ -152,8 +168,6 @@ Clients - {{ $client->name }}
 </div>
 <!-- END Past Orders -->
 
-
-
 <!-- Private Notes -->
 <div class="block block-rounded">
     <div class="block-header block-header-default">
@@ -176,4 +190,51 @@ Clients - {{ $client->name }}
     </div>
 </div>
 <!-- END Private Notes -->
+
+<script>
+        document.addEventListener('alpine:init', () => {
+            Alpine.data('kanbanBoard', () => ({
+                stages: [],
+
+                async initializeBoard() {
+                    const response = await fetch('/api/leads');
+                    this.stages = await response.json();
+                },
+
+                async updateOrder(leadUpdates) {
+                    await fetch('/api/lead/stage/update', {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({ leads: leadUpdates }),
+                    });
+                },
+            }));
+
+            Alpine.data('sortable', (stageId) => ({
+                stageId,
+
+                initSortable() {
+                    const container = document.getElementById(`stage-${this.stageId}`);
+                    new Sortable(container, {
+                        group: 'kanban',
+                        animation: 150,
+                        onEnd: (evt) => {
+                            const updatedLeads = Array.from(evt.to.children).map((child, index) => ({
+                                id: child.dataset.id,
+                                lead_stage_id: evt.to.id.split('-')[1],
+                                order: index,
+                            }));
+
+                            document.querySelector('[x-data="kanbanBoard"]').__x.$data.updateOrder(updatedLeads);
+                        },
+                    });
+                },
+            }));
+        });
+    </script>
 @endsection
+
+
+
+
+

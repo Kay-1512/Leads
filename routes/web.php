@@ -22,14 +22,9 @@ Route::middleware('auth')->group(function () {
     Route::get('/new-client', [ClientController::class, 'create'])->name('new-client');
     Route::get('/clients/{client}/edit', [ClientController::class, 'edit'])->name('edit-client');
     Route::put('/clients/{client}', [ClientController::class, 'update'])->name('client.update');
-
-
-Route::post('/store-user', [UserController::class, 'store'])->name('user.store');
-Route::post('/store-lead', [LeadController::class, 'store'])->name('lead.store');
-Route::post('/store-client', [ClientController::class, 'store'])->name('client.store');
-
-
-
+    Route::post('/store-user', [UserController::class, 'store'])->name('user.store');
+    Route::post('/store-lead', [LeadController::class, 'store'])->name('lead.store');
+    Route::post('/store-client', [ClientController::class, 'store'])->name('client.store');
 });
 
 require __DIR__.'/auth.php';

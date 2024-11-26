@@ -6,17 +6,10 @@ use Illuminate\Database\Eloquent\Model;
 
 class LeadStage extends Model
 {
-    protected $fillable = [
-        "name","order","board_id",
-    ];
+    protected $fillable = ['name', 'order'];
 
     public function leads()
     {
-        return $this->hasMany(Lead::class);
-    }
-
-    public function board()
-    {
-        return $this->belongsTo(Board::class);
+        return $this->hasMany(Lead::class, 'lead_stage_id')->orderBy('order');
     }
 }

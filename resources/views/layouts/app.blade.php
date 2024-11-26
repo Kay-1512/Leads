@@ -26,6 +26,8 @@
     <link rel="apple-touch-icon" sizes="180x180" href="assets/media/favicons/apple-touch-icon-180x180.png">
 
     <link rel="stylesheet" id="css-main" href="{{ asset('assets/css/oneui.min.css') }}">
+    <script src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js" defer></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Sortable/1.15.0/Sortable.min.js"></script>
 
     <script src="{{ asset('assets/js/setTheme.js') }}"></script>
 
