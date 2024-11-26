@@ -37,28 +37,26 @@ class LeadController extends Controller
      */
     public function store(Request $request, Client $client)
     {
-        // Create the lead
-        // dd($request->all());
         $validated = $request->validate([
-            'title' => 'string',
-            'potential_users' => 'nullable|integer',
-            'revenue' => 'nullable|numeric',
-            'is_referral' => 'nullable|in:1,0',
-            'referrer' => 'nullable|string',
+            'title' => 'required|string|max:255',
             'description' => 'nullable|string',
+            'lead_stage_id' => 'required|exists:lead_stages,id',
+            'is_referral' => 'boolean',
+            'referrer' => 'nullable|string',
+            'revenue' => 'nullable|numeric',
+            'potential_users' => 'nullable|numeric',
+            'client_id' => 'required|exists:clients,id',
+            'user_id' => 'required|exists:users,id',
         ]);
-
-        $lead = Lead::create([
-            'title' => $validated['title'],
-            'potential_users' => $validated['potential_users'],
-            'revenue' => $validated['revenue'],
-            'is_referral' => $validated['is_referral'],
-            'referrer' => $validated['referrer'],
-            'description' => $validated['description'],
-            'client_id' => $request['client_id'],
-            'lead_stage_id' => 1,
-            'user_id' => Auth::id(),
-        ]);
+    
+        // Find the current highest order in the stage
+        $highestOrder = Lead::where('lead_stage_id', $validated['lead_stage_id'])
+                            ->max('order') ?? 0;
+    
+        // Create the lead with the incremented order
+        $lead = Lead::create(array_merge($validated, [
+            'order' => $highestOrder + 1,
+        ]));
 
         return redirect()->route('leads')->with('success','');
     }

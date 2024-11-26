@@ -227,12 +227,14 @@ Clients - {{ $client->name }}
                 stages: [],
 
                 async initializeBoard() {
-                    const response = await fetch('/api/leads');
+                    // Fetch stages and leads from the backend
+                    const response = await fetch('/api/stages-with-leads');
                     this.stages = await response.json();
                 },
 
                 async updateOrder(leadUpdates) {
-                    await fetch('/api/lead/stage/update', {
+                    // Send updates to the backend
+                    await fetch('/leads/update-order', {
                         method: 'POST',
                         headers: { 'Content-Type': 'application/json' },
                         body: JSON.stringify({ leads: leadUpdates }),
@@ -246,15 +248,22 @@ Clients - {{ $client->name }}
                 initSortable() {
                     const container = document.getElementById(`stage-${this.stageId}`);
                     new Sortable(container, {
-                        group: 'kanban',
+                        group: {
+                            name: 'kanban',
+                            pull: true,
+                            put: true,
+                        },
                         animation: 150,
                         onEnd: (evt) => {
                             const updatedLeads = Array.from(evt.to.children).map((child, index) => ({
                                 id: child.dataset.id,
-                                lead_stage_id: evt.to.id.split('-')[1],
+                                lead_stage_id: evt.to.id.split('-')[1], // Extract stage ID from container ID
                                 order: index,
                             }));
 
+                            console.log('Updated Leads:', updatedLeads);
+
+                            // Update the backend
                             document.querySelector('[x-data="kanbanBoard"]').__x.$data.updateOrder(updatedLeads);
                         },
                     });
