@@ -18,7 +18,7 @@ Leads
       </thead>
       <tbody>
 
-        @foreach($leads as $lead)
+      @foreach($leads as $lead)
       <tr>
         <td>{{ $lead->title }}</td>
         <td>
@@ -32,13 +32,13 @@ Leads
         @if ($lead->is_referral)
         {{ $lead->referrer }}
         @else
-        No referral info
+          No referral info
         @endif
         </td>
         <td>{{ $lead->revenue }}</td>
         <td>{{ $lead->potential_users }}</td>
       </tr>
-    @endforeach
+      @endforeach
       </tbody>
     </table>
   </div>

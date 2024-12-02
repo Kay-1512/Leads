@@ -35,8 +35,8 @@ class ClientController extends Controller
     {
         // Validate the client and lead data
         $validated = $request->validate([
-            'companyName' => 'required|string|max:255',
-            'contactPerson' => 'required|string|max:255',
+            'name' => 'required|string|max:255',
+            'contact_person_id' => 'required|string|max:255',
             'email' => 'required|email|unique:clients,email',
             'phone' => 'required|numeric',
             'number_of_users' => 'nullable|integer',
@@ -47,8 +47,8 @@ class ClientController extends Controller
     
         // Create the client
         $client = Client::create([
-            'companyName' => $validated['companyName'],
-            'contactPerson' => $validated['contactPerson'],
+            'name' => $validated['name'],
+            'contact_person_id' => $validated['contact_person_id'],
             'email' => $validated['email'],
             'phone' => $validated['phone'],
         ]);

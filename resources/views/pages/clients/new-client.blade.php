@@ -45,6 +45,9 @@
                                 <label for="phone" required>Phone</label>
                             </div>
                         </div>
+
+                        <input type="hidden" class="form-control" id="contact_person_id" name="contact_person_id" value="{{ auth()->user()->id }}">
+
                     </div>
                 </div>
 

@@ -1,41 +1,151 @@
 @extends('layouts.app')
 
 @section('title')
-Clients - {{ $client->name }}
+    Clients - {{ $client->name }}
 @endsection
 
 @section('content')
-<script src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js" defer></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/Sortable/1.15.0/Sortable.min.js"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/dragula/3.7.3/dragula.min.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/dragula/3.7.3/dragula.min.js"></script>
+
 <style>
-    .kanban-board {
-        display: flex;
-        gap: 16px;
-        justify-content: center;
-    }
+/* Kanban board layout */
+.kanban-board {
+    display: flex;
+    flex-direction: row; /* Columns aligned horizontally */
+    gap: 16px;
+    overflow-x: auto; /* Enable horizontal scrolling if needed */
+    padding: 10px;
+}
 
-    .kanban-column {
-        background-color: #f3f3f3;
-        border-radius: 8px;
-        padding: 16px;
-        width: 300px;
-        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    }
+/* Kanban column styling */
+.kanban-column {
+    background-color: #f3f3f3;
+    border-radius: 8px;
+    padding: 16px;
+    width: 300px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
 
-    .kanban-column h3 {
-        margin-bottom: 16px;
-        text-align: center;
-        color: #333;
-    }
+/* Column titles */
+.kanban-column h3 {
+    margin-bottom: 16px;
+    text-align: center;
+    color: #333;
+}
 
-    .kanban-card {
-        background-color: #ffffff;
-        border-radius: 8px;
-        padding: 12px;
-        margin-bottom: 12px;
-        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-        cursor: grab;
-    }
+/* Cards container */
+.kanban-cards {
+    min-height: 200px;
+    border: 2px dashed #ccc;
+    padding: 10px;
+    border-radius: 4px;
+    background-color: #fafafa;
+}
+
+/* Card styling */
+.kanban-card {
+    padding: 10px;
+    border-radius: 8px;
+    margin-bottom: 10px;
+    color: #fff;
+    font-weight: bold;
+    text-align: center;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    cursor: grab;
+    transition: transform 0.2s ease-in-out;
+}
+
+.kanban-card:hover {
+    transform: scale(1.05); /* Slightly enlarge on hover */
+}
+
+/* Visual feedback for drop areas */
+.gu-mirror {
+    position: fixed !important;
+    z-index: 9999 !important;
+    opacity: 0.8;
+}
+
+.kanban-cards.gu-drop-ready {
+    background-color: #f0f8ff; /* Light blue when ready to drop */
+}
+
+/* Sticky Notes Container */
+#sticky-notes-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-top: 20px;
+}
+
+/* Sticky Note Styling */
+.sticky-note {
+    background-color: #fdfd96; /* Classic sticky note yellow */
+    width: 220px;
+    min-height: 150px;
+    padding: 15px;
+    border-radius: 10px;
+    box-shadow: 4px 4px 6px rgba(0, 0, 0, 0.2);
+    font-family: 'Comic Sans MS', sans-serif; /* Playful font for sticky notes */
+    color: #333;
+    position: relative;
+    transform: rotate(-2deg); /* Slight tilt for a casual look */
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+/* Slight Hover Effect */
+.sticky-note:hover {
+    transform: rotate(0deg) scale(1.05); /* Straighten and enlarge slightly */
+    box-shadow: 6px 6px 8px rgba(0, 0, 0, 0.3);
+}
+
+/* Sticky Note Title */
+.sticky-note h5 {
+    font-size: 16px;
+    margin-bottom: 10px;
+    text-align: center;
+    font-weight: bold;
+    text-transform: uppercase;
+    color: #555;
+}
+
+/* Sticky Note Text */
+.sticky-note p {
+    font-size: 14px;
+    margin: 0;
+    line-height: 1.4;
+    word-wrap: break-word;
+}
+
+/* Delete Button */
+.sticky-note .delete-note {
+    position: absolute;
+    top: 8px;
+    right: 8px;
+    font-size: 20px;
+    color: #d9534f;
+    cursor: pointer;
+    transition: color 0.2s;
+}
+
+.sticky-note .delete-note:hover {
+    color: #c9302c;
+}
+
+/* Optional Variants for Colors */
+.sticky-note.blue {
+    background-color: #a2d5f2; /* Light blue */
+}
+
+.sticky-note.green {
+    background-color: #b2f2a2; /* Light green */
+}
+
+.sticky-note.pink {
+    background-color: #f2a2c2; /* Light pink */
+}
+
 </style>
 
 <div class="row">
@@ -76,74 +186,9 @@ Clients - {{ $client->name }}
     <div class="block-header block-header-default">
         <h3 class="block-title">Current Leads</h3>
     </div>
-    <div class="block-content">
-        <div x-data="kanbanBoard" x-init="initializeBoard()" class="kanban-board">
-            <template x-for="stage in stages" :key="stage . id">
-                <div class="kanban-column">
-                    <!-- Stage Title -->
-                    <h3 x-text="stage.title" class="text-xl font-bold text-center text-gray-800"></h3>
-                    <!-- Leads within the Stage -->
-                    <div :id="'stage-' + stage . id" class="kanban-cards" x-data="sortable(stage.id)"
-                        x-init="initSortable()">
-                        <template x-for="lead in stage.leads" :key="lead . id">
-                            <div class="kanban-card" :data-id="lead.id">
-                                <!-- Lead Title -->
-                                <h4 x-text="lead.title" class="font-semibold"></h4>
-                                <!-- Lead Description -->
-                                <p x-text="lead.description" class="text-sm text-gray-600"></p>
-                            </div>
-                        </template>
-                    </div>
-                </div>
-            </template>
-        </div>
-        <!-- <div class="table-responsive">
-            <table class="table table-borderless table-striped table-vcenter">
-                <thead>
-                    <tr>
-                        <th class="d-none d-md-table-cell">Title</th>
-                        <th class="d-none d-md-table-cell">Potential Users</th>
-                        <th class="d-none d-sm-table-cell text-center">Potential Revenue</th>
-                        <th>Referral</th>
-                        <th class="d-none d-sm-table-cell text-end">Name of referrer</th>
-                        <th class="text-center">Action</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @foreach ($client->leads as $lead)
 
-                        <tr>
-                            <td>{{ $lead->title }}</td>
-                            <td>{{ $lead->potential_users }}</td>
-                            <td>{{ $lead->revenue }}</td>
-                            <td>
-                                @if ($lead->is_referral)
-                                    <span class="badge rounded-pill bg-success">Yes</span>
-                                @else
-                                    <span class="badge rounded-pill bg-danger">No</span>
-                                @endif
-                            </td>
-                            <td>
-                                @if ($lead->is_referral)
-                                    {{ $lead->referrer }}
-                                @else
-                                    No referral info
-                                @endif
-                            </td>
-
-                            <td class="text-center fs-sm">
-
-                                <a class="btn btn-sm btn-alt-danger" href="javascript:void(0)" data-bs-toggle="tooltip"
-                                    title="Delete">
-                                    <i class="fa fa-fw fa-times text-danger"></i>
-                                </a>
-                            </td>
-                        </tr>
-                    @endforeach
-
-                </tbody>
-            </table>
-        </div> -->
+    <div id="kanban-board" class="kanban-board">
+        <!-- Columns will be dynamically rendered here -->
     </div>
 </div>
 <!-- END Shopping Cart -->
@@ -214,7 +259,7 @@ Clients - {{ $client->name }}
         <p class="alert alert-dark fs-sm">
             <i class="fa fa-fw fa-info me-1"></i> This note will not be displayed to the customer.
         </p>
-        <form action="be_pages_ecom_customer.html" onsubmit="return false;">
+        <form id="noteForm" onsubmit="return addStickyNote();">
             <div class="mb-4">
                 <label class="form-label" for="one-ecom-customer-note">Note</label>
                 <textarea class="form-control" id="one-ecom-customer-note" name="one-ecom-customer-note" rows="4"
@@ -224,58 +269,147 @@ Clients - {{ $client->name }}
                 <button type="submit" class="btn btn-alt-primary">Add Note</button>
             </div>
         </form>
+
+        <!-- Sticky Notes Section -->
+        <div id="sticky-notes-container" class="d-flex flex-wrap gap-3 mt-4">
+            <!-- Static sticky note -->
+            <div class="sticky-note">
+                <h5>Note</h5>
+                <p>This is a static note added for demonstration purposes.</p>
+                <span class="delete-note" onclick="removeStickyNote(this)">×</span>
+            </div>
+        </div>
     </div>
 </div>
 <!-- END Private Notes -->
 
+
 <script>
-    document.addEventListener('alpine:init', () => {
-        Alpine.data('kanbanBoard', () => ({
-            stages: [],
+document.addEventListener('DOMContentLoaded', () => {
+    const kanbanBoard = document.getElementById('kanban-board');
 
-            async initializeBoard() {
-                // Fetch stages and leads from the backend
-                const response = await fetch('/api/leads');
-                this.stages = await response.json();
-            },
+    // Fetch stages and leads from the server
+    fetch('/api/leads')
+        .then(response => response.json())
+        .then(stages => {
+            console.log('Fetched Stages:', stages);
+            if (!kanbanBoard) {
+                console.error('Kanban board element not found.');
+                return;
+            }
+            kanbanBoard.innerHTML = ''; // Clear the board
+            renderKanbanBoard(stages, kanbanBoard); // Render the board
+            initializeDragula(); // Initialize Dragula after rendering
+        })
+        .catch(error => console.error('Error fetching stages:', error));
+});
 
-            async updateOrder(leadUpdates) {
-                // Send updates to the backend
-                await fetch('/lead/stage/update', {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ leads: leadUpdates }),
-                });
-            },
-        }));
+// Render Kanban board dynamically
+function renderKanbanBoard(stages, kanbanBoard) {
+    kanbanBoard.innerHTML = ''; // Clear the board
 
-        Alpine.data('sortable', (stageId) => ({
-            stageId,
+    stages.forEach(stage => {
+        const column = document.createElement('div');
+        column.className = 'kanban-column';
+        column.id = `stage-${stage.id}`;
 
-            initSortable() {
-                const container = document.getElementById(`stage-${this.stageId}`);
-                new Sortable(container, {
-                    group: {
-                        name: 'kanban',
-                        pull: true,
-                        put: true,
-                    },
-                    animation: 150,
-                    onEnd: (evt) => {
-                        const updatedLeads = Array.from(evt.to.children).map((child, index) => ({
-                            id: child.dataset.id,
-                            lead_stage_id: evt.to.id.split('-')[1], // Extract stage ID from container ID
-                            order: index,
-                        }));
+        const title = document.createElement('h3');
+        title.innerText = stage.title || 'Untitled Stage';
+        column.appendChild(title);
 
-                        console.log('Updated Leads:', updatedLeads);
+        const cardContainer = document.createElement('div');
+        cardContainer.className = 'kanban-cards';
+        cardContainer.id = `cards-${stage.id}`;
+        column.appendChild(cardContainer);
 
-                        // Update the backend
-                        document.querySelector('[x-data="kanbanBoard"]').__x.$data.updateOrder(updatedLeads);
-                    },
-                });
-            },
-        }));
+        stage.leads.forEach(lead => {
+            const card = document.createElement('div');
+            card.className = 'kanban-card';
+            card.dataset.id = lead.id;
+
+            // Apply random background color
+            const randomColor = getRandomColor();
+            card.style.backgroundColor = randomColor;
+
+            card.innerHTML = `<h4>${lead.title}</h4><p>${lead.description}</p>`;
+            cardContainer.appendChild(card);
+        });
+
+        kanbanBoard.appendChild(column);
     });
+
+    console.log('Kanban Board Structure:', kanbanBoard.innerHTML);
+}
+
+// Helper function to generate random colors
+function getRandomColor() {
+    const letters = '0123456789ABCDEF';
+    let color = '#';
+    for (let i = 0; i < 6; i++) {
+        color += letters[Math.floor(Math.random() * 16)];
+    }
+    return color;
+}
+
+
+// Initialize Dragula
+function initializeDragula() {
+    const containers = Array.from(document.querySelectorAll('.kanban-cards'));
+
+    dragula(containers, {
+        moves: (el, source, handle, sibling) => true, // Allow all items to be draggable
+    }).on('drop', (el, target, source, sibling) => {
+        console.log('Item dropped:', el);
+        console.log('Dropped in container:', target.id);
+        console.log('Removed from container:', source.id);
+
+        // Extract updated data
+        const newStageId = target.id.split('-')[1];
+        const updatedLeads = Array.from(target.children).map((child, index) => ({
+            id: child.dataset.id,
+            lead_stage_id: newStageId,
+            order: index,
+        }));
+
+        console.log('Updated Leads Payload:', updatedLeads);
+
+        // Send updated data to the server
+        fetch('/api/lead/stage/update', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'Accept': 'application/json',
+            },
+            body: JSON.stringify({ leads: updatedLeads }),
+        })
+            .then(response => response.json())
+            .then(data => {
+                console.log(data.message);
+                refreshKanbanBoard();
+            })
+            .catch(error => console.error('Error updating order:', error));
+    });
+}
+
+
+// Refresh the board after updates
+function refreshKanbanBoard() {
+    const kanbanBoard = document.getElementById('kanban-board');
+    if (!kanbanBoard) {
+        console.error('Kanban board element not found.');
+        return;
+    }
+
+    fetch('/api/leads')
+        .then(response => response.json())
+        .then(stages => {
+            console.log('Refreshed Stages:', stages);
+            kanbanBoard.innerHTML = '';
+            renderKanbanBoard(stages, kanbanBoard);
+            initializeDragula(); // Reinitialize Dragula after rendering
+        })
+        .catch(error => console.error('Error refreshing Kanban board:', error));
+}
+
 </script>
 @endsection
