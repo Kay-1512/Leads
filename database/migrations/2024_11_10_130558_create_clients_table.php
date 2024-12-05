@@ -12,12 +12,11 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('clients', function (Blueprint $table) {
-            $table->id();
-                ;
-            $table->foreignId('contact_person_id')->constrained('users', 'id')->onDelete('cascade');
+            $table->id();  // Remove the extra semicolon here
+            $table->foreignId('contact_person_id')->constrained('users', 'id')->onDelete('cascade'); // Contact person references users table
             $table->string('phone');
-            $table->string('email');
-            $table->foreignId('province_id')->constrained()->onDelete('cascade');
+            $table->string('email')->unique()->nullable(false)->change();
+            $table->foreignId('province_id')->constrained()->onDelete('cascade'); // Province references the provinces table
             $table->timestamps();
         });
     }

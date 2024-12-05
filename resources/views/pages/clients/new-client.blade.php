@@ -23,8 +23,8 @@
                     <div class="row">
                         <div class="col-12 mb-3">
                             <div class="form-floating">
-                                <input type="text" class="form-control" id="companyName" name="companyName" placeholder="Company Name">
-                                <label for="companyName" required>Company Name</label>
+                                <input type="text" class="form-control" id="name" name="name" placeholder="Company Name">
+                                <label for="name" required>Company Name</label>
                             </div>
                         </div>
                         <div class="col-12 mb-3">

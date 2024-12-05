@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('title')
-    Clients - {{ $client->name }}
+Clients - {{ $client->name }}
 @endsection
 
 @section('content')
@@ -9,143 +9,153 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/dragula/3.7.3/dragula.min.js"></script>
 
 <style>
-/* Kanban board layout */
-.kanban-board {
-    display: flex;
-    flex-direction: row; /* Columns aligned horizontally */
-    gap: 16px;
-    overflow-x: auto; /* Enable horizontal scrolling if needed */
-    padding: 10px;
-}
+    /* Kanban board layout */
+    .kanban-board {
+        display: flex;
+        flex-direction: row;
+        /* Columns aligned horizontally */
+        gap: 16px;
+        overflow-x: auto;
+        /* Enable horizontal scrolling if needed */
+        padding: 10px;
+    }
 
-/* Kanban column styling */
-.kanban-column {
-    background-color: #f3f3f3;
-    border-radius: 8px;
-    padding: 16px;
-    width: 300px;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-}
+    /* Kanban column styling */
+    .kanban-column {
+        background-color: #f3f3f3;
+        border-radius: 8px;
+        padding: 16px;
+        width: 300px;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    }
 
-/* Column titles */
-.kanban-column h3 {
-    margin-bottom: 16px;
-    text-align: center;
-    color: #333;
-}
+    /* Column titles */
+    .kanban-column h3 {
+        margin-bottom: 16px;
+        text-align: center;
+        color: #333;
+    }
 
-/* Cards container */
-.kanban-cards {
-    min-height: 200px;
-    border: 2px dashed #ccc;
-    padding: 10px;
-    border-radius: 4px;
-    background-color: #fafafa;
-}
+    /* Cards container */
+    .kanban-cards {
+        min-height: 200px;
+        border: 2px dashed #ccc;
+        padding: 10px;
+        border-radius: 4px;
+        background-color: #fafafa;
+    }
 
-/* Card styling */
-.kanban-card {
-    padding: 10px;
-    border-radius: 8px;
-    margin-bottom: 10px;
-    color: #fff;
-    font-weight: bold;
-    text-align: center;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    cursor: grab;
-    transition: transform 0.2s ease-in-out;
-}
+    /* Card styling */
+    .kanban-card {
+        padding: 10px;
+        border-radius: 8px;
+        margin-bottom: 10px;
+        color: #fff;
+        font-weight: bold;
+        text-align: center;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        cursor: grab;
+        transition: transform 0.2s ease-in-out;
+    }
 
-.kanban-card:hover {
-    transform: scale(1.05); /* Slightly enlarge on hover */
-}
+    .kanban-card:hover {
+        transform: scale(1.05);
+        /* Slightly enlarge on hover */
+    }
 
-/* Visual feedback for drop areas */
-.gu-mirror {
-    position: fixed !important;
-    z-index: 9999 !important;
-    opacity: 0.8;
-}
+    /* Visual feedback for drop areas */
+    .gu-mirror {
+        position: fixed !important;
+        z-index: 9999 !important;
+        opacity: 0.8;
+    }
 
-.kanban-cards.gu-drop-ready {
-    background-color: #f0f8ff; /* Light blue when ready to drop */
-}
+    .kanban-cards.gu-drop-ready {
+        background-color: #f0f8ff;
+        /* Light blue when ready to drop */
+    }
 
-/* Sticky Notes Container */
-#sticky-notes-container {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 10px;
-    margin-top: 20px;
-}
+    /* Sticky Notes Container */
+    #sticky-notes-container {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+        margin-top: 20px;
+    }
 
-/* Sticky Note Styling */
-.sticky-note {
-    background-color: #fdfd96; /* Classic sticky note yellow */
-    width: 220px;
-    min-height: 150px;
-    padding: 15px;
-    border-radius: 10px;
-    box-shadow: 4px 4px 6px rgba(0, 0, 0, 0.2);
-    font-family: 'Comic Sans MS', sans-serif; /* Playful font for sticky notes */
-    color: #333;
-    position: relative;
-    transform: rotate(-2deg); /* Slight tilt for a casual look */
-    transition: transform 0.2s ease, box-shadow 0.2s ease;
-}
+    /* Sticky Note Styling */
+    .sticky-note {
+        background-color: #fdfd96;
+        /* Classic sticky note yellow */
+        width: 220px;
+        min-height: 150px;
+        padding: 15px;
+        border-radius: 10px;
+        box-shadow: 4px 4px 6px rgba(0, 0, 0, 0.2);
+        font-family: 'Comic Sans MS', sans-serif;
+        /* Playful font for sticky notes */
+        color: #333;
+        position: relative;
+        transform: rotate(-2deg);
+        /* Slight tilt for a casual look */
+        transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
 
-/* Slight Hover Effect */
-.sticky-note:hover {
-    transform: rotate(0deg) scale(1.05); /* Straighten and enlarge slightly */
-    box-shadow: 6px 6px 8px rgba(0, 0, 0, 0.3);
-}
+    /* Slight Hover Effect */
+    .sticky-note:hover {
+        transform: rotate(0deg) scale(1.05);
+        /* Straighten and enlarge slightly */
+        box-shadow: 6px 6px 8px rgba(0, 0, 0, 0.3);
+    }
 
-/* Sticky Note Title */
-.sticky-note h5 {
-    font-size: 16px;
-    margin-bottom: 10px;
-    text-align: center;
-    font-weight: bold;
-    text-transform: uppercase;
-    color: #555;
-}
+    /* Sticky Note Title */
+    .sticky-note h5 {
+        font-size: 16px;
+        margin-bottom: 10px;
+        text-align: center;
+        font-weight: bold;
+        text-transform: uppercase;
+        color: #555;
+    }
 
-/* Sticky Note Text */
-.sticky-note p {
-    font-size: 14px;
-    margin: 0;
-    line-height: 1.4;
-    word-wrap: break-word;
-}
+    /* Sticky Note Text */
+    .sticky-note p {
+        font-size: 14px;
+        margin: 0;
+        line-height: 1.4;
+        word-wrap: break-word;
+    }
 
-/* Delete Button */
-.sticky-note .delete-note {
-    position: absolute;
-    top: 8px;
-    right: 8px;
-    font-size: 20px;
-    color: #d9534f;
-    cursor: pointer;
-    transition: color 0.2s;
-}
+    /* Delete Button */
+    .sticky-note .delete-note {
+        position: absolute;
+        top: 8px;
+        right: 8px;
+        font-size: 20px;
+        color: #d9534f;
+        cursor: pointer;
+        transition: color 0.2s;
+    }
 
-.sticky-note .delete-note:hover {
-    color: #c9302c;
-}
+    .sticky-note .delete-note:hover {
+        color: #c9302c;
+    }
 
-/* Optional Variants for Colors */
-.sticky-note.blue {
-    background-color: #a2d5f2; /* Light blue */
-}
+    /* Optional Variants for Colors */
+    .sticky-note.blue {
+        background-color: #a2d5f2;
+        /* Light blue */
+    }
 
-.sticky-note.green {
-    background-color: #b2f2a2; /* Light green */
-}
+    .sticky-note.green {
+        background-color: #b2f2a2;
+        /* Light green */
+    }
 
-.sticky-note.pink {
-    background-color: #f2a2c2; /* Light pink */
-}
-
+    .sticky-note.pink {
+        background-color: #f2a2c2;
+        /* Light pink */
+    }
 </style>
 
 <div class="row">
@@ -270,6 +280,7 @@
             </div>
         </form>
 
+
         <!-- Sticky Notes Section -->
         <div id="sticky-notes-container" class="d-flex flex-wrap gap-3 mt-4">
             <!-- Static sticky note -->
@@ -285,131 +296,210 @@
 
 
 <script>
-document.addEventListener('DOMContentLoaded', () => {
-    const kanbanBoard = document.getElementById('kanban-board');
+    document.addEventListener('DOMContentLoaded', () => {
+        const kanbanBoard = document.getElementById('kanban-board');
 
-    // Fetch stages and leads from the server
-    fetch('/api/leads')
-        .then(response => response.json())
-        .then(stages => {
-            console.log('Fetched Stages:', stages);
-            if (!kanbanBoard) {
-                console.error('Kanban board element not found.');
-                return;
-            }
-            kanbanBoard.innerHTML = ''; // Clear the board
-            renderKanbanBoard(stages, kanbanBoard); // Render the board
-            initializeDragula(); // Initialize Dragula after rendering
-        })
-        .catch(error => console.error('Error fetching stages:', error));
-});
+        // Fetch stages and leads from the server
+        fetch('/api/leads')
+            .then(response => response.json())
+            .then(stages => {
+                console.log('Fetched Stages:', stages);
+                if (!kanbanBoard) {
+                    console.error('Kanban board element not found.');
+                    return;
+                }
+                kanbanBoard.innerHTML = ''; // Clear the board
+                renderKanbanBoard(stages, kanbanBoard); // Render the board
+                initializeDragula(); // Initialize Dragula after rendering
+            })
+            .catch(error => console.error('Error fetching stages:', error));
+    });
 
-// Render Kanban board dynamically
-function renderKanbanBoard(stages, kanbanBoard) {
-    kanbanBoard.innerHTML = ''; // Clear the board
+    // Render Kanban board dynamically
+    function renderKanbanBoard(stages, kanbanBoard) {
+        kanbanBoard.innerHTML = ''; // Clear the board
 
-    stages.forEach(stage => {
-        const column = document.createElement('div');
-        column.className = 'kanban-column';
-        column.id = `stage-${stage.id}`;
+        stages.forEach(stage => {
+            const column = document.createElement('div');
+            column.className = 'kanban-column';
+            column.id = `stage-${stage.id}`;
 
-        const title = document.createElement('h3');
-        title.innerText = stage.title || 'Untitled Stage';
-        column.appendChild(title);
+            const title = document.createElement('h3');
+            title.innerText = stage.title || 'Untitled Stage';
+            column.appendChild(title);
 
-        const cardContainer = document.createElement('div');
-        cardContainer.className = 'kanban-cards';
-        cardContainer.id = `cards-${stage.id}`;
-        column.appendChild(cardContainer);
+            const cardContainer = document.createElement('div');
+            cardContainer.className = 'kanban-cards';
+            cardContainer.id = `cards-${stage.id}`;
+            column.appendChild(cardContainer);
 
-        stage.leads.forEach(lead => {
-            const card = document.createElement('div');
-            card.className = 'kanban-card';
-            card.dataset.id = lead.id;
+            stage.leads.forEach(lead => {
+                const card = document.createElement('div');
+                card.className = 'kanban-card';
+                card.dataset.id = lead.id;
 
-            // Apply random background color
-            const randomColor = getRandomColor();
-            card.style.backgroundColor = randomColor;
+                // Apply random background color
+                const randomColor = getRandomColor();
+                card.style.backgroundColor = randomColor;
 
-            card.innerHTML = `<h4>${lead.title}</h4><p>${lead.description}</p>`;
-            cardContainer.appendChild(card);
+                card.innerHTML = `<h4>${lead.title}</h4><p>${lead.description}</p>`;
+                cardContainer.appendChild(card);
+            });
+
+            kanbanBoard.appendChild(column);
         });
 
-        kanbanBoard.appendChild(column);
-    });
-
-    console.log('Kanban Board Structure:', kanbanBoard.innerHTML);
-}
-
-// Helper function to generate random colors
-function getRandomColor() {
-    const letters = '0123456789ABCDEF';
-    let color = '#';
-    for (let i = 0; i < 6; i++) {
-        color += letters[Math.floor(Math.random() * 16)];
+        console.log('Kanban Board Structure:', kanbanBoard.innerHTML);
     }
-    return color;
-}
+
+    // Helper function to generate random colors
+    function getRandomColor() {
+        const letters = '0123456789ABCDEF';
+        let color = '#';
+        for (let i = 0; i < 6; i++) {
+            color += letters[Math.floor(Math.random() * 16)];
+        }
+        return color;
+    }
 
 
-// Initialize Dragula
-function initializeDragula() {
-    const containers = Array.from(document.querySelectorAll('.kanban-cards'));
+    // Initialize Dragula
+    function initializeDragula() {
+        const containers = Array.from(document.querySelectorAll('.kanban-cards'));
 
-    dragula(containers, {
-        moves: (el, source, handle, sibling) => true, // Allow all items to be draggable
-    }).on('drop', (el, target, source, sibling) => {
-        console.log('Item dropped:', el);
-        console.log('Dropped in container:', target.id);
-        console.log('Removed from container:', source.id);
+        dragula(containers, {
+            moves: (el, source, handle, sibling) => true, // Allow all items to be draggable
+        }).on('drop', (el, target, source, sibling) => {
+            console.log('Item dropped:', el);
+            console.log('Dropped in container:', target.id);
+            console.log('Removed from container:', source.id);
 
-        // Extract updated data
-        const newStageId = target.id.split('-')[1];
-        const updatedLeads = Array.from(target.children).map((child, index) => ({
-            id: child.dataset.id,
-            lead_stage_id: newStageId,
-            order: index,
-        }));
+            // Extract updated data
+            const newStageId = target.id.split('-')[1];
+            const updatedLeads = Array.from(target.children).map((child, index) => ({
+                id: child.dataset.id,
+                lead_stage_id: newStageId,
+                order: index,
+            }));
 
-        console.log('Updated Leads Payload:', updatedLeads);
+            console.log('Updated Leads Payload:', updatedLeads);
 
-        // Send updated data to the server
-        fetch('/api/lead/stage/update', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-                'Accept': 'application/json',
-            },
-            body: JSON.stringify({ leads: updatedLeads }),
-        })
-            .then(response => response.json())
-            .then(data => {
-                console.log(data.message);
-                refreshKanbanBoard();
+            // Send updated data to the server
+            fetch('/api/lead/stage/update', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Accept': 'application/json',
+                },
+                body: JSON.stringify({ leads: updatedLeads }),
             })
-            .catch(error => console.error('Error updating order:', error));
-    });
-}
-
-
-// Refresh the board after updates
-function refreshKanbanBoard() {
-    const kanbanBoard = document.getElementById('kanban-board');
-    if (!kanbanBoard) {
-        console.error('Kanban board element not found.');
-        return;
+                .then(response => response.json())
+                .then(data => {
+                    console.log(data.message);
+                    refreshKanbanBoard();
+                })
+                .catch(error => console.error('Error updating order:', error));
+        });
     }
 
-    fetch('/api/leads')
-        .then(response => response.json())
-        .then(stages => {
-            console.log('Refreshed Stages:', stages);
-            kanbanBoard.innerHTML = '';
-            renderKanbanBoard(stages, kanbanBoard);
-            initializeDragula(); // Reinitialize Dragula after rendering
-        })
-        .catch(error => console.error('Error refreshing Kanban board:', error));
-}
 
+    // Refresh the board after updates
+    function refreshKanbanBoard() {
+        const kanbanBoard = document.getElementById('kanban-board');
+        if (!kanbanBoard) {
+            console.error('Kanban board element not found.');
+            return;
+        }
+
+        fetch('/api/leads')
+            .then(response => response.json())
+            .then(stages => {
+                console.log('Refreshed Stages:', stages);
+                kanbanBoard.innerHTML = '';
+                renderKanbanBoard(stages, kanbanBoard);
+                initializeDragula(); // Reinitialize Dragula after rendering
+            })
+            .catch(error => console.error('Error refreshing Kanban board:', error));
+    }
+
+
+    // Function to load the sticky notes from local storage when the page loads
+    // Load sticky notes for a specific client
+    function loadStickyNotes(clientId) {
+        const stickyNotesContainer = document.getElementById('sticky-notes-container');
+
+        // Retrieve notes for the specific client from localStorage
+        const notes = JSON.parse(localStorage.getItem(`stickyNotes_${clientId}`)) || [];
+
+        // Clear the container first
+        stickyNotesContainer.innerHTML = '';
+
+        // Add the sticky notes to the container
+        notes.forEach(note => {
+            const stickyNote = createStickyNoteElement(note.content, note.id);
+            stickyNotesContainer.appendChild(stickyNote);
+        });
+    }
+
+    // Create a sticky note element
+    function createStickyNoteElement(content, id) {
+        const note = document.createElement('div');
+        note.className = 'sticky-note';
+        note.dataset.id = id || new Date().getTime(); // Use timestamp for unique ID if none exists
+
+        note.innerHTML = `
+        <h5>Note</h5>
+        <p>${content}</p>
+        <span class="delete-note" onclick="removeStickyNote(this)">×</span>
+    `;
+
+        return note;
+    }
+
+    // Add a sticky note for a specific client
+    function addStickyNote() {
+        const noteContent = document.getElementById('one-ecom-customer-note').value;
+        const clientId = {{ $client->id }};  // Assume the client ID is available in the template
+
+        if (!noteContent) return false; // Do not add empty notes
+
+        // Create a new sticky note element
+        const stickyNotesContainer = document.getElementById('sticky-notes-container');
+        const newNote = createStickyNoteElement(noteContent);
+
+        // Add the note to the container
+        stickyNotesContainer.appendChild(newNote);
+
+        // Store the note for this specific client in localStorage
+        const notes = JSON.parse(localStorage.getItem(`stickyNotes_${clientId}`)) || [];
+        notes.push({ id: newNote.dataset.id, content: noteContent });
+        localStorage.setItem(`stickyNotes_${clientId}`, JSON.stringify(notes));
+
+        // Clear the input field
+        document.getElementById('one-ecom-customer-note').value = '';
+
+        return false; // Prevent form submission
+    }
+
+    // Remove a sticky note
+    function removeStickyNote(element) {
+        const note = element.closest('.sticky-note');
+        const noteId = note.dataset.id;
+        const clientId = {{ $client->id }};  // Assume the client ID is available in the template
+
+        // Remove the note from the DOM
+        note.remove();
+
+        // Remove the note from localStorage for the specific client
+        let notes = JSON.parse(localStorage.getItem(`stickyNotes_${clientId}`)) || [];
+        notes = notes.filter(note => note.id !== noteId);
+        localStorage.setItem(`stickyNotes_${clientId}`, JSON.stringify(notes));
+    }
+
+    // Load sticky notes when the page is ready
+    document.addEventListener('DOMContentLoaded', () => {
+        const clientId = {{ $client->id }};  // Get the client ID from Blade
+        loadStickyNotes(clientId);  // Load the sticky notes for this specific client
+    });
 </script>
 @endsection

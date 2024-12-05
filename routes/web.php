@@ -25,6 +25,7 @@ Route::middleware('auth')->group(function () {
     Route::post('/store-user', [UserController::class, 'store'])->name('user.store');
     Route::post('/store-lead', [LeadController::class, 'store'])->name('lead.store');
     Route::post('/store-client', [ClientController::class, 'store'])->name('client.store');
+    
 });
 
 require __DIR__.'/auth.php';

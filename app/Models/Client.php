@@ -11,7 +11,7 @@ class Client extends Model
         'user_id',
         'phone',
         'province_id',
-        
+        "contact_person_id",
     ];
 
     public function leads()

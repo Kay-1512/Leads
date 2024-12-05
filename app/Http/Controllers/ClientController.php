@@ -38,7 +38,7 @@ class ClientController extends Controller
             'name' => 'required|string|max:255',
             'contact_person_id' => 'required|string|max:255',
             'email' => 'required|email|unique:clients,email',
-            'phone' => 'required|numeric',
+            'phone' => 'required',
             'number_of_users' => 'nullable|integer',
             'potential_revenue' => 'nullable|numeric',
             'referral' => 'nullable|in:1,2', // '1' for Yes, '2' for No
@@ -46,6 +46,7 @@ class ClientController extends Controller
         ]);
     
         // Create the client
+     
         $client = Client::create([
             'name' => $validated['name'],
             'contact_person_id' => $validated['contact_person_id'],

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Note;
+use App\Models\Client;
 use Illuminate\Http\Request;
 
 class NoteController extends Controller
@@ -10,9 +11,10 @@ class NoteController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Client $client)
     {
-        //
+        // Fetch all notes associated with the client
+        return response()->json($client->notes);
     }
 
     /**
