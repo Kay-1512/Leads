@@ -28,12 +28,38 @@ class NoteController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(Request $request, Client $client)
     {
-        $validated = $request->validate([
-            "content"=> "string",
+        $request->validate([
+            'content' => 'required|string|max:255',
         ]);
+
+        // Create a new sticky note
+        $note = new Note();
+        $note->client_id = $client->id;
+        $note->user_id = auth()->id(); // Store the ID of the logged-in user
+        $note->content = $request->input('content');
+        $note->save();
+
+        return response()->json(['message' => 'Note added successfully.']);
     }
+
+
+    public function getNotes(Client $client)
+    {
+        $notes = Note::where('client_id', $client->id)
+            ->where(function ($query) {
+                // Show notes created by the logged-in user or admin
+                $query->where('user_id', auth()->id())
+                      ->orWhereHas('user', function ($query) {
+                          $query->where('role', 'Admin');  // Assuming the user has a role column
+                      });
+            })
+            ->get();
+
+        return response()->json($notes);
+    }
+
 
     /**
      * Display the specified resource.
@@ -64,6 +90,13 @@ class NoteController extends Controller
      */
     public function destroy(Note $note)
     {
-        //
+        // Check if the current user is authorized to delete the note
+        if ($note->user_id !== auth()->id() && !auth()->user()->hasRole('Admin')) {
+            return response()->json(['message' => 'Unauthorized'], 403);
+        }
+
+        $note->delete();
+
+        return response()->json(['message' => 'Note deleted successfully.']);
     }
 }
