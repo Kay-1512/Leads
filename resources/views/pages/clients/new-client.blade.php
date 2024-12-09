@@ -22,59 +22,75 @@
                 <div class="block-content block-content-full">
                     <div class="row">
                         <div class="col-12 mb-3">
-                            <div class="form-floating">
-                                <input type="text" class="form-control" id="name" name="name" placeholder="Company Name">
-                                <label for="name" required>Company Name</label>
+                            <div class="form-control">
+                                <input type="text" class="form-control" id="companyName" name="name"
+                                    placeholder="Company Name">
+                                <label for="companyName" required>Company Name</label>
                             </div>
                         </div>
                         <div class="col-12 mb-3">
-                            <div class="form-floating">
-                                <input type="text" class="form-control" id="contactPerson" name="contactPerson" placeholder="Contact Person">
+                            <div class="form-control">
+                                <input type="text" class="form-control" id="contactPerson" name="contactPerson"
+                                    placeholder="Contact Person">
                                 <label for="contactPerson" required>Contact Person</label>
                             </div>
                         </div>
                         <div class="col-12 mb-3">
-                            <div class="form-floating">
+                            <div class="form-control">
                                 <input type="email" class="form-control" id="email" name="email" placeholder="Email">
                                 <label for="email" required>Email</label>
                             </div>
                         </div>
                         <div class="col-12 mb-3">
-                            <div class="form-floating">
+                            <div class="form-control">
                                 <input type="text" class="form-control" id="phone" name="phone" placeholder="Phone">
                                 <label for="phone" required>Phone</label>
                             </div>
                         </div>
 
-                        <input type="hidden" class="form-control" id="contact_person_id" name="contact_person_id" value="{{ auth()->user()->id }}">
+                        <div class="col-12 mb-3">
+                            <div class="form-control">
+                                <label for="phone" required>Province</label>
+
+                                <select name="province_id" id="">
+                                    @foreach ($provinces as $province)
+                                        <option value="{{$province->id}}">{{$province->name}}</option>
+                                    @endforeach
+
+                                </select>
+                            </div>
+                        </div>
+
+                        <input type="hidden" class="form-control" id="contact_person_id" name="contact_person_id"
+                            value="{{ auth()->user()->id }}">
 
                     </div>
                 </div>
 
-                
+
                 <button type="submit" class="btn btn-primary w-100">Add Client</button>
             </div>
-        </form>
-    </div>
+    </form>
+</div>
 
-    <style>
-        .slim-form-container {
-            max-width: 600px; 
-            width: 100%; 
-            margin: 0 auto; 
-            padding: 20px;
-        }
+<style>
+    .slim-form-container {
+        max-width: 600px;
+        width: 100%;
+        margin: 0 auto;
+        padding: 20px;
+    }
 
-        
-        .slim-form-container .block {
-            border: 1px solid #ddd; 
-            border-radius: 8px; 
-            padding: 20px; 
-        }
 
-       
-        .slim-form-container .form-floating {
-            margin-bottom: 1rem; 
-        }
-    </style>
+    .slim-form-container .block {
+        border: 1px solid #ddd;
+        border-radius: 8px;
+        padding: 20px;
+    }
+
+
+    .slim-form-container .form-floating {
+        margin-bottom: 1rem;
+    }
+</style>
 @endsection

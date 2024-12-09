@@ -15,5 +15,12 @@ class ProvinceSeeder extends Seeder
     {
         Province::create(['name' => 'Eastern Cape', 'abbreviation' => 'EC']);
         Province::create(['name' => 'Free State', 'abbreviation' => 'FS']);
+        Province::create(['name' => 'Gauteng', 'abbreviation' => 'GP']);
+        Province::create(['name' => 'KwaZulu-Natal', 'abbreviation' => 'KZN']);
+        Province::create(['name' => 'Limpopo', 'abbreviation' => 'LP']);
+        Province::create(['name' => 'Mpumalanga', 'abbreviation' => 'MP']);
+        Province::create(['name' => 'Northern Cape', 'abbreviation' => 'NC']);
+        Province::create(['name' => 'North West', 'abbreviation' => 'NW']);
+        Province::create(['name' => 'Western Cape', 'abbreviation' => 'WC']);
     }
 }

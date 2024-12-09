@@ -267,29 +267,28 @@ Clients - {{ $client->name }}
     </div>
     <div class="block-content">
         <p class="alert alert-dark fs-sm">
-            <i class="fa fa-fw fa-info me-1"></i> Drop your thought here <3.
-        </p>
-        <form id="noteForm" onsubmit="return addStickyNote();">
-            <div class="mb-4">
-                <label class="form-label" for="one-ecom-customer-note">Note</label>
-                <textarea class="form-control" id="one-ecom-customer-note" name="one-ecom-customer-note" rows="4"
-                    placeholder="Update - Set up meeting?"></textarea>
-            </div>
-            <div class="mb-4">
-                <button type="submit" class="btn btn-alt-primary">Add Note</button>
-            </div>
-        </form>
+            <i class="fa fa-fw fa-info me-1"></i> Drop your thought here <3. </p>
+                <form id="noteForm" onsubmit="return addStickyNote();">
+                    <div class="mb-4">
+                        <label class="form-label" for="one-ecom-customer-note">Note</label>
+                        <textarea class="form-control" id="one-ecom-customer-note" name="one-ecom-customer-note"
+                            rows="4" placeholder="Update - Set up meeting?"></textarea>
+                    </div>
+                    <div class="mb-4">
+                        <button type="submit" class="btn btn-alt-primary">Add Note</button>
+                    </div>
+                </form>
 
 
-        <!-- Sticky Notes Section -->
-        <div id="sticky-notes-container" class="d-flex flex-wrap gap-3 mt-4">
-            <!-- Static sticky note -->
-            <div class="sticky-note">
-                <h5>Note</h5>
-                <p>This is a static note added for demonstration purposes.</p>
-                <span class="delete-note" onclick="removeStickyNote(this)">×</span>
-            </div>
-        </div>
+                <!-- Sticky Notes Section -->
+                <div id="sticky-notes-container" class="d-flex flex-wrap gap-3 mt-4">
+                    <!-- Static sticky note -->
+                    <div class="sticky-note">
+                        <h5>Note</h5>
+                        <p>This is a static note added for demonstration purposes.</p>
+                        <span class="delete-note" onclick="removeStickyNote(this)">×</span>
+                    </div>
+                </div>
     </div>
 </div>
 <!-- END Private Notes -->
@@ -308,63 +307,61 @@ Clients - {{ $client->name }}
                     console.error('Kanban board element not found.');
                     return;
                 }
-                kanbanBoard.innerHTML = ''; // Clear the board
-                renderKanbanBoard(stages, kanbanBoard); // Render the board
-                initializeDragula(); // Initialize Dragula after rendering
+                kanbanBoard.innerHTML = '';
+                renderKanbanBoard(stages, kanbanBoard);
+                initializeDragula();
             })
             .catch(error => console.error('Error fetching stages:', error));
     });
 
-    // Render Kanban board dynamically
-// Render Kanban board dynamically
-function renderKanbanBoard(stages, kanbanBoard) {
-    kanbanBoard.innerHTML = ''; // Clear the board
+    function renderKanbanBoard(stages, kanbanBoard) {
+        kanbanBoard.innerHTML = '';
 
-    stages.forEach(stage => {
-        const column = document.createElement('div');
-        column.className = 'kanban-column';
-        column.id = `stage-${stage.id}`;
+        stages.forEach(stage => {
+            const column = document.createElement('div');
+            column.className = 'kanban-column';
+            column.id = `stage-${stage.id}`;
 
-        const title = document.createElement('h3');
-        title.innerText = stage.title || 'Untitled Stage';
-        column.appendChild(title);
+            const title = document.createElement('h3');
+            title.innerText = stage.title || 'Untitled Stage';
+            column.appendChild(title);
 
-        const revenueTotal = document.createElement('div');
-        revenueTotal.className = 'kanban-revenue-total';
-        revenueTotal.id = `revenue-total-${stage.id}`;
-        revenueTotal.innerHTML = `<strong>Total Revenue: </strong>R0`;
-        column.appendChild(revenueTotal);
+            const revenueTotal = document.createElement('div');
+            revenueTotal.className = 'kanban-revenue-total';
+            revenueTotal.id = `revenue-total-${stage.id}`;
+            revenueTotal.innerHTML = `<strong>Total Revenue: </strong>R0`;
+            column.appendChild(revenueTotal);
 
-        const cardContainer = document.createElement('div');
-        cardContainer.className = 'kanban-cards';
-        cardContainer.id = `cards-${stage.id}`;
-        column.appendChild(cardContainer);
+            const cardContainer = document.createElement('div');
+            cardContainer.className = 'kanban-cards';
+            cardContainer.id = `cards-${stage.id}`;
+            column.appendChild(cardContainer);
 
-        let totalRevenue = 0; // Initialize total revenue for this stage
+            let totalRevenue = 0;
 
-        stage.leads.forEach(lead => {
-            const card = document.createElement('div');
-            card.className = 'kanban-card';
-            card.dataset.id = lead.id;
+            stage.leads.forEach(lead => {
+                const card = document.createElement('div');
+                card.className = 'kanban-card';
+                card.dataset.id = lead.id;
 
-            // Apply random background color
-            const randomColor = getRandomColor();
-            card.style.backgroundColor = randomColor;
 
-            card.innerHTML = `<h4>${lead.title}</h4><p>${lead.description}</p><p>R${lead.revenue}</p>`;
-            cardContainer.appendChild(card);
+                const randomColor = getRandomColor();
+                card.style.backgroundColor = randomColor;
 
-            totalRevenue += parseFloat(lead.revenue); // Add lead revenue to the total
+                card.innerHTML = `<h4>${lead.title}</h4><p>${lead.description}</p><p>R${lead.revenue}</p>`;
+                cardContainer.appendChild(card);
+
+                totalRevenue += parseFloat(lead.revenue);
+            });
+
+            // Update the total revenue for this stage
+            revenueTotal.innerHTML = `<strong>Total Revenue: </strong>R${totalRevenue.toFixed(2)}`;
+
+            kanbanBoard.appendChild(column);
         });
 
-        // Update the total revenue for this stage
-        revenueTotal.innerHTML = `<strong>Total Revenue: </strong>R${totalRevenue.toFixed(2)}`;
-
-        kanbanBoard.appendChild(column);
-    });
-
-    console.log('Kanban Board Structure:', kanbanBoard.innerHTML);
-}
+        console.log('Kanban Board Structure:', kanbanBoard.innerHTML);
+    }
 
     // Helper function to generate random colors
     function getRandomColor() {
@@ -377,99 +374,99 @@ function renderKanbanBoard(stages, kanbanBoard) {
     }
 
 
+
     // Initialize Dragula
-// Initialize Dragula
-function initializeDragula() {
-    const containers = Array.from(document.querySelectorAll('.kanban-cards')); // Collect all containers
+    function initializeDragula() {
+        const containers = Array.from(document.querySelectorAll('.kanban-cards')); // Collect all containers
 
-    // Initialize drag-and-drop with Dragula
-    dragula(containers, {
-        moves: (el, source, handle, sibling) => true, // Allow any element to be draggable
-        accepts: (el, target) => {
-            console.log('Accepting drop:', target); // Log target drop element
-            return target.classList.contains('kanban-cards');
-        }
-    })
-    .on('drag', (el, source) => {
-        console.log('Dragging:', el); // Log the item being dragged
-        el.style.opacity = '0.5';  // Lower opacity while dragging
-    })
-    .on('dragend', (el) => {
-        console.log('Drag ended:', el); // Log when dragging ends
-        el.style.opacity = '1';  // Reset opacity
-        el.classList.remove('gu-mirror'); // Ensure that no mirror image remains
-    })
-    .on('drop', (el, target, source, sibling) => {
-        console.log('Item dropped:', el);  // Log the dropped item
-        console.log('Dropped in container:', target.id);  // Log the target container
-        console.log('Removed from container:', source.id);  // Log the source container
+        // Initialize drag-and-drop with Dragula
+        dragula(containers, {
+            moves: (el, source, handle, sibling) => true, // Allow any element to be draggable
+            accepts: (el, target) => {
+                console.log('Accepting drop:', target); // Log target drop element
+                return target.classList.contains('kanban-cards');
+            }
+        })
+            .on('drag', (el, source) => {
+                console.log('Dragging:', el); // Log the item being dragged
+                el.style.opacity = '0.5';  // Lower opacity while dragging
+            })
+            .on('dragend', (el) => {
+                console.log('Drag ended:', el); // Log when dragging ends
+                el.style.opacity = '1';  // Reset opacity
+                el.classList.remove('gu-mirror'); // Ensure that no mirror image remains
+            })
+            .on('drop', (el, target, source, sibling) => {
+                console.log('Item dropped:', el);  // Log the dropped item
+                console.log('Dropped in container:', target.id);  // Log the target container
+                console.log('Removed from container:', source.id);  // Log the source container
 
-        if (!target.classList.contains('kanban-cards')) {
-            console.log('Invalid drop target!');
+                if (!target.classList.contains('kanban-cards')) {
+                    console.log('Invalid drop target!');
+                    return;
+                }
+
+                // Extract updated data from the dropped item
+                const newStageId = target.id.split('-')[1];
+                const updatedLeads = Array.from(target.children).map((child, index) => ({
+                    id: child.dataset.id,
+                    lead_stage_id: newStageId,
+                    order: index,
+                }));
+
+                console.log('Updated Leads Payload:', updatedLeads);
+
+                // Send updated data to the server to update the lead's stage
+                fetch('/api/lead/stage/update', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Accept': 'application/json',
+                    },
+                    body: JSON.stringify({ leads: updatedLeads }),  // Send the updated order of leads
+                })
+                    .then(response => response.json())
+                    .then(data => {
+                        console.log(data.message);
+                        refreshKanbanBoard(); // Refresh the board after the update
+                    })
+                    .catch(error => console.error('Error updating order:', error));
+
+                // Update the revenue totals for both the source and target columns
+                updateRevenueTotal(source);  // Update the source container's total
+                updateRevenueTotal(target);  // Update the target container's total
+            });
+    }
+
+    // Function to update the revenue total of a stage
+    function updateRevenueTotal(stageElement) {
+        // Find the 'kanban-cards' container within the stage
+        const cardContainer = stageElement.querySelector('.kanban-cards');
+
+        // If the container is not found, log an error and return early
+        if (!cardContainer) {
+            console.error('No .kanban-cards container found in stage:', stageElement);
             return;
         }
 
-        // Extract updated data from the dropped item
-        const newStageId = target.id.split('-')[1];
-        const updatedLeads = Array.from(target.children).map((child, index) => ({
-            id: child.dataset.id,
-            lead_stage_id: newStageId,
-            order: index,
-        }));
+        let totalRevenue = 0;
+        const cards = cardContainer.querySelectorAll('.kanban-card');
+        cards.forEach(card => {
+            const revenueText = card.querySelector('p').innerText;
+            const revenue = parseFloat(revenueText.replace('R', '').trim()); // Extract revenue and convert to number
+            totalRevenue += revenue;
+        });
 
-        console.log('Updated Leads Payload:', updatedLeads);
+        // Find or create the revenue total element at the bottom
+        let revenueTotal = cardContainer.querySelector('.revenue-total');
+        if (!revenueTotal) {
+            revenueTotal = document.createElement('div');
+            revenueTotal.classList.add('revenue-total');  // Add the necessary class for styling
+            cardContainer.appendChild(revenueTotal);  // Append the revenue total at the bottom
+        }
 
-        // Send updated data to the server to update the lead's stage
-        fetch('/api/lead/stage/update', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-                'Accept': 'application/json',
-            },
-            body: JSON.stringify({ leads: updatedLeads }),  // Send the updated order of leads
-        })
-        .then(response => response.json())
-        .then(data => {
-            console.log(data.message);
-            refreshKanbanBoard(); // Refresh the board after the update
-        })
-        .catch(error => console.error('Error updating order:', error));
-
-        // Update the revenue totals for both the source and target columns
-        updateRevenueTotal(source);  // Update the source container's total
-        updateRevenueTotal(target);  // Update the target container's total
-    });
-}
-
-// Function to update the revenue total of a stage
-function updateRevenueTotal(stageElement) {
-    // Find the 'kanban-cards' container within the stage
-    const cardContainer = stageElement.querySelector('.kanban-cards');
-    
-    // If the container is not found, log an error and return early
-    if (!cardContainer) {
-        console.error('No .kanban-cards container found in stage:', stageElement);
-        return;
+        revenueTotal.innerHTML = `<strong>Total Revenue: </strong>R${totalRevenue.toFixed(2)}`;
     }
-
-    let totalRevenue = 0;
-    const cards = cardContainer.querySelectorAll('.kanban-card');
-    cards.forEach(card => {
-        const revenueText = card.querySelector('p').innerText;
-        const revenue = parseFloat(revenueText.replace('R', '').trim()); // Extract revenue and convert to number
-        totalRevenue += revenue;
-    });
-
-    // Find or create the revenue total element at the bottom
-    let revenueTotal = cardContainer.querySelector('.revenue-total');
-    if (!revenueTotal) {
-        revenueTotal = document.createElement('div');
-        revenueTotal.classList.add('revenue-total');  // Add the necessary class for styling
-        cardContainer.appendChild(revenueTotal);  // Append the revenue total at the bottom
-    }
-
-    revenueTotal.innerHTML = `<strong>Total Revenue: </strong>R${totalRevenue.toFixed(2)}`;
-}
 
     // Refresh the board after updates
     function refreshKanbanBoard() {

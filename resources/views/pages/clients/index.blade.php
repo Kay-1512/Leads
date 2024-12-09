@@ -15,9 +15,6 @@ Clients
         <div class="item item-2x item-circle bg-white-10 py-3 my-3 mx-auto">
           <i class="fab fa-html5 fa-2x text-white-75"></i>
         </div>
-        <!-- <div class="fs-sm text-white-75">
-          10 lessons &bull; 3 hours
-        </div> -->
       </div>
       <div class="block-content block-content-full">
         <h4 class="h5 mb-1">
