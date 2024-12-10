@@ -11,6 +11,7 @@
         <table class="table table-bordered table-striped table-vcenter">
             <thead>
                 <tr>
+                    <th>Rank</th>
                     <th>Name</th>
                     <th style="width: 15%;">Roles</th>
                     <th style="width: 20%;">Number of Conversions</th>
@@ -24,8 +25,9 @@
             </thead>
 
             <tbody>
-                @foreach ($users as $user)
+                @foreach ($users as $index =>$user)
                     <tr>
+                        <td>{{ $index + 1 }}</td> 
                         <td class="fw-semibold fs-sm">
                             <a href="be_pages_generic_profile.html">{{ $user->first_name }} {{ $user->last_name }}</a>
                         </td>
@@ -38,7 +40,7 @@
                             </span>
                         </td>
                         
-                        <td>{{ $user->leads->count() }}</td>
+                        <td>{{ $user->leads->sum('potential_users') }}</td>
                         
                         <!-- Turnover -->
                         <td>R{{ $user->leads->sum('revenue') }}</td> <!-- Sum of revenue from leads -->
