@@ -7,7 +7,3 @@ use App\Http\Controllers\LeadStageController;
 Route::get('/user', function (Request $request) {
     return $request->user();
 })->middleware('auth:sanctum');
-
-Route::get('/leads', [LeadStageController::class, 'index'])->name('api.leads.index');
-Route::post('/lead/stage/update', [LeadStageController::class, 'update'])->name('lead.stage.update');
-

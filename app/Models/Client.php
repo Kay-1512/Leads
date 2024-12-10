@@ -20,14 +20,13 @@ class Client extends Model
         return $this->hasMany(Lead::class);
     }
 
-    public function represantatives()
+    public function representatives()
     {
         return $this->hasMany(User::class, 'representative_id');
     }
 
     public function contact_person()
     {
-        return $this->belongsTo(User::class,'contact_person_id', 'id');
+        return $this->belongsTo(User::class, 'contact_person_id', 'id');
     }
-
 }

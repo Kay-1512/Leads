@@ -5,6 +5,7 @@ use App\Http\Controllers\LeadController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\ClientController;
 use App\Http\Controllers\NoteController;
+use App\Http\Controllers\LeadStageController;
 
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
@@ -27,6 +28,8 @@ Route::middleware('auth')->group(function () {
     Route::post('/store-lead', [LeadController::class, 'store'])->name('lead.store');
     Route::post('/store-client', [ClientController::class, 'store'])->name('client.store');
 
+    Route::get('/clients/{client}/lead-stages', [LeadStageController::class, 'index']);
+    Route::post('/lead/stage/update', [LeadStageController::class, 'update'])->name('lead.stage.update');
     // Routes in web.php or api.php
 
     // Get sticky notes for a specific client (only the logged-in user and admins can see them)
@@ -37,8 +40,6 @@ Route::middleware('auth')->group(function () {
 
     // Delete a specific sticky note (user-specific, only the creator or an admin can delete)
     Route::delete('/clients/{client}/sticky-notes/{stickyNote}', [NoteController::class, 'destroy']);
-
-
 });
 
 require __DIR__ . '/auth.php';

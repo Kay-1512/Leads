@@ -223,35 +223,35 @@ Clients - {{ $client->name }}
                 </thead>
                 <tbody>
                     @foreach ($client->leads as $lead)
-                        <tr>
-                            <td class="text-center fs-sm">
-                                <a class="fw-semibold" href="be_pages_ecom_order.html">
-                                    <strong>{{ $lead->title }}</strong>
-                                </a>
-                            </td>
+                    <tr>
+                        <td class="text-center fs-sm">
+                            <a class="fw-semibold" href="be_pages_ecom_order.html">
+                                <strong>{{ $lead->title }}</strong>
+                            </a>
+                        </td>
 
-                            <td class="d-none d-sm-table-cell text-center fs-sm">{{ $lead->created_at }}</td>
-                            <td>
-                                <span class="badge bg-success">Delivered</span>
-                            </td>
-                            <td class="text-end d-none d-sm-table-cell fs-sm">
-                                <strong>R{{$lead->revenue}}</strong>
-                            </td>
+                        <td class="d-none d-sm-table-cell text-center fs-sm">{{ $lead->created_at }}</td>
+                        <td>
+                            <span class="badge bg-success">Delivered</span>
+                        </td>
+                        <td class="text-end d-none d-sm-table-cell fs-sm">
+                            <strong>R{{$lead->revenue}}</strong>
+                        </td>
 
-                            <td class="text-end d-none d-sm-table-cell fs-sm">
-                                <strong>{{$lead->potential_users}}</strong>
-                            </td>
-                            <td class="text-center fs-sm">
-                                <a class="btn btn-sm btn-alt-secondary" href="be_pages_ecom_product_edit.html"
-                                    data-bs-toggle="tooltip" title="View">
-                                    <i class="fa fa-fw fa-eye"></i>
-                                </a>
-                                <a class="btn btn-sm btn-alt-danger" href="javascript:void(0)" data-bs-toggle="tooltip"
-                                    title="Delete">
-                                    <i class="fa fa-fw fa-times text-danger"></i>
-                                </a>
-                            </td>
-                        </tr>
+                        <td class="text-end d-none d-sm-table-cell fs-sm">
+                            <strong>{{$lead->potential_users}}</strong>
+                        </td>
+                        <td class="text-center fs-sm">
+                            <a class="btn btn-sm btn-alt-secondary" href="be_pages_ecom_product_edit.html"
+                                data-bs-toggle="tooltip" title="View">
+                                <i class="fa fa-fw fa-eye"></i>
+                            </a>
+                            <a class="btn btn-sm btn-alt-danger" href="javascript:void(0)" data-bs-toggle="tooltip"
+                                title="Delete">
+                                <i class="fa fa-fw fa-times text-danger"></i>
+                            </a>
+                        </td>
+                    </tr>
                     @endforeach
                 </tbody>
             </table>
@@ -293,278 +293,208 @@ Clients - {{ $client->name }}
 </div>
 <!-- END Private Notes -->
 
-
 <script>
     document.addEventListener('DOMContentLoaded', () => {
-        const kanbanBoard = document.getElementById('kanban-board');
-
-        // Fetch stages and leads from the server
-        fetch('/api/leads')
-            .then(response => response.json())
-            .then(stages => {
-                console.log('Fetched Stages:', stages);
-                if (!kanbanBoard) {
-                    console.error('Kanban board element not found.');
-                    return;
-                }
-                kanbanBoard.innerHTML = '';
-                renderKanbanBoard(stages, kanbanBoard);
-                initializeDragula();
-            })
-            .catch(error => console.error('Error fetching stages:', error));
+    const kanbanBoard = document.getElementById('kanban-board');
+    const clientId = {{ $client->id }}; // Blade variable for client ID
+    
+    // Load stages and leads from the server
+    fetch(`/clients/${clientId}/lead-stages`)
+    .then(response => response.json())
+    .then(stages => {
+    if (!kanbanBoard) {
+    console.error('Kanban board element not found.');
+    return;
+    }
+    kanbanBoard.innerHTML = ''; // Clear existing content
+    renderKanbanBoard(stages, kanbanBoard); // Render the Kanban board
+    initializeDragula(); // Initialize drag-and-drop functionality
+    })
+    .catch(error => console.error('Error fetching stages:', error));
+    
+    loadStickyNotes(clientId); // Load sticky notes for the specific client
     });
-
+    
     function renderKanbanBoard(stages, kanbanBoard) {
-        kanbanBoard.innerHTML = '';
-
-        stages.forEach(stage => {
-            const column = document.createElement('div');
-            column.className = 'kanban-column';
-            column.id = `stage-${stage.id}`;
-
-            const title = document.createElement('h3');
-            title.innerText = stage.title || 'Untitled Stage';
-            column.appendChild(title);
-
-            const revenueTotal = document.createElement('div');
-            revenueTotal.className = 'kanban-revenue-total';
-            revenueTotal.id = `revenue-total-${stage.id}`;
-            revenueTotal.innerHTML = `<strong>Total Revenue: </strong>R0`;
-            column.appendChild(revenueTotal);
-
-            const cardContainer = document.createElement('div');
-            cardContainer.className = 'kanban-cards';
-            cardContainer.id = `cards-${stage.id}`;
-            column.appendChild(cardContainer);
-
-            let totalRevenue = 0;
-
-            stage.leads.forEach(lead => {
-                const card = document.createElement('div');
-                card.className = 'kanban-card';
-                card.dataset.id = lead.id;
-
-
-                const randomColor = getRandomColor();
-                card.style.backgroundColor = randomColor;
-
-                card.innerHTML = `<h4>${lead.title}</h4><p>${lead.description}</p><p>R${lead.revenue}</p>`;
-                cardContainer.appendChild(card);
-
-                totalRevenue += parseFloat(lead.revenue);
-            });
-
-            // Update the total revenue for this stage
-            revenueTotal.innerHTML = `<strong>Total Revenue: </strong>R${totalRevenue.toFixed(2)}`;
-
-            kanbanBoard.appendChild(column);
-        });
-
-        console.log('Kanban Board Structure:', kanbanBoard.innerHTML);
+    kanbanBoard.innerHTML = ''; // Clear existing content
+    
+    stages.forEach(stage => {
+    const column = document.createElement('div');
+    column.className = 'kanban-column';
+    column.id = `stage-${stage.id}`;
+    
+    const title = document.createElement('h3');
+    title.innerText = stage.title || 'Untitled Stage';
+    column.appendChild(title);
+    
+    const revenueTotal = document.createElement('div');
+    revenueTotal.className = 'kanban-revenue-total';
+    revenueTotal.id = `revenue-total-${stage.id}`;
+    revenueTotal.innerHTML = `<strong>Total Revenue: </strong>R0`;
+    column.appendChild(revenueTotal);
+    
+    const cardContainer = document.createElement('div');
+    cardContainer.className = 'kanban-cards';
+    cardContainer.id = `cards-${stage.id}`;
+    column.appendChild(cardContainer);
+    
+    let totalRevenue = 0;
+    
+    stage.leads.forEach(lead => {
+    const card = createKanbanCard(lead);
+    cardContainer.appendChild(card);
+    totalRevenue += parseFloat(lead.revenue || 0);
+    });
+    
+    // Update the total revenue for this stage
+    revenueTotal.innerHTML = `<strong>Total Revenue: </strong>R${totalRevenue.toFixed(2)}`;
+    
+    kanbanBoard.appendChild(column);
+    });
     }
-
-    // Helper function to generate random colors
+    
+    function createKanbanCard(lead) {
+    const card = document.createElement('div');
+    card.className = 'kanban-card';
+    card.dataset.id = lead.id;
+    
+    const randomColor = getRandomColor();
+    card.style.backgroundColor = randomColor;
+    
+    card.innerHTML = `
+    <h4>${lead.title}</h4>
+    <p>${lead.description}</p>
+    <p>R${lead.revenue}</p>
+    `;
+    
+    return card;
+    }
+    
     function getRandomColor() {
-        const letters = '0123456789ABCDEF';
-        let color = '#';
-        for (let i = 0; i < 6; i++) {
-            color += letters[Math.floor(Math.random() * 16)];
+    const letters = '0123456789ABCDEF';
+    let color = '#';
+    for (let i = 0; i < 6; i++) { color +=letters[Math.floor(Math.random() * 16)]; } return color; } function
+        initializeDragula() { const containers=Array.from(document.querySelectorAll('.kanban-cards')); dragula(containers, {
+        moves: (el)=> true,
+        accepts: (el, target) => target.classList.contains('kanban-cards'),
+        }).on('drop', (el, target, source) => {
+        if (!target || !source) {
+        console.error('Invalid drag-and-drop operation.');
+        return;
         }
-        return color;
-    }
-
-
-
-    // Initialize Dragula
-    function initializeDragula() {
-        const containers = Array.from(document.querySelectorAll('.kanban-cards')); // Collect all containers
-
-        // Initialize drag-and-drop with Dragula
-        dragula(containers, {
-            moves: (el, source, handle, sibling) => true, // Allow any element to be draggable
-            accepts: (el, target) => {
-                console.log('Accepting drop:', target); // Log target drop element
-                return target.classList.contains('kanban-cards');
-            }
+    
+        const newStageId = target.id.split('-')[1];
+        const updatedLeads = Array.from(target.children).map((child, index) => ({
+        id: child.dataset.id,
+        lead_stage_id: newStageId,
+        order: index,
+        }));
+    
+        updateLeadsOnServer(updatedLeads);
+    
+        // Update revenue totals for both source and target columns
+        updateRevenueTotal(source.closest('.kanban-column'));
+        updateRevenueTotal(target.closest('.kanban-column'));
+        });
+        }
+    
+        function updateLeadsOnServer(updatedLeads) {
+        const csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
+    
+        fetch('/lead/stage/update', {
+        method: 'POST',
+        headers: {
+        'Content-Type': 'application/json',
+        'Accept': 'application/json',
+        'X-CSRF-TOKEN': csrfToken // Add the CSRF token to the headers
+        },
+        body: JSON.stringify({ leads: updatedLeads }),
         })
-            .on('drag', (el, source) => {
-                console.log('Dragging:', el); // Log the item being dragged
-                el.style.opacity = '0.5';  // Lower opacity while dragging
-            })
-            .on('dragend', (el) => {
-                console.log('Drag ended:', el); // Log when dragging ends
-                el.style.opacity = '1';  // Reset opacity
-                el.classList.remove('gu-mirror'); // Ensure that no mirror image remains
-            })
-            .on('drop', (el, target, source, sibling) => {
-                console.log('Item dropped:', el);  // Log the dropped item
-                console.log('Dropped in container:', target.id);  // Log the target container
-                console.log('Removed from container:', source.id);  // Log the source container
-
-                if (!target.classList.contains('kanban-cards')) {
-                    console.log('Invalid drop target!');
-                    return;
-                }
-
-                // Extract updated data from the dropped item
-                const newStageId = target.id.split('-')[1];
-                const updatedLeads = Array.from(target.children).map((child, index) => ({
-                    id: child.dataset.id,
-                    lead_stage_id: newStageId,
-                    order: index,
-                }));
-
-                console.log('Updated Leads Payload:', updatedLeads);
-
-                // Send updated data to the server to update the lead's stage
-                fetch('/api/lead/stage/update', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                        'Accept': 'application/json',
-                    },
-                    body: JSON.stringify({ leads: updatedLeads }),  // Send the updated order of leads
-                })
-                    .then(response => response.json())
-                    .then(data => {
-                        console.log(data.message);
-                        refreshKanbanBoard(); // Refresh the board after the update
-                    })
-                    .catch(error => console.error('Error updating order:', error));
-
-                // Update the revenue totals for both the source and target columns
-                updateRevenueTotal(source);  // Update the source container's total
-                updateRevenueTotal(target);  // Update the target container's total
-            });
-    }
-
-    // Function to update the revenue total of a stage
-    function updateRevenueTotal(stageElement) {
-        // Find the 'kanban-cards' container within the stage
+        .then(response => {
+        if (!response.ok) {
+        throw new Error('Network response was not ok');
+        }
+        return response.json();
+        })
+        .then(data => console.log(data.message))
+        .catch(error => console.error('Error updating leads:', error));
+        }
+    
+        function updateRevenueTotal(stageElement) {
+        if (!stageElement) {
+        console.error('Stage element is null or undefined');
+        return;
+        }
+    
         const cardContainer = stageElement.querySelector('.kanban-cards');
-
-        // If the container is not found, log an error and return early
         if (!cardContainer) {
-            console.error('No .kanban-cards container found in stage:', stageElement);
-            return;
+        console.error('No .kanban-cards container found in stage:', stageElement);
+        return;
         }
-
+    
         let totalRevenue = 0;
-        const cards = cardContainer.querySelectorAll('.kanban-card');
-        cards.forEach(card => {
-            const revenueText = card.querySelector('p').innerText;
-            const revenue = parseFloat(revenueText.replace('R', '').trim()); // Extract revenue and convert to number
-            totalRevenue += revenue;
+        cardContainer.querySelectorAll('.kanban-card').forEach(card => {
+        const revenueText = card.querySelector('p:last-of-type').innerText;
+        const revenue = parseFloat(revenueText.replace('R', '').trim());
+        totalRevenue += revenue || 0;
         });
-
-        // Find or create the revenue total element at the bottom
-        let revenueTotal = cardContainer.querySelector('.revenue-total');
-        if (!revenueTotal) {
-            revenueTotal = document.createElement('div');
-            revenueTotal.classList.add('revenue-total');  // Add the necessary class for styling
-            cardContainer.appendChild(revenueTotal);  // Append the revenue total at the bottom
-        }
-
+    
+        const revenueTotal = stageElement.querySelector('.kanban-revenue-total');
+        if (revenueTotal) {
         revenueTotal.innerHTML = `<strong>Total Revenue: </strong>R${totalRevenue.toFixed(2)}`;
-    }
-
-    // Refresh the board after updates
-    function refreshKanbanBoard() {
-        const kanbanBoard = document.getElementById('kanban-board');
-        if (!kanbanBoard) {
-            console.error('Kanban board element not found.');
-            return;
         }
-
-        fetch('/api/leads')
-            .then(response => response.json())
-            .then(stages => {
-                console.log('Refreshed Stages:', stages);
-                kanbanBoard.innerHTML = '';
-                renderKanbanBoard(stages, kanbanBoard);
-                initializeDragula(); // Reinitialize Dragula after rendering
-            })
-            .catch(error => console.error('Error refreshing Kanban board:', error));
-    }
-
-
-    // Function to load the sticky notes from local storage when the page loads
-    // Load sticky notes for a specific client
-    function loadStickyNotes(clientId) {
+        }
+    
+        // Sticky Notes Functions
+        function loadStickyNotes(clientId) {
         const stickyNotesContainer = document.getElementById('sticky-notes-container');
-
-        // Retrieve notes for the specific client from localStorage
         const notes = JSON.parse(localStorage.getItem(`stickyNotes_${clientId}`)) || [];
-
-        // Clear the container first
         stickyNotesContainer.innerHTML = '';
-
-        // Add the sticky notes to the container
         notes.forEach(note => {
-            const stickyNote = createStickyNoteElement(note.content, note.id);
-            stickyNotesContainer.appendChild(stickyNote);
+        const stickyNote = createStickyNoteElement(note.content, note.id);
+        stickyNotesContainer.appendChild(stickyNote);
         });
-    }
-
-    // Create a sticky note element
-    function createStickyNoteElement(content, id) {
+        }
+    
+        function createStickyNoteElement(content, id) {
         const note = document.createElement('div');
         note.className = 'sticky-note';
-        note.dataset.id = id || new Date().getTime(); // Use timestamp for unique ID if none exists
-
+        note.dataset.id = id || Date.now();
         note.innerHTML = `
-            <h5>Note</h5>
-            <p>${content}</p>
-            <span class="delete-note" onclick="removeStickyNote(this)">×</span>
+        <h5>Note</h5>
+        <p>${content}</p>
+        <span class="delete-note" onclick="removeStickyNote(this)">×</span>
         `;
-
         return note;
-    }
-
-    // Add a sticky note for a specific client
-    function addStickyNote() {
+        }
+    
+        function addStickyNote() {
         const noteContent = document.getElementById('one-ecom-customer-note').value;
-        const clientId = {{ $client->id }};  // Assume the client ID is available in the template
-
-        if (!noteContent) return false; // Do not add empty notes
-
-        // Create a new sticky note element
+        const clientId = {{ $client->id }};
+        if (!noteContent) return false;
+    
         const stickyNotesContainer = document.getElementById('sticky-notes-container');
         const newNote = createStickyNoteElement(noteContent);
-
-        // Add the note to the container
         stickyNotesContainer.appendChild(newNote);
-
-        // Store the note for this specific client in localStorage
+    
         const notes = JSON.parse(localStorage.getItem(`stickyNotes_${clientId}`)) || [];
         notes.push({ id: newNote.dataset.id, content: noteContent });
         localStorage.setItem(`stickyNotes_${clientId}`, JSON.stringify(notes));
-
-        // Clear the input field
+    
         document.getElementById('one-ecom-customer-note').value = '';
-
-        return false; // Prevent form submission
-    }
-
-    // Remove a sticky note
-    function removeStickyNote(element) {
+        return false;
+        }
+    
+        function removeStickyNote(element) {
         const note = element.closest('.sticky-note');
         const noteId = note.dataset.id;
-        const clientId = {{ $client->id }};  // Assume the client ID is available in the template
-
-        // Remove the note from the DOM
+        const clientId = {{ $client->id }};
+    
         note.remove();
-
-        // Remove the note from localStorage for the specific client
-        let notes = JSON.parse(localStorage.getItem(`stickyNotes_${clientId}`)) || [];
-        notes = notes.filter(note => note.id !== noteId);
-        localStorage.setItem(`stickyNotes_${clientId}`, JSON.stringify(notes));
-    }
-
-    // Load sticky notes when the page is ready
-    document.addEventListener('DOMContentLoaded', () => {
-        const clientId = {{ $client->id }};  // Get the client ID from Blade
-        loadStickyNotes(clientId);  // Load the sticky notes for this specific client
-    });
+    
+        const notes = JSON.parse(localStorage.getItem(`stickyNotes_${clientId}`)) || [];
+        const updatedNotes = notes.filter(note => note.id !== noteId);
+        localStorage.setItem(`stickyNotes_${clientId}`, JSON.stringify(updatedNotes));
+        }
 </script>
 @endsection

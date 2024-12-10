@@ -10,6 +10,6 @@ class LeadStage extends Model
 
     public function leads()
     {
-        return $this->hasMany(Lead::class, 'lead_stage_id')->orderBy('order');
+        return $this->hasMany(Lead::class);
     }
 }

@@ -6,13 +6,13 @@ use Illuminate\Database\Eloquent\Model;
 
 class Lead extends Model
 {
-        /**
+    /**
      * The attributes that are mass assignable.
      *
      * @var array<int, string>
      */
     protected $fillable = [
-        
+
         'title',
         'description',
         'is_referral',
@@ -24,17 +24,20 @@ class Lead extends Model
         'lead_stage_id',
         'order',
     ];
-    
+
     public function stage()
     {
         return $this->belongsTo(LeadStage::class, 'lead_stage_id');
     }
 
-    public function user(){
+    public function user()
+    {
         return $this->belongsTo(User::class);
     }
-    
 
-    public function client(){
+
+    public function client()
+    {
         return $this->belongsTo(Client::class);
-    }}
+    }
+}

@@ -7,6 +7,7 @@ use App\Models\Client;
 use App\Models\LeadStage;
 use Illuminate\Http\Request;
 use Log;
+use Illuminate\Support\Facades\Auth;
 
 class LeadStageController extends Controller
 {
@@ -15,30 +16,27 @@ class LeadStageController extends Controller
      */
     public function index(Client $client)
     {
-
         $user = auth()->user();
 
-        // $stages = LeadStage::with(['leads.client' => function ($query) {
-        //     $query->orderBy('order');
-        // }])->orderBy('order')->get();
+        if (!$user) {
+            return response()->json(['error' => 'Unauthorized'], 401);
+        }
 
-        // $leads = Lead::with(['stage', 'client'])
-        //     ->where('client_id', $client->id)
-        //     ->get();
+        $isAdmin = $user->hasRole('Admin');
 
-        $stages = LeadStage::with([
-            'leads' => function ($query) use ($client, $user) {
-                $query->where('client_id', $client->id)
-                ->where('user_id', $user->id)->orderBy('order');
-            }
-        ])->orderBy('order')
-        ->get();
-
-        // dd(vars: $stages);
-
+        $stages = LeadStage::with(['leads' => function ($query) use ($client, $user, $isAdmin) {
+            $query->where('client_id', $client->id)
+                ->when(!$isAdmin, function ($q) use ($user) {
+                    $q->where('user_id', $user->id);
+                });
+        }])
+            ->orderBy('order')
+            ->get();
 
         return response()->json($stages);
     }
+
+
 
     /**
      * Update the specified resource in storage.
@@ -69,7 +67,6 @@ class LeadStageController extends Controller
             }
 
             return response()->json(['message' => 'Order updated successfully.']);
-
         } catch (\Exception $e) {
             return response()->json(['error' => $e->getMessage()], 500);
         }
