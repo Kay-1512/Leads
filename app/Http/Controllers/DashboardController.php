@@ -12,6 +12,15 @@ use Auth;
 
 class DashboardController extends Controller
 {
+
+
+
+    public function index()
+    {
+        return view('pages.dashboard');  // This will load the dashboard.blade.php file
+    }
+
+    
     /**
      * Display the specified resource.
      */

@@ -4,6 +4,8 @@
 @endsection
 
 @section('content')
+
+<h2 class="mb-4 text-center" style = color:white;>LEADERBOARD</h2>
 <div class="row">
     <div class="table-responsive">
         <table class="table table-bordered table-striped table-vcenter">
@@ -39,7 +41,7 @@
                         <td>{{ $user->leads->count() }}</td>
                         
                         <!-- Turnover -->
-                        <td>{{ $user->leads->sum('revenue') }}</td> <!-- Sum of revenue from leads -->
+                        <td>R{{ $user->leads->sum('revenue') }}</td> <!-- Sum of revenue from leads -->
                         
                         @role('Admin')
                             <td class="text-center">

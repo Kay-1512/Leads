@@ -4,7 +4,7 @@
           <!-- Left Section -->
           <div class="d-flex align-items-center">
             <!-- Logo -->
-            <a class="fw-semibold fs-5 tracking-wider text-dual me-3" href="index.html">SP Manager Portal </a>
+            <a class="fw-semibold fs-5 tracking-wider text-dual me-3" href="{{ route('dashboard') }}">SP Manager Portal </a>
             <!-- END Logo -->
 
             <!-- Notifications Dropdown -->

@@ -14,6 +14,7 @@ Leads
           <th>Referrer</th>
           <th>Revenue</th>
           <th>Potential Users</th>
+          <th>Person Responsible</th>
         </tr>
       </thead>
       <tbody>
@@ -37,6 +38,9 @@ Leads
         </td>
         <td>{{ $lead->revenue }}</td>
         <td>{{ $lead->potential_users }}</td>
+        <td>
+          {{ $lead->user ? $lead->user->first_name . ' ' . $lead->user->last_name : 'No user assigned' }}
+        </td>
       </tr>
       @endforeach
       </tbody>
