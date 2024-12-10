@@ -8,7 +8,7 @@
             <!-- END Logo -->
 
             <!-- Notifications Dropdown -->
-            <div class="dropdown d-inline-block me-2">
+            <!-- <div class="dropdown d-inline-block me-2">
               <button type="button" class="btn btn-sm btn-alt-secondary" id="page-header-notifications-dropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                 <i class="fa fa-fw fa-bell"></i>
                 <span class="text-primary">•</span>
@@ -91,7 +91,7 @@
                   </a>
                 </div>
               </div>
-            </div>
+            </div> -->
             <!-- END Notifications Dropdown -->
           </div>
           <!-- END Left Section -->
@@ -105,13 +105,13 @@
             <!-- User Dropdown -->
             <div class="dropdown d-inline-block ms-2">
               <button type="button" class="btn btn-sm btn-alt-secondary d-flex align-items-center" id="page-header-user-dropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                <img class="rounded-circle" src="assets/media/avatars/avatar10.jpg" alt="Header Avatar" style="width: 21px;" />
+                <img class="rounded-circle" src="/assets/media/avatars/avatar10.jpg" alt="Header Avatar" style="width: 21px;" />
                 <span class="d-none d-sm-inline-block ms-2">{{ auth()->user()->first_name }}</span>
                 <i class="fa fa-fw fa-angle-down d-none d-sm-inline-block opacity-50 ms-1"></i>
               </button>
               <div class="dropdown-menu dropdown-menu-md dropdown-menu-end p-0 border-0" aria-labelledby="page-header-user-dropdown">
                 <div class="p-3 text-center bg-body-light border-bottom rounded-top">
-                  <img class="img-avatar img-avatar48 img-avatar-thumb" src="assets/media/avatars/avatar10.jpg" alt="">
+                  <img class="img-avatar img-avatar48 img-avatar-thumb" src="/assets/media/avatars/avatar10.jpg" alt="">
                   <p class="mt-2 mb-0 fw-medium">{{ auth()->user()->first_name }} {{ auth()->user()->last_name }}</p>
                   <p class="mb-0 text-muted fs-sm fw-medium">{{ auth()->user()->getRoleNames()->first() }}</p>
                 </div>

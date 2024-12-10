@@ -176,17 +176,17 @@ Clients - {{ $client->name }}
 <!-- END Quick Actions -->
 
 <!-- User Info -->
-<div class="block block-rounded">
+<div class="block block-rounded" style="background-image: url('/assets/media/photos/abstract-marble-black-gold-background.jpg'); background-size: cover; background-position: center;">
     <div class="block-content text-center">
         <div class="py-4">
             <div class="mb-3">
-                <img class="img-avatar" src="assets/media/avatars/avatar13.jpg" alt="">
+                <img class="img-avatar" src="/assets/media/avatars/avatar13.jpg" alt="">
             </div>
-            <h1 class="fs-lg mb-0">
+            <h1 class="fs-lg mb-0" style="color: white;">
                 <span>{{ $client->name }}</span>
             </h1>
-            <p class="fs-sm fw-medium text-muted">{{ $client->email }}</p>
-            <p class="fs-sm fw-medium text-muted">{{ $client->phone }}</p>
+            <p class="fs-sm fw-medium text-muted" style="color: white;">{{ $client->email }}</p>
+            <p class="fs-sm fw-medium text-muted" style="color: white;">{{ $client->phone }}</p>
         </div>
     </div>
 </div>
