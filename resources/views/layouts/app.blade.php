@@ -312,8 +312,8 @@
   </div>
   <div class="dark-transparent sidebartoggler"></div>
 
-  <div class="container-fluid footer p-0">
-    <footer class="">
+  <div class="container-fluid footer p-0 mt-4 mb-4">
+    <footer class="pt-4 pb-4">
       &copy; 2025 Skills Panda. All rights reserved
     </footer>
   </div>
