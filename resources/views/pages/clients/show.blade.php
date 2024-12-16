@@ -218,68 +218,71 @@ Clients - {{ $client->name }}
                         <h6 class="note-title text-truncate w-75 mb-0" data-noteheading="{{ $note->title }}">
                             {{ $note->title }}
                         </h6>
-                        <p class="note-date fs-2">{{ $note->created_at }}</p>
+                        <p class="note-date fs-2">{{ $note->created_at->format('Y-m-d') }}</p>
                         <div class="note-content">
                             <p class="note-inner-content" data-notecontent="{{ $note->content }}">
                                 {{ $note->content }}
                             </p>
                         </div>
                         <div class="d-flex align-items-center">
-                            <a href="javascript:void(0)" class="link me-1">
-                                <i class="ti ti-star fs-4 favourite-note"></i>
+                            <a href="javascript:void(0)" class="link text-primary ms-2 edit-note" data-id="{{ $note->id }}"
+                                data-title="{{ $note->title }}" data-content="{{ $note->content }}">
+                                <i class="ti ti-pencil fs-4"></i>
                             </a>
-                            <a href="javascript:void(0)" class="link text-danger ms-2">
+
+                            <a href="javascript:void(0)" class="link text-danger ms-2 delete-note"
+                                data-id="{{ $note->id }}">
                                 <i class="ti ti-trash fs-4 remove-note"></i>
                             </a>
                             <!-- <div class="ms-auto">
-                                    <div class="category-selector btn-group">
-                                        <a class="nav-link category-dropdown label-group p-0" data-bs-toggle="dropdown"
-                                            href="javascript:void(0)" role="button" aria-haspopup="true" aria-expanded="false">
-                                            <div class="category">
-                                                <div class="category-business"></div>
-                                                <div class="category-social"></div>
-                                                <div class="category-important"></div>
-                                                <span class="more-options text-dark">
-                                                    <i class="ti ti-dots-vertical fs-5"></i>
-                                                </span>
-                                            </div>
-                                        </a>
-                                        <div class="dropdown-menu dropdown-menu-right category-menu" style="">
-                                            <a class="
-                                                                                                                                          note-business
-                                                                                                                                          badge-group-item badge-business
-                                                                                                                                          dropdown-item
-                                                                                                                                          position-relative
-                                                                                                                                          category-business
-                                                                                                                                          d-flex
-                                                                                                                                          align-items-center
-                                                                                                                                        "
-                                                href="javascript:void(0);">Business</a>
-                                            <a class="
-                                                                                                                                          note-social
-                                                                                                                                          badge-group-item badge-social
-                                                                                                                                          dropdown-item
-                                                                                                                                          position-relative
-                                                                                                                                          category-social
-                                                                                                                                          d-flex
-                                                                                                                                          align-items-center
-                                                                                                                                        "
-                                                href="javascript:void(0);">
-                                                Social</a>
-                                            <a class="
-                                                                                                                                          note-important
-                                                                                                                                          badge-group-item badge-important
-                                                                                                                                          dropdown-item
-                                                                                                                                          position-relative
-                                                                                                                                          category-important
-                                                                                                                                          d-flex
-                                                                                                                                          align-items-center
-                                                                                                                                        "
-                                                href="javascript:void(0);">
-                                                Important</a>
-                                        </div>
-                                    </div>
-                                </div> -->
+                                                                                                                <div class="category-selector btn-group">
+                                                                                                                    <a class="nav-link category-dropdown label-group p-0" data-bs-toggle="dropdown"
+                                                                                                                        href="javascript:void(0)" role="button" aria-haspopup="true" aria-expanded="false">
+                                                                                                                        <div class="category">
+                                                                                                                            <div class="category-business"></div>
+                                                                                                                            <div class="category-social"></div>
+                                                                                                                            <div class="category-important"></div>
+                                                                                                                            <span class="more-options text-dark">
+                                                                                                                                <i class="ti ti-dots-vertical fs-5"></i>
+                                                                                                                            </span>
+                                                                                                                        </div>
+                                                                                                                    </a>
+                                                                                                                    <div class="dropdown-menu dropdown-menu-right category-menu" style="">
+                                                                                                                        <a class="
+                                                                                                                                                                                                                      note-business
+                                                                                                                                                                                                                      badge-group-item badge-business
+                                                                                                                                                                                                                      dropdown-item
+                                                                                                                                                                                                                      position-relative
+                                                                                                                                                                                                                      category-business
+                                                                                                                                                                                                                      d-flex
+                                                                                                                                                                                                                      align-items-center
+                                                                                                                                                                                                                    "
+                                                                                                                            href="javascript:void(0);">Business</a>
+                                                                                                                        <a class="
+                                                                                                                                                                                                                      note-social
+                                                                                                                                                                                                                      badge-group-item badge-social
+                                                                                                                                                                                                                      dropdown-item
+                                                                                                                                                                                                                      position-relative
+                                                                                                                                                                                                                      category-social
+                                                                                                                                                                                                                      d-flex
+                                                                                                                                                                                                                      align-items-center
+                                                                                                                                                                                                                    "
+                                                                                                                            href="javascript:void(0);">
+                                                                                                                            Social</a>
+                                                                                                                        <a class="
+                                                                                                                                                                                                                      note-important
+                                                                                                                                                                                                                      badge-group-item badge-important
+                                                                                                                                                                                                                      dropdown-item
+                                                                                                                                                                                                                      position-relative
+                                                                                                                                                                                                                      category-important
+                                                                                                                                                                                                                      d-flex
+                                                                                                                                                                                                                      align-items-center
+                                                                                                                                                                                                                    "
+                                                                                                                            href="javascript:void(0);">
+                                                                                                                            Important</a>
+                                                                                                                    </div>
+                                                                                                                </div>
+                                                                                                            </div> -->
                         </div>
                     </div>
                 </div>
@@ -1244,7 +1247,126 @@ Clients - {{ $client->name }}
     </div>
 </div>
 
+<div class="modal fade" id="edit-note-modal" tabindex="-1" aria-labelledby="editNoteModalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <form action="" method="POST" id="edit-note-form">
+                @csrf
+                @method('PUT')
+                <div class="modal-header d-flex align-items-center">
+                    <h4 class="modal-title" id="editNoteModalLabel">
+                        Edit Note
+                    </h4>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="mb-3">
+                        <label for="edit-title" class="">Title</label>
+                        <input type="text" class="form-control" id="edit-title" name="title" />
+                    </div>
+                    <div class="mb-3">
+                        <label for="edit-content" class="">Content</label>
+                        <textarea class="form-control" id="edit-content" name="content"></textarea>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn bg-danger-subtle text-danger " data-bs-dismiss="modal">
+                        Close
+                    </button>
+                    <button type="submit" class="btn btn-success">
+                        Update Note
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
 <script>
+    document.addEventListener('DOMContentLoaded', function () {
+        document.querySelectorAll('.edit-note').forEach(button => {
+            button.addEventListener('click', function () {
+                const noteId = this.getAttribute('data-id');
+                const noteTitle = this.getAttribute('data-title');
+                const noteContent = this.getAttribute('data-content');
+
+                // Set the form action dynamically
+                const form = document.getElementById('edit-note-form');
+                form.setAttribute('action', `/notes/${noteId}`);
+
+                // Populate the fields in the modal
+                document.getElementById('edit-title').value = noteTitle;
+                document.getElementById('edit-content').value = noteContent;
+
+                // Show the modal
+                const editModal = new bootstrap.Modal(document.getElementById('edit-note-modal'));
+                editModal.show();
+            });
+        });
+    });
+
+    document.addEventListener('DOMContentLoaded', function () {
+        document.querySelectorAll('.delete-note').forEach(button => {
+            button.addEventListener('click', function () {
+                const noteId = this.getAttribute('data-id');
+
+                // SweetAlert confirmation
+                Swal.fire({
+                    title: 'Are you sure?',
+                    text: "You won't be able to revert this!",
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#3085d6',
+                    cancelButtonColor: '#d33',
+                    confirmButtonText: 'Yes, delete it!'
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        // Send AJAX request to delete note
+                        fetch(`/notes/${noteId}`, {
+                            method: 'DELETE',
+                            headers: {
+                                'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content'),
+                                'Content-Type': 'application/json',
+                            },
+                        })
+                            .then(response => response.json())
+                            .then(data => {
+                                if (data.success) {
+                                    // SweetAlert success notification
+                                    Swal.fire(
+                                        'Deleted!',
+                                        'Your note has been deleted.',
+                                        'success'
+                                    );
+
+                                    // Remove note from the DOM
+                                    button.closest('.single-note-item').remove();
+                                } else {
+                                    // SweetAlert error notification
+                                    Swal.fire(
+                                        'Error!',
+                                        'Failed to delete the note.',
+                                        'error'
+                                    );
+                                }
+                            })
+                            .catch(error => {
+                                console.error('Error:', error);
+                                Swal.fire(
+                                    'Error!',
+                                    'Something went wrong.',
+                                    'error'
+                                );
+                            });
+                    }
+                });
+            });
+        });
+    });
+
     document.addEventListener('DOMContentLoaded', () => {
         const kanbanBoard = document.getElementById('kanban-board');
         const clientId = {{ $client->id }}; // Blade variable for client ID

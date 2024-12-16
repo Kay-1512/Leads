@@ -31,6 +31,7 @@ class NoteController extends Controller
     public function store(Request $request, Client $client)
     {
         $request->validate([
+            'title' => 'required|string',
             'content' => 'required|string|max:255',
         ]);
 
@@ -38,6 +39,7 @@ class NoteController extends Controller
         $note = new Note();
         $note->client_id = $client->id;
         $note->user_id = auth()->id(); // Store the ID of the logged-in user
+        $note->title = $request->input('title');
         $note->content = $request->input('content');
         $note->save();
 
@@ -83,8 +85,19 @@ class NoteController extends Controller
      */
     public function update(Request $request, Note $note)
     {
-        //
+        $request->validate([
+            'title' => 'required|string|max:255',
+            'content' => 'required|string',
+        ]);
+
+        $note->update([
+            'title' => $request->title,
+            'content' => $request->content,
+        ]);
+
+        return redirect()->back()->with('success', 'Note updated successfully.');
     }
+
 
     /**
      * Remove the specified resource from storage.
@@ -98,6 +111,6 @@ class NoteController extends Controller
 
         $note->delete();
 
-        return response()->json(['message' => 'Note deleted successfully.']);
+        return response()->json(['success' => true, 'message' => 'Note deleted successfully.']);
     }
 }

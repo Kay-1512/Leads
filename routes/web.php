@@ -34,13 +34,14 @@ Route::middleware('auth')->group(function () {
     // Routes in web.php or api.php
 
     // Get sticky notes for a specific client (only the logged-in user and admins can see them)
-    Route::get('/clients/{client}/sticky-notes', [NoteController::class, 'getNotes']);
+    Route::get('/clients/{client}/notes', [NoteController::class, 'getNotes']);
 
     // Store a sticky note for a specific client (user-specific)
-    Route::post('/clients/{client}/sticky-notes', [NoteController::class, 'store'])->name('note.store');
+    Route::post('/clients/{client}/note', [NoteController::class, 'store'])->name('note.store');
+    Route::put('/notes/{note}', [NoteController::class, 'update'])->name('note.update');
 
     // Delete a specific sticky note (user-specific, only the creator or an admin can delete)
-    Route::delete('/clients/{client}/sticky-notes/{stickyNote}', [NoteController::class, 'destroy']);
+    Route::delete('/notes/{note}', [NoteController::class, 'destroy'])->name('note.delete');
 });
 
 require __DIR__ . '/auth.php';

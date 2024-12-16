@@ -9,6 +9,7 @@ class Note extends Model
     protected $fillable = [
         'user_id',
         'client_id',
+        'title',
         'content',
     ];
 
