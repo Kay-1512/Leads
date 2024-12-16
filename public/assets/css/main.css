@@ -1,15 +1,14 @@
 .topbar {
     height: 80px;
 }
-html[data-layout="horizontal"] .left-sidebar {
-    top: 80px;
+html[data-layout="horizontal"] .body-wrapper > .container-fluid {
+    padding-top: 30px !important;
 }
 /* Kanban board layout */
 .kanban-board {
     display: flex;
     gap: 16px;
     overflow-x: auto;
-    padding: 10px;
     white-space: nowrap;
 }
 
