@@ -1,4 +1,4 @@
-        @extends('layouts.app')
+@extends('layouts.app')
 
 @section('title')
 Clients - {{ $client->name }}
@@ -99,50 +99,52 @@ Clients - {{ $client->name }}
     }
 </style>
 
-          <div class="card overflow-hidden">
-            <div class="card-body p-0">
-              <img src="../assets/images/backgrounds/profilebg.jpg" alt="modernize-img" class="img-fluid">
-              <div class="row align-items-center">
-                <div class="col-lg-4 order-lg-1 order-2">
-                  <div class="d-flex align-items-center justify-content-around m-4">
+<div class="card overflow-hidden">
+    <div class="card-body p-0">
+        <img src="../assets/images/backgrounds/profilebg.jpg" alt="modernize-img" class="img-fluid">
+        <div class="row align-items-center">
+            <div class="col-lg-4 order-lg-1 order-2">
+                <div class="d-flex align-items-center justify-content-around m-4">
                     <div class="text-center">
-                      <i class="ti ti-file-description fs-6 d-block mb-2"></i>
-                      <h4 class="mb-0 lh-1">{{ $client->leads->count() }}</h4>
-                      <p class="mb-0 ">Leads</p>
+                        <i class="ti ti-file-description fs-6 d-block mb-2"></i>
+                        <h4 class="mb-0 lh-1">{{ $client->leads->count() }}</h4>
+                        <p class="mb-0 ">Leads</p>
                     </div>
                     <div class="text-center">
-                      <i class="ti ti-user-circle fs-6 d-block mb-2"></i>
-                      <h4 class="mb-0 lh-1">0</h4>
-                      <p class="mb-0 ">Projects</p>
+                        <i class="ti ti-user-circle fs-6 d-block mb-2"></i>
+                        <h4 class="mb-0 lh-1">0</h4>
+                        <p class="mb-0 ">Projects</p>
                     </div>
                     <!-- <div class="text-center">
                       <i class="ti ti-user-check fs-6 d-block mb-2"></i>
                       <h4 class="mb-0 lh-1">2,659</h4>
                       <p class="mb-0 ">Following</p>
                     </div> -->
-                  </div>
                 </div>
-                <div class="col-lg-4 mt-n3 order-lg-2 order-1">
-                  <div class="mt-n5">
+            </div>
+            <div class="col-lg-4 mt-n3 order-lg-2 order-1">
+                <div class="mt-n5">
                     <div class="d-flex align-items-center justify-content-center mb-2">
-                      <div class="d-flex align-items-center justify-content-center round-110">
-                        <div class="border border-4 border-white d-flex align-items-center justify-content-center rounded-circle overflow-hidden round-100">
-                          <img src="../assets/images/profile/user-1.jpg" alt="modernize-img" class="w-100 h-100">
+                        <div class="d-flex align-items-center justify-content-center round-110">
+                            <div
+                                class="border border-4 border-white d-flex align-items-center justify-content-center rounded-circle overflow-hidden round-100">
+                                <img src="../assets/images/profile/user-1.jpg" alt="modernize-img" class="w-100 h-100">
+                            </div>
                         </div>
-                      </div>
                     </div>
                     <div class="text-center">
-                      <h5 class="mb-0">{{ $client->name }}</h5>
-                      <p class="mb-0">{{ $client->email }}</p>
+                        <h5 class="mb-0">{{ $client->name }}</h5>
+                        <p class="mb-0">{{ $client->email }}</p>
                     </div>
-                  </div>
                 </div>
-                <div class="col-lg-4 order-last">
-                  <ul class="list-unstyled d-flex align-items-center justify-content-center justify-content-lg-end my-3 mx-4 pe-xxl-4 gap-3">
+            </div>
+            <div class="col-lg-4 order-last">
+                <ul
+                    class="list-unstyled d-flex align-items-center justify-content-center justify-content-lg-end my-3 mx-4 pe-xxl-4 gap-3">
                     <li>
                         <a class="btn btn-primary text-center" href="{{ route('lead.new-lead', $client)}}">
-                        Add Lead
-                        </a>                    
+                            Add Lead
+                        </a>
                     </li>
                     @role('Admin')
                     <li>
@@ -156,17 +158,20 @@ Clients - {{ $client->name }}
                         </a>
                     </li>
                     @endrole
-                  </ul>
-                </div>
-              </div>
-              <ul class="nav nav-pills user-profile-tab justify-content-end mt-2 bg-primary-subtle rounded-2 rounded-top-0" id="pills-tab" role="tablist">
-                <li class="nav-item" role="presentation">
-                  <button class="nav-link active hstack gap-2 rounded-0 py-6" id="pills-leads-tab" data-bs-toggle="pill" data-bs-target="#pills-leads" type="button" role="tab" aria-controls="pills-leads" aria-selected="true">
+                </ul>
+            </div>
+        </div>
+        <ul class="nav nav-pills user-profile-tab justify-content-end mt-2 bg-primary-subtle rounded-2 rounded-top-0"
+            id="pills-tab" role="tablist">
+            <li class="nav-item" role="presentation">
+                <button class="nav-link active hstack gap-2 rounded-0 py-6" id="pills-leads-tab" data-bs-toggle="pill"
+                    data-bs-target="#pills-leads" type="button" role="tab" aria-controls="pills-leads"
+                    aria-selected="true">
                     <i class="ti ti-user-circle fs-5"></i>
                     <span class="d-none d-md-block">Leads</span>
-                  </button>
-                </li>
-                <!-- <li class="nav-item" role="presentation">
+                </button>
+            </li>
+            <!-- <li class="nav-item" role="presentation">
                   <button class="nav-link hstack gap-2 rounded-0 py-6" id="pills-followers-tab" data-bs-toggle="pill" data-bs-target="#pills-followers" type="button" role="tab" aria-controls="pills-followers" aria-selected="false">
                     <i class="ti ti-heart fs-5"></i>
                     <span class="d-none d-md-block">Followers</span>
@@ -184,18 +189,19 @@ Clients - {{ $client->name }}
                     <span class="d-none d-md-block">Gallery</span>
                   </button>
                 </li> -->
-              </ul>
+        </ul>
+    </div>
+</div>
+<div class="tab-content" id="pills-tabContent">
+    <div class="tab-pane fade show active" id="pills-leads" role="tabpanel" aria-labelledby="pills-leads-tab"
+        tabindex="0">
+        <div class="block block-rounded">
+            <div id="kanban-board" class="kanban-board">
+                <!-- Columns will be dynamically rendered here -->
             </div>
-          </div>
-          <div class="tab-content" id="pills-tabContent">
-            <div class="tab-pane fade show active" id="pills-leads" role="tabpanel" aria-labelledby="pills-leads-tab" tabindex="0">
-                <div class="block block-rounded">
-                    <div id="kanban-board" class="kanban-board">
-                        <!-- Columns will be dynamically rendered here -->
-                    </div>
-                </div>
-            </div>
-            <!-- <div class="tab-pane fade" id="pills-friends" role="tabpanel" aria-labelledby="pills-friends-tab" tabindex="0">
+        </div>
+    </div>
+    <!-- <div class="tab-pane fade" id="pills-friends" role="tabpanel" aria-labelledby="pills-friends-tab" tabindex="0">
               <div class="d-sm-flex align-items-center justify-content-between mt-3 mb-4">
                 <h3 class="mb-3 mb-sm-0 fw-semibold d-flex align-items-center">Friends <span class="badge text-bg-secondary fs-2 rounded-4 py-1 px-2 ms-2">20</span>
                 </h3>
@@ -1115,220 +1121,193 @@ Clients - {{ $client->name }}
                 </div>
               </div>
             </div> -->
-          </div>
+</div>
 
 <script>
     document.addEventListener('DOMContentLoaded', () => {
-    const kanbanBoard = document.getElementById('kanban-board');
-    const clientId = {{ $client->id }}; // Blade variable for client ID
-    
-    if (!kanbanBoard) {
-    console.error('Kanban board element not found.');
-    return;
-    }
-    
-    // Load stages and leads from the server
-    fetch(`/clients/${clientId}/lead-stages`)
-    .then(response => response.json())
-    .then(stages => {
-    renderKanbanBoard(stages, kanbanBoard); // Render the Kanban board
-    initializeDragula(); // Initialize drag-and-drop functionality
-    })
-    .catch(error => console.error('Error fetching stages:', error));
-    
-    loadStickyNotes(clientId); // Load sticky notes for the specific client
+        const kanbanBoard = document.getElementById('kanban-board');
+        const clientId = {{ $client->id }}; // Blade variable for client ID
+
+        if (!kanbanBoard) {
+            console.error('Kanban board element not found.');
+            return;
+        }
+
+        // Load stages and leads from the server
+        fetch(`/clients/${clientId}/lead-stages`)
+            .then(response => response.json())
+            .then(stages => {
+                renderKanbanBoard(stages, kanbanBoard); // Render the Kanban board
+                initializeDragula(); // Initialize drag-and-drop functionality
+            })
+            .catch(error => console.error('Error fetching stages:', error));
+
+        loadStickyNotes(clientId); // Load sticky notes for the specific client
     });
-    
+
+    // Format currency with spaces
+    function formatCurrency(amount) {
+        return new Intl.NumberFormat('en-ZA', {
+            style: 'currency',
+            currency: 'ZAR',
+            minimumFractionDigits: 2,
+        }).format(amount).replace('ZAR', 'R').replace(/\s/g, ' ');
+    }
+
     function renderKanbanBoard(stages, kanbanBoard) {
-    kanbanBoard.innerHTML = ''; // Clear existing content
-    
-    stages.forEach(stage => {
-    const column = createKanbanColumn(stage);
-    kanbanBoard.appendChild(column);
-    });
+        kanbanBoard.innerHTML = ''; // Clear existing content
+
+        stages.forEach(stage => {
+            const column = createKanbanColumn(stage);
+            kanbanBoard.appendChild(column);
+        });
     }
-    
+
     function createKanbanColumn(stage) {
-    const column = document.createElement('div');
-    column.className = 'kanban-column';
-    column.id = `stage-${stage.id}`;
-    
-    // Column title
-    const title = document.createElement('h3');
-    title.innerText = stage.title || 'Untitled Stage';
-    column.appendChild(title);
-    
-    // Total revenue display
-    const revenueTotal = document.createElement('div');
-    revenueTotal.className = 'kanban-revenue-total';
-    revenueTotal.id = `revenue-total-${stage.id}`;
-    revenueTotal.innerHTML = `<strong>Total Revenue: </strong>R0`;
-    column.appendChild(revenueTotal);
-    
-    // Cards container
-    const cardContainer = document.createElement('div');
-    cardContainer.className = 'kanban-cards';
-    cardContainer.id = `cards-${stage.id}`;
-    column.appendChild(cardContainer);
-    
-    let totalRevenue = 0;
-    
-    // Create cards for each lead
-    stage.leads.forEach(lead => {
-    const card = createKanbanCard(lead);
-    cardContainer.appendChild(card);
-    totalRevenue += parseFloat(lead.revenue || 0);
-    });
-    
-    // Update the total revenue for this stage
-    revenueTotal.innerHTML = `<strong>Total Revenue: </strong>R${totalRevenue.toFixed(2)}`;
-    
-    return column;
+        const column = document.createElement('div');
+        column.className = 'kanban-column';
+        column.id = `stage-${stage.id}`;
+
+        // Column title
+        const title = document.createElement('h3');
+        title.innerText = stage.title || 'Untitled Stage';
+        column.appendChild(title);
+
+        // Total revenue display
+        const revenueTotal = document.createElement('div');
+        revenueTotal.className = 'kanban-revenue-total';
+        revenueTotal.id = `revenue-total-${stage.id}`;
+        revenueTotal.innerHTML = `<strong>Total Revenue: </strong>R0`;
+        column.appendChild(revenueTotal);
+
+        // Cards container
+        const cardContainer = document.createElement('div');
+        cardContainer.className = 'kanban-cards';
+        cardContainer.id = `cards-${stage.id}`;
+        column.appendChild(cardContainer);
+
+        let totalRevenue = 0;
+
+        // Create cards for each lead
+        stage.leads.forEach(lead => {
+            const card = createKanbanCard(lead);
+            cardContainer.appendChild(card);
+            totalRevenue += parseFloat(lead.revenue || 0);
+        });
+
+        // Update the total revenue for this stage
+        revenueTotal.innerHTML = `<strong>Total Revenue: </strong>${formatCurrency(totalRevenue)}`;
+
+        return column;
     }
-    
+
     function createKanbanCard(lead) {
-    const card = document.createElement('div');
-    card.className = 'kanban-card';
-    card.dataset.id = lead.id;
-    
-    // Random background color
-    card.style.backgroundColor = getRandomColor();
-    
-    // Card content
-    card.innerHTML = `
+        const card = document.createElement('div');
+        card.className = 'kanban-card';
+        card.dataset.id = lead.id;
+
+        // Random background color
+        card.style.backgroundColor = getRandomColor();
+
+        // Card content
+        card.innerHTML = `
     <h4>${lead.title}</h4>
     <p>${lead.description}</p>
-    <p>R${lead.revenue}</p>
-    `;
-    
-    return card;
+    <p>${formatCurrency(parseFloat(lead.revenue || 0))}</p>
+  `;
+
+        return card;
     }
-    
+
     function getRandomColor() {
-    const letters = '0123456789ABCDEF';
-    let color = '#';
-    for (let i = 0; i < 6; i++) { color +=letters[Math.floor(Math.random() * 16)]; } return color; } function
-        initializeDragula() { const containers=Array.from(document.querySelectorAll('.kanban-cards')); dragula(containers, {
-        moves: ()=> true,
-        accepts: (el, target) => target.classList.contains('kanban-cards'),
+        const letters = '0123456789ABCDEF';
+        let color = '#';
+        for (let i = 0; i < 6; i++) {
+            color += letters[Math.floor(Math.random() * 16)];
+        }
+        return color;
+    }
+
+    function initializeDragula() {
+        const containers = Array.from(document.querySelectorAll('.kanban-cards'));
+
+        dragula(containers, {
+            moves: () => true,
+            accepts: (el, target) => target.classList.contains('kanban-cards'),
         }).on('drop', (el, target, source) => {
-        if (!target || !source) {
-        console.error('Invalid drag-and-drop operation.');
-        return;
-        }
-    
-        const newStageId = target.id.split('-')[1];
-        const updatedLeads = Array.from(target.children).map((child, index) => ({
-        id: child.dataset.id,
-        lead_stage_id: newStageId,
-        order: index,
-        }));
-    
-        updateLeadsOnServer(updatedLeads);
-    
-        // Update revenue totals for both source and target columns
-        updateRevenueTotal(source.closest('.kanban-column'));
-        updateRevenueTotal(target.closest('.kanban-column'));
+            if (!target || !source) {
+                console.error('Invalid drag-and-drop operation.');
+                return;
+            }
+
+            const newStageId = target.id.split('-')[1];
+            const updatedLeads = Array.from(target.children).map((child, index) => ({
+                id: child.dataset.id,
+                lead_stage_id: newStageId,
+                order: index,
+            }));
+
+            updateLeadsOnServer(updatedLeads);
+
+            // Update revenue totals for both source and target columns
+            updateRevenueTotal(source.closest('.kanban-column'));
+            updateRevenueTotal(target.closest('.kanban-column'));
         });
-        }
-    
-        function updateLeadsOnServer(updatedLeads) {
+    }
+
+    function updateLeadsOnServer(updatedLeads) {
         const csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
-    
+
         fetch('/lead/stage/update', {
-        method: 'POST',
-        headers: {
-        'Content-Type': 'application/json',
-        'Accept': 'application/json',
-        'X-CSRF-TOKEN': csrfToken, // Add the CSRF token to the headers
-        },
-        body: JSON.stringify({ leads: updatedLeads }),
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'Accept': 'application/json',
+                'X-CSRF-TOKEN': csrfToken, // Add the CSRF token to the headers
+            },
+            body: JSON.stringify({ leads: updatedLeads }),
         })
-        .then(response => {
-        if (!response.ok) {
-        throw new Error('Network response was not ok');
-        }
-        return response.json();
-        })
-        .then(data => console.log(data.message))
-        .catch(error => console.error('Error updating leads:', error));
-        }
-    
-        function updateRevenueTotal(stageElement) {
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+                return response.json();
+            })
+            .then(data => console.log(data.message))
+            .catch(error => console.error('Error updating leads:', error));
+    }
+
+    function updateRevenueTotal(stageElement) {
         if (!stageElement) {
-        console.error('Stage element is null or undefined');
-        return;
+            console.error('Stage element is null or undefined');
+            return;
         }
-    
+
         const cardContainer = stageElement.querySelector('.kanban-cards');
         if (!cardContainer) {
-        console.error('No .kanban-cards container found in stage:', stageElement);
-        return;
+            console.error('No .kanban-cards container found in stage:', stageElement);
+            return;
         }
-    
+
         let totalRevenue = 0;
         cardContainer.querySelectorAll('.kanban-card').forEach(card => {
-        const revenueText = card.querySelector('p:last-of-type').innerText;
-        const revenue = parseFloat(revenueText.replace('R', '').trim());
-        totalRevenue += revenue || 0;
+            const revenueText = card.querySelector('p:last-of-type').innerText.replace('R', '').replace(/\s/g, '');
+            const revenue = parseFloat(revenueText.trim());
+            totalRevenue += revenue || 0;
         });
-    
+
         const revenueTotal = stageElement.querySelector('.kanban-revenue-total');
         if (revenueTotal) {
-        revenueTotal.innerHTML = `<strong>Total Revenue: </strong>R${totalRevenue.toFixed(2)}`;
+            revenueTotal.innerHTML = `<strong>Total Revenue: </strong>${formatCurrency(totalRevenue)}`;
         }
-        }
-    
-        // Sticky Notes Functionss
-        // function loadStickyNotes(clientId) {
-        // const stickyNotesContainer = document.getElementById('sticky-notes-container');
-        // const notes = JSON.parse(localStorage.getItem(`stickyNotes_${clientId}`)) || [];
-        // stickyNotesContainer.innerHTML = '';
-        // notes.forEach(note => {
-        // const stickyNote = createStickyNoteElement(note.content, note.id);
-        // stickyNotesContainer.appendChild(stickyNote);
-        // });
-        // }
-    
-        // function createStickyNoteElement(content, id) {
-        // const note = document.createElement('div');
-        // note.className = 'sticky-note';
-        // note.dataset.id = id || Date.now();
-        // note.innerHTML = `
-        // <h5>Note</h5>
-        // <p>${content}</p>
-        // <span class="delete-note" onclick="removeStickyNote(this)">×</span>
-        // `;
-        // return note;
-        // }
-    
-        // function addStickyNote() {
-        // const noteContent = document.getElementById('one-ecom-customer-note').value;
-        // const clientId = {{ $client->id }};
-        // if (!noteContent) return false;
-    
-        // const stickyNotesContainer = document.getElementById('sticky-notes-container');
-        // const newNote = createStickyNoteElement(noteContent);
-        // stickyNotesContainer.appendChild(newNote);
-    
-        // const notes = JSON.parse(localStorage.getItem(`stickyNotes_${clientId}`)) || [];
-        // notes.push({ id: newNote.dataset.id, content: noteContent });
-        // localStorage.setItem(`stickyNotes_${clientId}`, JSON.stringify(notes));
-    
-        // document.getElementById('one-ecom-customer-note').value = '';
-        // return false;
-        // }
-    
-        // function removeStickyNote(element) {
-        // const note = element.closest('.sticky-note');
-        // const noteId = note.dataset.id;
-        // const clientId = {{ $client->id }};
-    
-        // note.remove();
-    
-        // const notes = JSON.parse(localStorage.getItem(`stickyNotes_${clientId}`)) || [];
-        // const updatedNotes = notes.filter(note => note.id !== noteId);
-        // localStorage.setItem(`stickyNotes_${clientId}`, JSON.stringify(updatedNotes));
-        // }
+    }
+
+    function loadStickyNotes(clientId) {
+        console.log(`Loading sticky notes for client ${clientId}...`);
+        // Add logic for sticky notes if needed
+    }
+
+
+
 </script>
 @endsection
