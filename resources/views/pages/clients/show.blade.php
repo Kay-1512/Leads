@@ -107,7 +107,7 @@ Clients - {{ $client->name }}
                   <div class="d-flex align-items-center justify-content-around m-4">
                     <div class="text-center">
                       <i class="ti ti-file-description fs-6 d-block mb-2"></i>
-                      <h4 class="mb-0 lh-1">938</h4>
+                      <h4 class="mb-0 lh-1">{{ $client->leads->count() }}</h4>
                       <p class="mb-0 ">Leads</p>
                     </div>
                     <div class="text-center">

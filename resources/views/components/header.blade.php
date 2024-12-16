@@ -56,12 +56,12 @@
             <!-- ------------------------------- -->
             <!-- start profile Dropdown -->
             <!-- ------------------------------- -->
-            <li class="nav-item dropdown">
+            <!-- <li class="nav-item dropdown">
               <a class="nav-link pe-0" href="javascript:void(0)" id="drop1" aria-expanded="false">
                 <div class="d-flex align-items-center">
                   <div class="user-profile-img">
-                    <img src="../assets/images/profile/user-1.jpg" class="rounded-circle" width="35" height="35"
-                      alt="modernize-img" />
+                    <img src="{{ asset('assets/images/profile/user-1.jpg') }}" class="rounded-circle" width="35"
+                      height="35" alt="modernize-img" />
                   </div>
                 </div>
               </a>
@@ -75,9 +75,9 @@
                       alt="modernize-img" />
                     <div class="ms-3">
                       <h5 class="mb-1 fs-3">{{ auth()->user()->first_name }}</h5>
-                      <span class="mb-1 d-block">Designer</span>
+                      <span class="mb-1 d-block">{{ auth()->user()->full_name }}</span>
                       <p class="mb-0 d-flex align-items-center gap-2">
-                        <i class="ti ti-mail fs-4"></i> info@modernize.com
+                        <i class="ti ti-mail fs-4"></i> {{ auth()->user()->email }}
                       </p>
                     </div>
                   </div>
@@ -130,7 +130,7 @@
                   </div>
                 </div>
               </div>
-            </li>
+            </li> -->
             <!-- ------------------------------- -->
             <!-- end profile Dropdown -->
             <!-- ------------------------------- -->
@@ -335,7 +335,7 @@
         <li class="nav-item d-none d-xl-block">
           <a href="{{ route('/') }}" class="text-nowrap nav-link">
             <img src="{{ asset('assets/images/logo-dark.png') }}" class="dark-logo" height="80" alt="SP Portal" />
-            <img src="{{ asset('assets/images/logo-ligh.png') }}" class="light-logo" height="80" alt="SP Portal" />
+            <img src="{{ asset('assets/images/logo-light.png') }}" class="light-logo" height="80" alt="SP Portal" />
           </a>
         </li>
         <li class="nav-item nav-icon-hover-bg rounded-circle d-none d-xl-flex">
@@ -356,7 +356,7 @@
       <div class="d-block d-xl-none">
         <a href="{{ route('/') }}" class="text-nowrap nav-link">
           <img src="{{ asset('assets/images/logo-dark.svg') }}" class="dark-logo" height="80" alt="SP Portal" />
-          <img src="{{ asset('assets/images/logo-ligh.svg') }}" class="light-logo" height="80" alt="SP Portal" />
+          <img src="{{ asset('assets/images/logo-light.svg') }}" class="light-logo" height="80" alt="SP Portal" />
         </a>
       </div>
       <a class="navbar-toggler nav-icon-hover-bg rounded-circle p-0 mx-0 border-0" href="javascript:void(0)"
@@ -374,6 +374,14 @@
             <i class="ti ti-align-justified fs-7"></i>
           </a>
           <ul class="navbar-nav flex-row ms-auto align-items-center justify-content-center">
+            <li class="nav-item nav-icon-hover-bg rounded-circle">
+              <a class="nav-link moon dark-layout" href="javascript:void(0)" style="display: flex;">
+                <i class="ti ti-moon moon" style="display: flex;"></i>
+              </a>
+              <a class="nav-link sun light-layout" href="javascript:void(0)" style="display: none;">
+                <i class="ti ti-sun sun" style="display: none;"></i>
+              </a>
+            </li>
 
             <!-- ------------------------------- -->
             <!-- start profile Dropdown -->
@@ -406,7 +414,8 @@
                   <div class="message-body">
                     <a href="../horizontal/page-user-profile.html" class="py-8 px-7 mt-8 d-flex align-items-center">
                       <span class="d-flex align-items-center justify-content-center text-bg-light rounded-1 p-6">
-                        <img src="../assets/images/svgs/icon-account.svg" alt="modernize-img" width="24" height="24" />
+                        <img src="{{ asset('assets/images/svgs/icon-account.svg') }}" alt="modernize-img" width="24"
+                          height="24" />
                       </span>
                       <div class="w-100 ps-3">
                         <h6 class="mb-1 fs-3 fw-semibold lh-base">My Profile</h6>
@@ -415,7 +424,8 @@
                     </a>
                     <a href="../horizontal/app-email.html" class="py-8 px-7 d-flex align-items-center">
                       <span class="d-flex align-items-center justify-content-center text-bg-light rounded-1 p-6">
-                        <img src="../assets/images/svgs/icon-inbox.svg" alt="modernize-img" width="24" height="24" />
+                        <img src="{{ asset('assets/images/svgs/icon-inbox.svg') }}" alt="modernize-img" width="24"
+                          height="24" />
                       </span>
                       <div class="w-100 ps-3">
                         <h6 class="mb-1 fs-3 fw-semibold lh-base">My Inbox</h6>
@@ -424,7 +434,8 @@
                     </a>
                     <a href="../horizontal/app-notes.html" class="py-8 px-7 d-flex align-items-center">
                       <span class="d-flex align-items-center justify-content-center text-bg-light rounded-1 p-6">
-                        <img src="../assets/images/svgs/icon-tasks.svg" alt="modernize-img" width="24" height="24" />
+                        <img src="{{ asset('assets/images/svgs/icon-tasks.svg') }}" alt="modernize-img" width="24"
+                          height="24" />
                       </span>
                       <div class="w-100 ps-3">
                         <h6 class="mb-1 fs-3 fw-semibold lh-base">My Task</h6>
@@ -452,4 +463,64 @@
   <form method="post" action="{{ route('logout') }}" id="logout-form" style="display: none">
     @csrf
   </form>
+
+  <script>
+    document.addEventListener("DOMContentLoaded", () => {
+      const moonIcon = document.querySelector(".nav-link.moon");
+      const sunIcon = document.querySelector(".nav-link.sun");
+      const htmlElement = document.documentElement;
+
+      // Debugging: Log initial state
+      console.log("Moon Icon:", moonIcon);
+      console.log("Sun Icon:", sunIcon);
+
+      if (!moonIcon || !sunIcon) {
+        console.error("Moon or Sun icon not found! Check class names or HTML structure.");
+        return;
+      }
+
+      // Function to enable dark mode
+      function enableDarkMode() {
+        console.log("Enabling dark mode...");
+        htmlElement.setAttribute("data-bs-theme", "dark"); // Change theme
+        moonIcon.style.display = "none"; // Hide moon icon
+        sunIcon.style.display = "flex"; // Show sun icon
+        localStorage.setItem("theme", "dark"); // Save theme to localStorage
+        console.log("Dark mode enabled. Saved theme:", localStorage.getItem("theme"));
+      }
+
+      // Function to disable dark mode
+      function disableDarkMode() {
+        console.log("Disabling dark mode...");
+        htmlElement.setAttribute("data-bs-theme", "light"); // Change theme
+        moonIcon.style.display = "flex"; // Show moon icon
+        sunIcon.style.display = "none"; // Hide sun icon
+        localStorage.setItem("theme", "light"); // Save theme to localStorage
+        console.log("Light mode enabled. Saved theme:", localStorage.getItem("theme"));
+      }
+
+      // Check saved theme in localStorage and apply it
+      const savedTheme = localStorage.getItem("theme");
+      console.log("Saved theme on load:", savedTheme);
+
+      if (savedTheme === "dark") {
+        enableDarkMode();
+      } else {
+        disableDarkMode(); // Default to light mode
+      }
+
+      // Add event listeners for toggling
+      moonIcon.addEventListener("click", () => {
+        console.log("Moon icon clicked.");
+        enableDarkMode();
+      });
+
+      sunIcon.addEventListener("click", () => {
+        console.log("Sun icon clicked.");
+        disableDarkMode();
+      });
+    });
+
+
+  </script>
 </header>
