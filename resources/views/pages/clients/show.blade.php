@@ -204,7 +204,11 @@ Clients - {{ $client->name }}
         </div>
     </div>
 
-    <div class="tab-pane fade" id="pills-noted" role="tabpanel" aria-labelledby="pills-notes-tab" tabindex="0">
+    <div class="tab-pane fade" id="pills-notes" role="tabpanel" aria-labelledby="pills-notes-tab" tabindex="0">
+        <button type="button" class="btn mb-1 px-4 fs-4  bg-warning-subtle text-warning" data-bs-toggle="modal"
+            data-bs-target="#samedata-modal" data-bs-whatever="@getbootstrap">
+            Add Note
+        </button>
 
         <div id="note-full-container" class="note-has-grid row">
             @foreach ($client->notes as $note)
@@ -242,34 +246,36 @@ Clients - {{ $client->name }}
                                     </a>
                                     <div class="dropdown-menu dropdown-menu-right category-menu" style="">
                                         <a class="
-                                                                                      note-business
-                                                                                      badge-group-item badge-business
-                                                                                      dropdown-item
-                                                                                      position-relative
-                                                                                      category-business
-                                                                                      d-flex
-                                                                                      align-items-center
-                                                                                    "
+                                                                                                                                      note-business
+                                                                                                                                      badge-group-item badge-business
+                                                                                                                                      dropdown-item
+                                                                                                                                      position-relative
+                                                                                                                                      category-business
+                                                                                                                                      d-flex
+                                                                                                                                      align-items-center
+                                                                                                                                    "
                                             href="javascript:void(0);">Business</a>
                                         <a class="
-                                                                                      note-social
-                                                                                      badge-group-item badge-social
-                                                                                      dropdown-item
-                                                                                      position-relative
-                                                                                      category-social
-                                                                                      d-flex
-                                                                                      align-items-center
-                                                                                    " href="javascript:void(0);">
+                                                                                                                                      note-social
+                                                                                                                                      badge-group-item badge-social
+                                                                                                                                      dropdown-item
+                                                                                                                                      position-relative
+                                                                                                                                      category-social
+                                                                                                                                      d-flex
+                                                                                                                                      align-items-center
+                                                                                                                                    "
+                                            href="javascript:void(0);">
                                             Social</a>
                                         <a class="
-                                                                                      note-important
-                                                                                      badge-group-item badge-important
-                                                                                      dropdown-item
-                                                                                      position-relative
-                                                                                      category-important
-                                                                                      d-flex
-                                                                                      align-items-center
-                                                                                    " href="javascript:void(0);">
+                                                                                                                                      note-important
+                                                                                                                                      badge-group-item badge-important
+                                                                                                                                      dropdown-item
+                                                                                                                                      position-relative
+                                                                                                                                      category-important
+                                                                                                                                      d-flex
+                                                                                                                                      align-items-center
+                                                                                                                                    "
+                                            href="javascript:void(0);">
                                             Important</a>
                                     </div>
                                 </div>
@@ -1202,7 +1208,41 @@ Clients - {{ $client->name }}
             </div> -->
 </div>
 
+<div class="modal fade" id="samedata-modal" tabindex="-1" aria-labelledby="exampleModalLabel1">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <form action="{{ route('note.store', $client->id)}}" method="POST">
+                @csrf
+                <div class="modal-header d-flex align-items-center">
+                    <h4 class="modal-title" id="exampleModalLabel1">
+                        New Note
+                    </h4>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
 
+                    <div class="mb-3">
+                        <label for="recipient-name" class="">Title</label>
+                        <input type="text" class="form-control" name="title" />
+                    </div>
+                    <div class="mb-3">
+                        <label for="message-text" class="">Content</label>
+                        <textarea class="form-control" id="message-text1" name="content"></textarea>
+                    </div>
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn bg-danger-subtle text-danger " data-bs-dismiss="modal">
+                        Close
+                    </button>
+                    <button type="submit" class="btn btn-success">
+                        Save Note
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
 
 <script>
     document.addEventListener('DOMContentLoaded', () => {

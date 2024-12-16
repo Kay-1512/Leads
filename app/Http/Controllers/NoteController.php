@@ -41,7 +41,8 @@ class NoteController extends Controller
         $note->content = $request->input('content');
         $note->save();
 
-        return response()->json(['message' => 'Note added successfully.']);
+        // return response()->json(['message' => 'Note added successfully.']);
+        return redirect()->back()->with('success', 'Note saved successfully!');
     }
 
 
@@ -51,9 +52,9 @@ class NoteController extends Controller
             ->where(function ($query) {
                 // Show notes created by the logged-in user or admin
                 $query->where('user_id', auth()->id())
-                      ->orWhereHas('user', function ($query) {
-                          $query->where('role', 'Admin');  // Assuming the user has a role column
-                      });
+                    ->orWhereHas('user', function ($query) {
+                    $query->where('role', 'Admin');  // Assuming the user has a role column
+                });
             })
             ->get();
 
