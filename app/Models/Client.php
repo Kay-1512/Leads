@@ -7,11 +7,13 @@ use Illuminate\Database\Eloquent\Model;
 class Client extends Model
 {
     protected $fillable = [
-        "name",
+        'name',
+        'colour',
         'phone',
         'email',
         'province_id',
-        'contact_person_id',
+        'representative_id',
+        'sales_person_id',
     ];
 
     public function leads()
@@ -29,8 +31,8 @@ class Client extends Model
         return $this->hasMany(User::class, 'representative_id');
     }
 
-    public function contact_person()
+    public function salesperson()
     {
-        return $this->belongsTo(User::class, 'contact_person_id', 'id');
+        return $this->belongsTo(User::class, 'sales_person_id', 'id');
     }
 }

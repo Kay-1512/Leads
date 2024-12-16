@@ -28,7 +28,7 @@ class ClientController extends Controller
     {
         $provinces = Province::all();
 
-        return view("pages.clients.new-client", compact("provinces"));
+        return view("pages.clients.create", compact("provinces"));
     }
 
     /**
@@ -36,11 +36,14 @@ class ClientController extends Controller
      */
     public function store(Request $request)
     {
+
         // Validate the client and lead data
         $validated = $request->validate([
             'name' => 'required|string|max:255',
-            'contact_person_id' => 'required|string|max:255',
-            'province_id' => 'required|max:255',
+            'colour' => 'nullable|string',
+            'representative_id' => 'nullable|integer',
+            'sales_person_id' => 'required|integer',
+            'province_id' => 'required',
             'email' => 'required|email|unique:clients,email',
             'phone' => 'required',
             'number_of_users' => 'nullable|integer',
@@ -50,13 +53,7 @@ class ClientController extends Controller
         ]);
 
         // Create the client
-        $client = Client::create([
-            'name' => $validated['name'],
-            'contact_person_id' => $validated['contact_person_id'],
-            'province_id' => $validated['province_id'],
-            'email' => $validated['email'],
-            'phone' => $validated['phone'],
-        ]);
+        $client = Client::create($validated);
 
         return redirect()->route('clients')->with('success', 'Client and lead added successfully!');
     }
@@ -77,7 +74,7 @@ class ClientController extends Controller
     {
 
         // Pass the client data to the view
-        return view('pages.clients.edit-client', compact('client'));
+        return view('pages.clients.edit', compact('client'));
     }
 
     /**

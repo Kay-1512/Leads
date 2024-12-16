@@ -41,21 +41,21 @@ Clients
 <div class="row">
 
   @foreach ($clients as $client)
-  <div class="col-lg-4 col-xxl-4 col-6">
+    <div class="col-lg-4 col-xxl-4 col-6">
     <a class="block block-rounded block-link-pop h-100 mb-0" href="{{route('client.show', $client)}}">
-      <div class="card text-white text-bg-success">
-        <div class="card-body p-4">
-          <span>
-            <i class="ti ti-archive fs-8"></i>
-          </span>
-          <h4 class="card-title mt-3 mb-0 text-white">{{ $client->name }}</h4>
-          <p class="card-text text-white opacity-75 fs-3 fw-normal">
-            {{ $client->leads->count() }} Leads
-          </p>
-        </div>
+      <div class="card text-white" style=" background-color: {{ $client->colour ?? '#28a745' }};">
+      <div class="card-body p-4">
+        <span>
+        <i class="ti ti-archive fs-8"></i>
+        </span>
+        <h4 class="card-title mt-3 mb-0 text-white">{{ $client->name }}</h4>
+        <p class="card-text text-white opacity-75 fs-3 fw-normal">
+        {{ $client->leads->count() }} Leads
+        </p>
+      </div>
       </div>
     </a>
-  </div>
+    </div>
   @endforeach
 
 </div>

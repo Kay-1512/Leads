@@ -12,11 +12,13 @@ return new class extends Migration {
     {
         Schema::create('clients', function (Blueprint $table) {
             $table->id();
-            $table->string('name');
-            $table->foreignId('contact_person_id')->constrained('users', 'id')->onDelete('cascade');
+            $table->string(column: 'name');
+            $table->string(column: 'colour')->nullable();
+            $table->foreignId('contact_person_id')->nullable()->constrained('users', 'id')->onDelete('cascade');
             $table->string('phone');
             $table->string('email');
             $table->foreignId('province_id')->constrained()->onDelete('cascade');
+            $table->foreignId('sales_person_id')->constrained('users', 'id')->onDelete('cascade');
             $table->timestamps();
         });
     }
