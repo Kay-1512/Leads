@@ -333,7 +333,7 @@
           </a>
         </li>
         <li class="nav-item d-none d-xl-block">
-          <a href="../horizontal/index.html" class="text-nowrap nav-link">
+          <a href="{{ route('/') }}" class="text-nowrap nav-link">
             <img src="{{ asset('assets/images/logo-dark.png') }}" class="dark-logo" height="80" alt="SP Portal" />
             <img src="{{ asset('assets/images/logo-ligh.png') }}" class="light-logo" height="80" alt="SP Portal" />
           </a>
