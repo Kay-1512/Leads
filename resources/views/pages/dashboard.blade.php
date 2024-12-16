@@ -50,7 +50,7 @@ Dashboard
                     <img src="{{ asset('assets/images/svgs/icon-wallet.svg') }}" width="50" height="50" class="mb-3"
                         alt="modernize-img" />
                     <p class="fw-semibold fs-3 text-danger mb-1">Revenue</p>
-                    <h5 class="fw-semibold text-danger mb-0">R{{ $convertedRevenue }}</h5>
+                    <h5 class="fw-semibold text-danger mb-0">{{ $formattedConvertedRevenue }}</h5>
                 </div>
             </div>
         </div>
@@ -62,7 +62,7 @@ Dashboard
                     <img src="{{ asset('assets/images/svgs/icon-speech-bubble.svg')}}" width="50" height="50"
                         class="mb-3" alt="modernize-img" />
                     <p class="fw-semibold fs-3 text-success mb-1">Potential</p>
-                    <h5 class="fw-semibold text-success mb-0">R{{$potentialRevenue}}</h5>
+                    <h5 class="fw-semibold text-success mb-0">{{$formattedPotentialRevenue}}</h5>
                 </div>
             </div>
         </div>

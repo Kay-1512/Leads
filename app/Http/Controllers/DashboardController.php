@@ -53,8 +53,11 @@ class DashboardController extends Controller
         $lostRevenue = $data->where('conversion_status', 'Lost')->sum('revenue'); // Total revenue of lost leads
 
         // Format values for display
-        $formattedGainedRevenue = 'R ' . number_format($gainedRevenue, 2);
-        $formattedLostRevenue = 'R ' . number_format($lostRevenue, 2);
+        $formattedGainedRevenue = 'R ' . number_format($gainedRevenue, 2, '.', ' ');
+        $formattedLostRevenue = 'R ' . number_format($lostRevenue, 2, '.', ' ');
+        $formattedPotentialRevenue = 'R ' . number_format($potentialRevenue, 2, '.', ' ');
+        $formattedConvertedRevenue = 'R ' . number_format($convertedRevenue, 2, '.', ' ');
+
 
         // Prepare Data for Line Chart
         $chartData = [];
@@ -119,6 +122,8 @@ class DashboardController extends Controller
                 'totalUsers',
                 'formattedGainedRevenue',
                 'formattedLostRevenue',
+                'formattedPotentialRevenue',
+                'formattedConvertedRevenue',
                 'leadingConsultants',
                 'topConvertedClients'
             )
