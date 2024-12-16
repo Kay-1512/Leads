@@ -43,7 +43,7 @@
     <div class="page-wrapper">
       @include('components.header')
 
-      @include('components.navigation')
+      <!-- @include('components.navigation') -->
 
       <div class="body-wrapper">
         <div class="container-fluid">

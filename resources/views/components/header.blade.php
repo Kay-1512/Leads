@@ -345,9 +345,12 @@
         </li>
       </ul>
       <ul class="navbar-nav quick-links d-none d-xl-flex align-items-center">
-
         <li class="nav-item dropdown-hover d-none d-lg-block">
           <a class="nav-link" href="{{ route('/') }}">Home</a>
+        </li>
+
+        <li class="nav-item dropdown-hover d-none d-lg-block">
+          <a class="nav-link" href="{{ route('clients') }}">Clients</a>
         </li>
       </ul>
       <div class="d-block d-xl-none">
@@ -380,7 +383,7 @@
                 <div class="d-flex align-items-center">
                   <div class="user-profile-img">
                     <img src="{{ asset('assets/images/profile/user-1.jpg') }}" class="rounded-circle" width="35"
-                      height="35" alt="modernize-img" />
+                      height="35" alt="SP Portal" />
                   </div>
                 </div>
               </a>
