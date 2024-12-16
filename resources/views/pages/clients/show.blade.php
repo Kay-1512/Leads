@@ -171,13 +171,15 @@ Clients - {{ $client->name }}
                     <span class="d-none d-md-block">Leads</span>
                 </button>
             </li>
+            <li class="nav-item" role="presentation">
+                <button class="nav-link hstack gap-2 rounded-0 py-6" id="pills-notes-tab" data-bs-toggle="pill"
+                    data-bs-target="#pills-notes" type="button" role="tab" aria-controls="pills-notes"
+                    aria-selected="false">
+                    <i class="ti ti-notes fs-5"></i>
+                    <span class="d-none d-md-block">Notes</span>
+                </button>
+            </li>
             <!-- <li class="nav-item" role="presentation">
-                  <button class="nav-link hstack gap-2 rounded-0 py-6" id="pills-followers-tab" data-bs-toggle="pill" data-bs-target="#pills-followers" type="button" role="tab" aria-controls="pills-followers" aria-selected="false">
-                    <i class="ti ti-heart fs-5"></i>
-                    <span class="d-none d-md-block">Followers</span>
-                  </button>
-                </li>
-                <li class="nav-item" role="presentation">
                   <button class="nav-link hstack gap-2 rounded-0 py-6" id="pills-friends-tab" data-bs-toggle="pill" data-bs-target="#pills-friends" type="button" role="tab" aria-controls="pills-friends" aria-selected="false">
                     <i class="ti ti-user-circle fs-5"></i>
                     <span class="d-none d-md-block">Friends</span>
@@ -199,6 +201,83 @@ Clients - {{ $client->name }}
             <div id="kanban-board" class="kanban-board">
                 <!-- Columns will be dynamically rendered here -->
             </div>
+        </div>
+    </div>
+
+    <div class="tab-pane fade" id="pills-noted" role="tabpanel" aria-labelledby="pills-notes-tab" tabindex="0">
+
+        <div id="note-full-container" class="note-has-grid row">
+            @foreach ($client->notes as $note)
+                <div class="col-md-4 single-note-item all-category" style="">
+                    <div class="card card-body">
+                        <span class="side-stick"></span>
+                        <h6 class="note-title text-truncate w-75 mb-0" data-noteheading="{{ $note->title }}">
+                            {{ $note->title }}
+                        </h6>
+                        <p class="note-date fs-2">{{ $note->created_at }}/p>
+                        <div class="note-content">
+                            <p class="note-inner-content" data-notecontent="{{ $note->content }}">
+                                {{ $note->content }}
+                            </p>
+                        </div>
+                        <div class="d-flex align-items-center">
+                            <a href="javascript:void(0)" class="link me-1">
+                                <i class="ti ti-star fs-4 favourite-note"></i>
+                            </a>
+                            <a href="javascript:void(0)" class="link text-danger ms-2">
+                                <i class="ti ti-trash fs-4 remove-note"></i>
+                            </a>
+                            <div class="ms-auto">
+                                <div class="category-selector btn-group">
+                                    <a class="nav-link category-dropdown label-group p-0" data-bs-toggle="dropdown"
+                                        href="javascript:void(0)" role="button" aria-haspopup="true" aria-expanded="false">
+                                        <div class="category">
+                                            <div class="category-business"></div>
+                                            <div class="category-social"></div>
+                                            <div class="category-important"></div>
+                                            <span class="more-options text-dark">
+                                                <i class="ti ti-dots-vertical fs-5"></i>
+                                            </span>
+                                        </div>
+                                    </a>
+                                    <div class="dropdown-menu dropdown-menu-right category-menu" style="">
+                                        <a class="
+                                                                                      note-business
+                                                                                      badge-group-item badge-business
+                                                                                      dropdown-item
+                                                                                      position-relative
+                                                                                      category-business
+                                                                                      d-flex
+                                                                                      align-items-center
+                                                                                    "
+                                            href="javascript:void(0);">Business</a>
+                                        <a class="
+                                                                                      note-social
+                                                                                      badge-group-item badge-social
+                                                                                      dropdown-item
+                                                                                      position-relative
+                                                                                      category-social
+                                                                                      d-flex
+                                                                                      align-items-center
+                                                                                    " href="javascript:void(0);">
+                                            Social</a>
+                                        <a class="
+                                                                                      note-important
+                                                                                      badge-group-item badge-important
+                                                                                      dropdown-item
+                                                                                      position-relative
+                                                                                      category-important
+                                                                                      d-flex
+                                                                                      align-items-center
+                                                                                    " href="javascript:void(0);">
+                                            Important</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            @endforeach
         </div>
     </div>
     <!-- <div class="tab-pane fade" id="pills-friends" role="tabpanel" aria-labelledby="pills-friends-tab" tabindex="0">
@@ -1123,6 +1202,8 @@ Clients - {{ $client->name }}
             </div> -->
 </div>
 
+
+
 <script>
     document.addEventListener('DOMContentLoaded', () => {
         const kanbanBoard = document.getElementById('kanban-board');
@@ -1151,7 +1232,7 @@ Clients - {{ $client->name }}
             style: 'currency',
             currency: 'ZAR',
             minimumFractionDigits: 2,
-        }).format(amount).replace('ZAR', 'R').replace(/\s/g, ' ');
+        }).format(amount).replace('ZAR', 'R').trim();
     }
 
     function renderKanbanBoard(stages, kanbanBoard) {
@@ -1247,9 +1328,10 @@ Clients - {{ $client->name }}
                 order: index,
             }));
 
+            // Update leads on the server
             updateLeadsOnServer(updatedLeads);
 
-            // Update revenue totals for both source and target columns
+            // Immediately update revenue totals for both source and target columns
             updateRevenueTotal(source.closest('.kanban-column'));
             updateRevenueTotal(target.closest('.kanban-column'));
         });
@@ -1290,10 +1372,16 @@ Clients - {{ $client->name }}
         }
 
         let totalRevenue = 0;
+
+        // Sum up all card revenues
         cardContainer.querySelectorAll('.kanban-card').forEach(card => {
-            const revenueText = card.querySelector('p:last-of-type').innerText.replace('R', '').replace(/\s/g, '');
-            const revenue = parseFloat(revenueText.trim());
-            totalRevenue += revenue || 0;
+            const revenueText = card.querySelector('p:last-of-type').innerText;
+            const cleanedRevenue = revenueText.replace(/[^\d.-]/g, ''); // Remove non-numeric characters
+            const revenue = parseFloat(cleanedRevenue);
+
+            if (!isNaN(revenue)) {
+                totalRevenue += revenue;
+            }
         });
 
         const revenueTotal = stageElement.querySelector('.kanban-revenue-total');
@@ -1304,9 +1392,8 @@ Clients - {{ $client->name }}
 
     function loadStickyNotes(clientId) {
         console.log(`Loading sticky notes for client ${clientId}...`);
-        // Add logic for sticky notes if needed
+        // Placeholder for sticky notes logic
     }
-
 
 
 </script>
