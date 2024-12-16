@@ -1,45 +1,42 @@
-<div class="bg-primary-darker">
-          <div class="bg-black-10">
-            <div class="content py-3">
-              <!-- Toggle Main Navigation -->
-              <div class="d-lg-none">
-                <!-- Class Toggle, functionality initialized in Helpers.oneToggleClass() -->
-                <button type="button" class="btn w-100 btn-alt-secondary d-flex justify-content-between align-items-center" data-toggle="class-toggle" data-target="#main-navigation" data-class="d-none">
-                  Menu
-                  <i class="fa fa-bars"></i>
-                </button>
-              </div>
-              <!-- END Toggle Main Navigation -->
+<aside class="left-sidebar with-horizontal">
+    <!-- Sidebar scroll-->
+    <div>
+        <!-- Sidebar navigation-->
+        <nav id="sidebarnavh" class="sidebar-nav scroll-sidebar container-fluid">
+            <ul id="sidebarnav">
+                <!-- ============================= -->
+                <!-- Home -->
+                <!-- ============================= -->
+                <li class="nav-small-cap">
+                    <i class="ti ti-dots nav-small-cap-icon fs-4"></i>
+                    <span class="hide-menu">Home</span>
+                </li>
+                <!-- =================== -->
+                <!-- Dashboard -->
+                <!-- =================== -->
+                <li class="sidebar-item selected">
+                    <a class="sidebar-link" href="{{ route('/') }}" aria-expanded="false">
+                        <span>
+                            <i class="ti ti-home-2"></i>
+                        </span>
+                        <span class="hide-menu">Dashboard</span>
+                    </a>
 
-              <!-- Main Navigation -->
-              <div id="main-navigation" class="d-none d-lg-block mt-2 mt-lg-0">
-                <ul class="nav-main nav-main-dark nav-main-horizontal nav-main-hover">
-                  <li class="nav-main-item">
-                    <a class="nav-main-link active" href="{{route("leads")}}">
-                      <i class="nav-main-link-icon si si-compass"></i>
-                      <span class="nav-main-link-name">Leads</span>
-                    </a>
-                  </li>
-                  <div id="main-navigation" class="d-none d-lg-block mt-2 mt-lg-0">
-                <ul class="nav-main nav-main-dark nav-main-horizontal nav-main-hover">
-                  <li class="nav-main-item">
-                    <a class="nav-main-link active" href="{{route("clients")}}">
-                      <i class="nav-main-link-icon si si-compass"></i>
-                      <span class="nav-main-link-name">Clients</span>
-                    </a>
-                  </li>
+                </li>
 
-                  @role('Admin')
-                  <li class="nav-main-item">
-                    <a class="nav-main-link active" href="{{ route('user.create')}}">
-                      <i class="nav-main-link-icon si si-compass"></i>
-                      <span class="nav-main-link-name">New User</span>
+                <li class="sidebar-item">
+                    <a class="sidebar-link" href="{{ route('clients')}}" aria-expanded="false">
+                        <span>
+                            <i class="ti ti-home-2"></i>
+                        </span>
+                        <span class="hide-menu">Clients</span>
                     </a>
-                  </li>
-                  @endrole
-                </ul>
-              </div>
-              <!-- END Main Navigation -->
-            </div>
-          </div>
-        </div>
+
+                </li>
+
+            </ul>
+        </nav>
+        <!-- End Sidebar navigation -->
+    </div>
+    <!-- End Sidebar scroll-->
+</aside>

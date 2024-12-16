@@ -7,15 +7,16 @@ use App\Http\Controllers\ClientController;
 use App\Http\Controllers\NoteController;
 use App\Http\Controllers\LeadStageController;
 
+
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
-    return view('welcome');
-});
+    return redirect('dashboard');
+})->name('/');
 
 Route::middleware('auth')->group(function () {
-    Route::get('/dashboard', [DashboardController::class, 'show'])->name('dashboard');
+    Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
     Route::get('/create-user', [UserController::class, 'create'])->name('user.create');
     Route::get('/leads', [LeadController::class, 'index'])->name('leads');
     Route::get('/clients', [ClientController::class, 'index'])->name('clients');
@@ -36,7 +37,7 @@ Route::middleware('auth')->group(function () {
     Route::get('/clients/{client}/sticky-notes', [NoteController::class, 'getNotes']);
 
     // Store a sticky note for a specific client (user-specific)
-    Route::post('/clients/{client}/sticky-notes', [NoteController::class, 'store']);
+    Route::post('/clients/{client}/sticky-notes', [NoteController::class, 'store'])->name('note.store');
 
     // Delete a specific sticky note (user-specific, only the creator or an admin can delete)
     Route::delete('/clients/{client}/sticky-notes/{stickyNote}', [NoteController::class, 'destroy']);

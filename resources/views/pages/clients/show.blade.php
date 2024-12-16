@@ -1,4 +1,4 @@
-@extends('layouts.app')
+        @extends('layouts.app')
 
 @section('title')
 Clients - {{ $client->name }}
@@ -9,58 +9,12 @@ Clients - {{ $client->name }}
 <script src="https://cdnjs.cloudflare.com/ajax/libs/dragula/3.7.3/dragula.min.js"></script>
 
 <style>
-    /* Kanban board layout */
-    .kanban-board {
+    /* Sticky Notes Container */
+    #sticky-notes-container {
         display: flex;
-        flex-direction: row;
-        /* Columns aligned horizontally */
-        gap: 16px;
-        overflow-x: auto;
-        /* Enable horizontal scrolling if needed */
-        padding: 10px;
-    }
-
-    /* Kanban column styling */
-    .kanban-column {
-        background-color: #f3f3f3;
-        border-radius: 8px;
-        padding: 16px;
-        width: 300px;
-        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    }
-
-    /* Column titles */
-    .kanban-column h3 {
-        margin-bottom: 16px;
-        text-align: center;
-        color: #333;
-    }
-
-    /* Cards container */
-    .kanban-cards {
-        min-height: 200px;
-        border: 2px dashed #ccc;
-        padding: 10px;
-        border-radius: 4px;
-        background-color: #fafafa;
-    }
-
-    /* Card styling */
-    .kanban-card {
-        padding: 10px;
-        border-radius: 8px;
-        margin-bottom: 10px;
-        color: #fff;
-        font-weight: bold;
-        text-align: center;
-        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-        cursor: grab;
-        transition: transform 0.2s ease-in-out;
-    }
-
-    .kanban-card:hover {
-        transform: scale(1.05);
-        /* Slightly enlarge on hover */
+        flex-wrap: wrap;
+        gap: 10px;
+        margin-top: 20px;
     }
 
     /* Visual feedback for drop areas */
@@ -68,19 +22,6 @@ Clients - {{ $client->name }}
         position: fixed !important;
         z-index: 9999 !important;
         opacity: 0.8;
-    }
-
-    .kanban-cards.gu-drop-ready {
-        background-color: #f0f8ff;
-        /* Light blue when ready to drop */
-    }
-
-    /* Sticky Notes Container */
-    #sticky-notes-container {
-        display: flex;
-        flex-wrap: wrap;
-        gap: 10px;
-        margin-top: 20px;
     }
 
     /* Sticky Note Styling */
@@ -158,155 +99,1038 @@ Clients - {{ $client->name }}
     }
 </style>
 
-<div class="row">
-    <div class="col-6">
-        <a class="btn btn-primary text-center" href="{{ route('lead.new-lead', $client)}}">
-            Add Lead
-        </a>
-        <a class="btn btn-primary text-center" href="{{ route('edit-client', $client) }}">
-            Edit Client
-        </a>
-        @role('Admin')
-        <a class="btn btn-primary text-center" href="javascript:void(0)">
-            Add Representative
-        </a>
-        @endrole
-    </div>
-</div>
-<!-- END Quick Actions -->
-
-<!-- User Info -->
-<div class="block block-rounded" style="background-image: url('/assets/media/photos/abstract-marble-black-gold-background.jpg'); background-size: cover; background-position: center;">
-    <div class="block-content text-center">
-        <div class="py-4">
-            <div class="mb-3">
-                <img class="img-avatar" src="/assets/media/avatars/avatar13.jpg" alt="">
+          <div class="card overflow-hidden">
+            <div class="card-body p-0">
+              <img src="../assets/images/backgrounds/profilebg.jpg" alt="modernize-img" class="img-fluid">
+              <div class="row align-items-center">
+                <div class="col-lg-4 order-lg-1 order-2">
+                  <div class="d-flex align-items-center justify-content-around m-4">
+                    <div class="text-center">
+                      <i class="ti ti-file-description fs-6 d-block mb-2"></i>
+                      <h4 class="mb-0 lh-1">938</h4>
+                      <p class="mb-0 ">Leads</p>
+                    </div>
+                    <div class="text-center">
+                      <i class="ti ti-user-circle fs-6 d-block mb-2"></i>
+                      <h4 class="mb-0 lh-1">0</h4>
+                      <p class="mb-0 ">Projects</p>
+                    </div>
+                    <!-- <div class="text-center">
+                      <i class="ti ti-user-check fs-6 d-block mb-2"></i>
+                      <h4 class="mb-0 lh-1">2,659</h4>
+                      <p class="mb-0 ">Following</p>
+                    </div> -->
+                  </div>
+                </div>
+                <div class="col-lg-4 mt-n3 order-lg-2 order-1">
+                  <div class="mt-n5">
+                    <div class="d-flex align-items-center justify-content-center mb-2">
+                      <div class="d-flex align-items-center justify-content-center round-110">
+                        <div class="border border-4 border-white d-flex align-items-center justify-content-center rounded-circle overflow-hidden round-100">
+                          <img src="../assets/images/profile/user-1.jpg" alt="modernize-img" class="w-100 h-100">
+                        </div>
+                      </div>
+                    </div>
+                    <div class="text-center">
+                      <h5 class="mb-0">{{ $client->name }}</h5>
+                      <p class="mb-0">{{ $client->email }}</p>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-lg-4 order-last">
+                  <ul class="list-unstyled d-flex align-items-center justify-content-center justify-content-lg-end my-3 mx-4 pe-xxl-4 gap-3">
+                    <li>
+                        <a class="btn btn-primary text-center" href="{{ route('lead.new-lead', $client)}}">
+                        Add Lead
+                        </a>                    
+                    </li>
+                    @role('Admin')
+                    <li>
+                        <a class="btn btn-primary text-center" href="{{ route('edit-client', $client) }}">
+                            Edit Client
+                        </a>
+                    </li>
+                    <li>
+                        <a class="btn btn-primary text-center" href="javascript:void(0)">
+                            Add Representative
+                        </a>
+                    </li>
+                    @endrole
+                  </ul>
+                </div>
+              </div>
+              <ul class="nav nav-pills user-profile-tab justify-content-end mt-2 bg-primary-subtle rounded-2 rounded-top-0" id="pills-tab" role="tablist">
+                <li class="nav-item" role="presentation">
+                  <button class="nav-link active hstack gap-2 rounded-0 py-6" id="pills-leads-tab" data-bs-toggle="pill" data-bs-target="#pills-leads" type="button" role="tab" aria-controls="pills-leads" aria-selected="true">
+                    <i class="ti ti-user-circle fs-5"></i>
+                    <span class="d-none d-md-block">Leads</span>
+                  </button>
+                </li>
+                <!-- <li class="nav-item" role="presentation">
+                  <button class="nav-link hstack gap-2 rounded-0 py-6" id="pills-followers-tab" data-bs-toggle="pill" data-bs-target="#pills-followers" type="button" role="tab" aria-controls="pills-followers" aria-selected="false">
+                    <i class="ti ti-heart fs-5"></i>
+                    <span class="d-none d-md-block">Followers</span>
+                  </button>
+                </li>
+                <li class="nav-item" role="presentation">
+                  <button class="nav-link hstack gap-2 rounded-0 py-6" id="pills-friends-tab" data-bs-toggle="pill" data-bs-target="#pills-friends" type="button" role="tab" aria-controls="pills-friends" aria-selected="false">
+                    <i class="ti ti-user-circle fs-5"></i>
+                    <span class="d-none d-md-block">Friends</span>
+                  </button>
+                </li>
+                <li class="nav-item" role="presentation">
+                  <button class="nav-link hstack gap-2 rounded-0 py-6" id="pills-gallery-tab" data-bs-toggle="pill" data-bs-target="#pills-gallery" type="button" role="tab" aria-controls="pills-gallery" aria-selected="false">
+                    <i class="ti ti-photo-plus fs-5"></i>
+                    <span class="d-none d-md-block">Gallery</span>
+                  </button>
+                </li> -->
+              </ul>
             </div>
-            <h1 class="fs-lg mb-0" style="color: white;">
-                <span>{{ $client->name }}</span>
-            </h1>
-            <p class="fs-sm fw-medium text-muted" style="color: white;">{{ $client->email }}</p>
-            <p class="fs-sm fw-medium text-muted" style="color: white;">{{ $client->phone }}</p>
-        </div>
-    </div>
-</div>
-
-<!-- Shopping Cart -->
-<div class="block block-rounded">
-    <div class="block-header block-header-default">
-        <h3 class="block-title">Current Leads</h3>
-    </div>
-
-    <div id="kanban-board" class="kanban-board">
-        <!-- Columns will be dynamically rendered here -->
-    </div>
-</div>
-<!-- END Shopping Cart -->
-
-<!-- Past Orders -->
-<div class="block block-rounded">
-    <div class="block-header block-header-default">
-        <h3 class="block-title">Past Leads</h3>
-    </div>
-    <div class="block-content">
-        <div class="table-responsive">
-            <table class="table table-borderless table-striped table-vcenter">
-                <thead>
-                    <tr>
-                        <th class="text-center" style="width: 100px;">ID</th>
-                        <th class="d-none d-md-table-cell text-center">Products</th>
-                        <th class="d-none d-sm-table-cell text-center">Submitted</th>
-                        <th>Status</th>
-                        <th class="d-none d-sm-table-cell text-end">Value</th>
-                        <th class="text-center">Action</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @foreach ($client->leads as $lead)
-                    <tr>
-                        <td class="text-center fs-sm">
-                            <a class="fw-semibold" href="be_pages_ecom_order.html">
-                                <strong>{{ $lead->title }}</strong>
-                            </a>
-                        </td>
-
-                        <td class="d-none d-sm-table-cell text-center fs-sm">{{ $lead->created_at }}</td>
-                        <td>
-                            <span class="badge bg-success">Delivered</span>
-                        </td>
-                        <td class="text-end d-none d-sm-table-cell fs-sm">
-                            <strong>R{{$lead->revenue}}</strong>
-                        </td>
-
-                        <td class="text-end d-none d-sm-table-cell fs-sm">
-                            <strong>{{$lead->potential_users}}</strong>
-                        </td>
-                        <td class="text-center fs-sm">
-                            <a class="btn btn-sm btn-alt-secondary" href="be_pages_ecom_product_edit.html"
-                                data-bs-toggle="tooltip" title="View">
-                                <i class="fa fa-fw fa-eye"></i>
-                            </a>
-                            <a class="btn btn-sm btn-alt-danger" href="javascript:void(0)" data-bs-toggle="tooltip"
-                                title="Delete">
-                                <i class="fa fa-fw fa-times text-danger"></i>
-                            </a>
-                        </td>
-                    </tr>
-                    @endforeach
-                </tbody>
-            </table>
-        </div>
-    </div>
-</div>
-<!-- END Past Orders -->
-
-<!-- Private Notes -->
-<div class="block block-rounded">
-    <div class="block-header block-header-default">
-        <h3 class="block-title">Private Notes</h3>
-    </div>
-    <div class="block-content">
-        <p class="alert alert-dark fs-sm">
-            <i class="fa fa-fw fa-info me-1"></i> Drop your thought here <3. </p>
-                <form id="noteForm" onsubmit="return addStickyNote();">
-                    <div class="mb-4">
-                        <label class="form-label" for="one-ecom-customer-note">Note</label>
-                        <textarea class="form-control" id="one-ecom-customer-note" name="one-ecom-customer-note"
-                            rows="4" placeholder="Update - Set up meeting?"></textarea>
-                    </div>
-                    <div class="mb-4">
-                        <button type="submit" class="btn btn-alt-primary">Add Note</button>
-                    </div>
-                </form>
-
-
-                <!-- Sticky Notes Section -->
-                <div id="sticky-notes-container" class="d-flex flex-wrap gap-3 mt-4">
-                    <!-- Static sticky note -->
-                    <div class="sticky-note">
-                        <h5>Note</h5>
-                        <p>This is a static note added for demonstration purposes.</p>
-                        <span class="delete-note" onclick="removeStickyNote(this)">×</span>
+          </div>
+          <div class="tab-content" id="pills-tabContent">
+            <div class="tab-pane fade show active" id="pills-leads" role="tabpanel" aria-labelledby="pills-leads-tab" tabindex="0">
+                <div class="block block-rounded">
+                    <div id="kanban-board" class="kanban-board">
+                        <!-- Columns will be dynamically rendered here -->
                     </div>
                 </div>
-    </div>
-</div>
-<!-- END Private Notes -->
+            </div>
+            <!-- <div class="tab-pane fade" id="pills-friends" role="tabpanel" aria-labelledby="pills-friends-tab" tabindex="0">
+              <div class="d-sm-flex align-items-center justify-content-between mt-3 mb-4">
+                <h3 class="mb-3 mb-sm-0 fw-semibold d-flex align-items-center">Friends <span class="badge text-bg-secondary fs-2 rounded-4 py-1 px-2 ms-2">20</span>
+                </h3>
+                <form class="position-relative">
+                  <input type="text" class="form-control search-chat py-2 ps-5" id="text-srh" placeholder="Search Friends">
+                  <i class="ti ti-search position-absolute top-50 start-0 translate-middle-y text-dark ms-3"></i>
+                </form>
+              </div>
+              <div class="row">
+                <div class="col-sm-6 col-lg-4">
+                  <div class="card hover-img">
+                    <div class="card-body p-4 text-center border-bottom">
+                      <img src="../assets/images/profile/user-1.jpg" alt="modernize-img" class="rounded-circle mb-3" width="80" height="80">
+                      <h5 class="fw-semibold mb-0">Betty Adams</h5>
+                      <span class="text-dark fs-2">Medical Secretary</span>
+                    </div>
+                    <ul class="px-2 py-2 bg-light list-unstyled d-flex align-items-center justify-content-center mb-0">
+                      <li class="position-relative">
+                        <a class="text-primary d-flex align-items-center justify-content-center p-2 fs-5 rounded-circle fw-semibold" href="javascript:void(0)">
+                          <i class="ti ti-brand-facebook"></i>
+                        </a>
+                      </li>
+                      <li class="position-relative">
+                        <a class="text-danger d-flex align-items-center justify-content-center p-2 fs-5 rounded-circle fw-semibold " href="javascript:void(0)">
+                          <i class="ti ti-brand-instagram"></i>
+                        </a>
+                      </li>
+                      <li class="position-relative">
+                        <a class="text-info d-flex align-items-center justify-content-center p-2 fs-5 rounded-circle fw-semibold " href="javascript:void(0)">
+                          <i class="ti ti-brand-github"></i>
+                        </a>
+                      </li>
+                      <li class="position-relative">
+                        <a class="text-secondary d-flex align-items-center justify-content-center p-2 fs-5 rounded-circle fw-semibold " href="javascript:void(0)">
+                          <i class="ti ti-brand-twitter"></i>
+                        </a>
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+                <div class="col-sm-6 col-lg-4">
+                  <div class="card hover-img">
+                    <div class="card-body p-4 text-center border-bottom">
+                      <img src="../assets/images/profile/user-2.jpg" alt="modernize-img" class="rounded-circle mb-3" width="80" height="80">
+                      <h5 class="fw-semibold mb-0">Inez Lyons</h5>
+                      <span class="text-dark fs-2">Medical Technician</span>
+                    </div>
+                    <ul class="px-2 py-2 bg-light list-unstyled d-flex align-items-center justify-content-center mb-0">
+                      <li class="position-relative">
+                        <a class="text-primary d-flex align-items-center justify-content-center p-2 fs-5 rounded-circle fw-semibold" href="javascript:void(0)">
+                          <i class="ti ti-brand-facebook"></i>
+                        </a>
+                      </li>
+                      <li class="position-relative">
+                        <a class="text-danger d-flex align-items-center justify-content-center p-2 fs-5 rounded-circle fw-semibold " href="javascript:void(0)">
+                          <i class="ti ti-brand-instagram"></i>
+                        </a>
+                      </li>
+                      <li class="position-relative">
+                        <a class="text-info d-flex align-items-center justify-content-center p-2 fs-5 rounded-circle fw-semibold " href="javascript:void(0)">
+                          <i class="ti ti-brand-github"></i>
+                        </a>
+                      </li>
+                      <li class="position-relative">
+                        <a class="text-secondary d-flex align-items-center justify-content-center p-2 fs-5 rounded-circle fw-semibold " href="javascript:void(0)">
+                          <i class="ti ti-brand-twitter"></i>
+                        </a>
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+                <div class="col-sm-6 col-lg-4">
+                  <div class="card hover-img">
+                    <div class="card-body p-4 text-center border-bottom">
+                      <img src="../assets/images/profile/user-3.jpg" alt="modernize-img" class="rounded-circle mb-3" width="80" height="80">
+                      <h5 class="fw-semibold mb-0">Lydia Bryan</h5>
+                      <span class="text-dark fs-2">Preschool Teacher</span>
+                    </div>
+                    <ul class="px-2 py-2 bg-light list-unstyled d-flex align-items-center justify-content-center mb-0">
+                      <li class="position-relative">
+                        <a class="text-primary d-flex align-items-center justify-content-center p-2 fs-5 rounded-circle fw-semibold" href="javascript:void(0)">
+                          <i class="ti ti-brand-facebook"></i>
+                        </a>
+                      </li>
+                      <li class="position-relative">
+                        <a class="text-danger d-flex align-items-center justify-content-center p-2 fs-5 rounded-circle fw-semibold " href="javascript:void(0)">
+                          <i class="ti ti-brand-instagram"></i>
+                        </a>
+                      </li>
+                      <li class="position-relative">
+                        <a class="text-info d-flex align-items-center justify-content-center p-2 fs-5 rounded-circle fw-semibold " href="javascript:void(0)">
+                          <i class="ti ti-brand-github"></i>
+                        </a>
+                      </li>
+                      <li class="position-relative">
+                        <a class="text-secondary d-flex align-items-center justify-content-center p-2 fs-5 rounded-circle fw-semibold " href="javascript:void(0)">
+                          <i class="ti ti-brand-twitter"></i>
+                        </a>
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+                <div class="col-sm-6 col-lg-4">
+                  <div class="card hover-img">
+                    <div class="card-body p-4 text-center border-bottom">
+                      <img src="../assets/images/profile/user-4.jpg" alt="modernize-img" class="rounded-circle mb-3" width="80" height="80">
+                      <h5 class="fw-semibold mb-0">Carolyn Bryant</h5>
+                      <span class="text-dark fs-2">Legal Secretary</span>
+                    </div>
+                    <ul class="px-2 py-2 bg-light list-unstyled d-flex align-items-center justify-content-center mb-0">
+                      <li class="position-relative">
+                        <a class="text-primary d-flex align-items-center justify-content-center p-2 fs-5 rounded-circle fw-semibold" href="javascript:void(0)">
+                          <i class="ti ti-brand-facebook"></i>
+                        </a>
+                      </li>
+                      <li class="position-relative">
+                        <a class="text-danger d-flex align-items-center justify-content-center p-2 fs-5 rounded-circle fw-semibold " href="javascript:void(0)">
+                          <i class="ti ti-brand-instagram"></i>
+                        </a>
+                      </li>
+                      <li class="position-relative">
+                        <a class="text-info d-flex align-items-center justify-content-center p-2 fs-5 rounded-circle fw-semibold " href="javascript:void(0)">
+                          <i class="ti ti-brand-github"></i>
+                        </a>
+                      </li>
+                      <li class="position-relative">
+                        <a class="text-secondary d-flex align-items-center justify-content-center p-2 fs-5 rounded-circle fw-semibold " href="javascript:void(0)">
+                          <i class="ti ti-brand-twitter"></i>
+                        </a>
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+                <div class="col-sm-6 col-lg-4">
+                  <div class="card hover-img">
+                    <div class="card-body p-4 text-center border-bottom">
+                      <img src="../assets/images/profile/user-5.jpg" alt="modernize-img" class="rounded-circle mb-3" width="80" height="80">
+                      <h5 class="fw-semibold mb-0">Paul Benson</h5>
+                      <span class="text-dark fs-2">Safety Engineer</span>
+                    </div>
+                    <ul class="px-2 py-2 bg-light list-unstyled d-flex align-items-center justify-content-center mb-0">
+                      <li class="position-relative">
+                        <a class="text-primary d-flex align-items-center justify-content-center p-2 fs-5 rounded-circle fw-semibold" href="javascript:void(0)">
+                          <i class="ti ti-brand-facebook"></i>
+                        </a>
+                      </li>
+                      <li class="position-relative">
+                        <a class="text-danger d-flex align-items-center justify-content-center p-2 fs-5 rounded-circle fw-semibold " href="javascript:void(0)">
+                          <i class="ti ti-brand-instagram"></i>
+                        </a>
+                      </li>
+                      <li class="position-relative">
+                        <a class="text-info d-flex align-items-center justify-content-center p-2 fs-5 rounded-circle fw-semibold " href="javascript:void(0)">
+                          <i class="ti ti-brand-github"></i>
+                        </a>
+                      </li>
+                      <li class="position-relative">
+                        <a class="text-secondary d-flex align-items-center justify-content-center p-2 fs-5 rounded-circle fw-semibold " href="javascript:void(0)">
+                          <i class="ti ti-brand-twitter"></i>
+                        </a>
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+                <div class="col-sm-6 col-lg-4">
+                  <div class="card hover-img">
+                    <div class="card-body p-4 text-center border-bottom">
+                      <img src="../assets/images/profile/user-6.jpg" alt="modernize-img" class="rounded-circle mb-3" width="80" height="80">
+                      <h5 class="fw-semibold mb-0">Robert Francis</h5>
+                      <span class="text-dark fs-2">Nursing Administrator</span>
+                    </div>
+                    <ul class="px-2 py-2 bg-light list-unstyled d-flex align-items-center justify-content-center mb-0">
+                      <li class="position-relative">
+                        <a class="text-primary d-flex align-items-center justify-content-center p-2 fs-5 rounded-circle fw-semibold" href="javascript:void(0)">
+                          <i class="ti ti-brand-facebook"></i>
+                        </a>
+                      </li>
+                      <li class="position-relative">
+                        <a class="text-danger d-flex align-items-center justify-content-center p-2 fs-5 rounded-circle fw-semibold " href="javascript:void(0)">
+                          <i class="ti ti-brand-instagram"></i>
+                        </a>
+                      </li>
+                      <li class="position-relative">
+                        <a class="text-info d-flex align-items-center justify-content-center p-2 fs-5 rounded-circle fw-semibold " href="javascript:void(0)">
+                          <i class="ti ti-brand-github"></i>
+                        </a>
+                      </li>
+                      <li class="position-relative">
+                        <a class="text-secondary d-flex align-items-center justify-content-center p-2 fs-5 rounded-circle fw-semibold " href="javascript:void(0)">
+                          <i class="ti ti-brand-twitter"></i>
+                        </a>
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+                <div class="col-sm-6 col-lg-4">
+                  <div class="card hover-img">
+                    <div class="card-body p-4 text-center border-bottom">
+                      <img src="../assets/images/profile/user-7.jpg" alt="modernize-img" class="rounded-circle mb-3" width="80" height="80">
+                      <h5 class="fw-semibold mb-0">Billy Rogers</h5>
+                      <span class="text-dark fs-2">Legal Secretary</span>
+                    </div>
+                    <ul class="px-2 py-2 bg-light list-unstyled d-flex align-items-center justify-content-center mb-0">
+                      <li class="position-relative">
+                        <a class="text-primary d-flex align-items-center justify-content-center p-2 fs-5 rounded-circle fw-semibold" href="javascript:void(0)">
+                          <i class="ti ti-brand-facebook"></i>
+                        </a>
+                      </li>
+                      <li class="position-relative">
+                        <a class="text-danger d-flex align-items-center justify-content-center p-2 fs-5 rounded-circle fw-semibold " href="javascript:void(0)">
+                          <i class="ti ti-brand-instagram"></i>
+                        </a>
+                      </li>
+                      <li class="position-relative">
+                        <a class="text-info d-flex align-items-center justify-content-center p-2 fs-5 rounded-circle fw-semibold " href="javascript:void(0)">
+                          <i class="ti ti-brand-github"></i>
+                        </a>
+                      </li>
+                      <li class="position-relative">
+                        <a class="text-secondary d-flex align-items-center justify-content-center p-2 fs-5 rounded-circle fw-semibold " href="javascript:void(0)">
+                          <i class="ti ti-brand-twitter"></i>
+                        </a>
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+                <div class="col-sm-6 col-lg-4">
+                  <div class="card hover-img">
+                    <div class="card-body p-4 text-center border-bottom">
+                      <img src="../assets/images/profile/user-8.jpg" alt="modernize-img" class="rounded-circle mb-3" width="80" height="80">
+                      <h5 class="fw-semibold mb-0">Rosetta Brewer</h5>
+                      <span class="text-dark fs-2">Comptroller</span>
+                    </div>
+                    <ul class="px-2 py-2 bg-light list-unstyled d-flex align-items-center justify-content-center mb-0">
+                      <li class="position-relative">
+                        <a class="text-primary d-flex align-items-center justify-content-center p-2 fs-5 rounded-circle fw-semibold" href="javascript:void(0)">
+                          <i class="ti ti-brand-facebook"></i>
+                        </a>
+                      </li>
+                      <li class="position-relative">
+                        <a class="text-danger d-flex align-items-center justify-content-center p-2 fs-5 rounded-circle fw-semibold " href="javascript:void(0)">
+                          <i class="ti ti-brand-instagram"></i>
+                        </a>
+                      </li>
+                      <li class="position-relative">
+                        <a class="text-info d-flex align-items-center justify-content-center p-2 fs-5 rounded-circle fw-semibold " href="javascript:void(0)">
+                          <i class="ti ti-brand-github"></i>
+                        </a>
+                      </li>
+                      <li class="position-relative">
+                        <a class="text-secondary d-flex align-items-center justify-content-center p-2 fs-5 rounded-circle fw-semibold " href="javascript:void(0)">
+                          <i class="ti ti-brand-twitter"></i>
+                        </a>
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+                <div class="col-sm-6 col-lg-4">
+                  <div class="card hover-img">
+                    <div class="card-body p-4 text-center border-bottom">
+                      <img src="../assets/images/profile/user-9.jpg" alt="modernize-img" class="rounded-circle mb-3" width="80" height="80">
+                      <h5 class="fw-semibold mb-0">Patrick Knight</h5>
+                      <span class="text-dark fs-2">Retail Store Manager</span>
+                    </div>
+                    <ul class="px-2 py-2 bg-light list-unstyled d-flex align-items-center justify-content-center mb-0">
+                      <li class="position-relative">
+                        <a class="text-primary d-flex align-items-center justify-content-center p-2 fs-5 rounded-circle fw-semibold" href="javascript:void(0)">
+                          <i class="ti ti-brand-facebook"></i>
+                        </a>
+                      </li>
+                      <li class="position-relative">
+                        <a class="text-danger d-flex align-items-center justify-content-center p-2 fs-5 rounded-circle fw-semibold " href="javascript:void(0)">
+                          <i class="ti ti-brand-instagram"></i>
+                        </a>
+                      </li>
+                      <li class="position-relative">
+                        <a class="text-info d-flex align-items-center justify-content-center p-2 fs-5 rounded-circle fw-semibold " href="javascript:void(0)">
+                          <i class="ti ti-brand-github"></i>
+                        </a>
+                      </li>
+                      <li class="position-relative">
+                        <a class="text-secondary d-flex align-items-center justify-content-center p-2 fs-5 rounded-circle fw-semibold " href="javascript:void(0)">
+                          <i class="ti ti-brand-twitter"></i>
+                        </a>
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+                <div class="col-sm-6 col-lg-4">
+                  <div class="card hover-img">
+                    <div class="card-body p-4 text-center border-bottom">
+                      <img src="../assets/images/profile/user-10.jpg" alt="modernize-img" class="rounded-circle mb-3" width="80" height="80">
+                      <h5 class="fw-semibold mb-0">Francis Sutton</h5>
+                      <span class="text-dark fs-2">Astronomer</span>
+                    </div>
+                    <ul class="px-2 py-2 bg-light list-unstyled d-flex align-items-center justify-content-center mb-0">
+                      <li class="position-relative">
+                        <a class="text-primary d-flex align-items-center justify-content-center p-2 fs-5 rounded-circle fw-semibold" href="javascript:void(0)">
+                          <i class="ti ti-brand-facebook"></i>
+                        </a>
+                      </li>
+                      <li class="position-relative">
+                        <a class="text-danger d-flex align-items-center justify-content-center p-2 fs-5 rounded-circle fw-semibold " href="javascript:void(0)">
+                          <i class="ti ti-brand-instagram"></i>
+                        </a>
+                      </li>
+                      <li class="position-relative">
+                        <a class="text-info d-flex align-items-center justify-content-center p-2 fs-5 rounded-circle fw-semibold " href="javascript:void(0)">
+                          <i class="ti ti-brand-github"></i>
+                        </a>
+                      </li>
+                      <li class="position-relative">
+                        <a class="text-secondary d-flex align-items-center justify-content-center p-2 fs-5 rounded-circle fw-semibold " href="javascript:void(0)">
+                          <i class="ti ti-brand-twitter"></i>
+                        </a>
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+                <div class="col-sm-6 col-lg-4">
+                  <div class="card hover-img">
+                    <div class="card-body p-4 text-center border-bottom">
+                      <img src="../assets/images/profile/user-1.jpg" alt="modernize-img" class="rounded-circle mb-3" width="80" height="80">
+                      <h5 class="fw-semibold mb-0">Bernice Henry</h5>
+                      <span class="text-dark fs-2">Security Consultant</span>
+                    </div>
+                    <ul class="px-2 py-2 bg-light list-unstyled d-flex align-items-center justify-content-center mb-0">
+                      <li class="position-relative">
+                        <a class="text-primary d-flex align-items-center justify-content-center p-2 fs-5 rounded-circle fw-semibold" href="javascript:void(0)">
+                          <i class="ti ti-brand-facebook"></i>
+                        </a>
+                      </li>
+                      <li class="position-relative">
+                        <a class="text-danger d-flex align-items-center justify-content-center p-2 fs-5 rounded-circle fw-semibold " href="javascript:void(0)">
+                          <i class="ti ti-brand-instagram"></i>
+                        </a>
+                      </li>
+                      <li class="position-relative">
+                        <a class="text-info d-flex align-items-center justify-content-center p-2 fs-5 rounded-circle fw-semibold " href="javascript:void(0)">
+                          <i class="ti ti-brand-github"></i>
+                        </a>
+                      </li>
+                      <li class="position-relative">
+                        <a class="text-secondary d-flex align-items-center justify-content-center p-2 fs-5 rounded-circle fw-semibold " href="javascript:void(0)">
+                          <i class="ti ti-brand-twitter"></i>
+                        </a>
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+                <div class="col-sm-6 col-lg-4">
+                  <div class="card hover-img">
+                    <div class="card-body p-4 text-center border-bottom">
+                      <img src="../assets/images/profile/user-2.jpg" alt="modernize-img" class="rounded-circle mb-3" width="80" height="80">
+                      <h5 class="fw-semibold mb-0">Estella Garcia</h5>
+                      <span class="text-dark fs-2">Lead Software Test Engineer</span>
+                    </div>
+                    <ul class="px-2 py-2 bg-light list-unstyled d-flex align-items-center justify-content-center mb-0">
+                      <li class="position-relative">
+                        <a class="text-primary d-flex align-items-center justify-content-center p-2 fs-5 rounded-circle fw-semibold" href="javascript:void(0)">
+                          <i class="ti ti-brand-facebook"></i>
+                        </a>
+                      </li>
+                      <li class="position-relative">
+                        <a class="text-danger d-flex align-items-center justify-content-center p-2 fs-5 rounded-circle fw-semibold " href="javascript:void(0)">
+                          <i class="ti ti-brand-instagram"></i>
+                        </a>
+                      </li>
+                      <li class="position-relative">
+                        <a class="text-info d-flex align-items-center justify-content-center p-2 fs-5 rounded-circle fw-semibold " href="javascript:void(0)">
+                          <i class="ti ti-brand-github"></i>
+                        </a>
+                      </li>
+                      <li class="position-relative">
+                        <a class="text-secondary d-flex align-items-center justify-content-center p-2 fs-5 rounded-circle fw-semibold " href="javascript:void(0)">
+                          <i class="ti ti-brand-twitter"></i>
+                        </a>
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+                <div class="col-sm-6 col-lg-4">
+                  <div class="card hover-img">
+                    <div class="card-body p-4 text-center border-bottom">
+                      <img src="../assets/images/profile/user-3.jpg" alt="modernize-img" class="rounded-circle mb-3" width="80" height="80">
+                      <h5 class="fw-semibold mb-0">Norman Moran</h5>
+                      <span class="text-dark fs-2">Engineer Technician</span>
+                    </div>
+                    <ul class="px-2 py-2 bg-light list-unstyled d-flex align-items-center justify-content-center mb-0">
+                      <li class="position-relative">
+                        <a class="text-primary d-flex align-items-center justify-content-center p-2 fs-5 rounded-circle fw-semibold" href="javascript:void(0)">
+                          <i class="ti ti-brand-facebook"></i>
+                        </a>
+                      </li>
+                      <li class="position-relative">
+                        <a class="text-danger d-flex align-items-center justify-content-center p-2 fs-5 rounded-circle fw-semibold " href="javascript:void(0)">
+                          <i class="ti ti-brand-instagram"></i>
+                        </a>
+                      </li>
+                      <li class="position-relative">
+                        <a class="text-info d-flex align-items-center justify-content-center p-2 fs-5 rounded-circle fw-semibold " href="javascript:void(0)">
+                          <i class="ti ti-brand-github"></i>
+                        </a>
+                      </li>
+                      <li class="position-relative">
+                        <a class="text-secondary d-flex align-items-center justify-content-center p-2 fs-5 rounded-circle fw-semibold " href="javascript:void(0)">
+                          <i class="ti ti-brand-twitter"></i>
+                        </a>
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+                <div class="col-sm-6 col-lg-4">
+                  <div class="card hover-img">
+                    <div class="card-body p-4 text-center border-bottom">
+                      <img src="../assets/images/profile/user-4.jpg" alt="modernize-img" class="rounded-circle mb-3" width="80" height="80">
+                      <h5 class="fw-semibold mb-0">Jessie Matthews</h5>
+                      <span class="text-dark fs-2">Lead Software Engineer</span>
+                    </div>
+                    <ul class="px-2 py-2 bg-light list-unstyled d-flex align-items-center justify-content-center mb-0">
+                      <li class="position-relative">
+                        <a class="text-primary d-flex align-items-center justify-content-center p-2 fs-5 rounded-circle fw-semibold" href="javascript:void(0)">
+                          <i class="ti ti-brand-facebook"></i>
+                        </a>
+                      </li>
+                      <li class="position-relative">
+                        <a class="text-danger d-flex align-items-center justify-content-center p-2 fs-5 rounded-circle fw-semibold " href="javascript:void(0)">
+                          <i class="ti ti-brand-instagram"></i>
+                        </a>
+                      </li>
+                      <li class="position-relative">
+                        <a class="text-info d-flex align-items-center justify-content-center p-2 fs-5 rounded-circle fw-semibold " href="javascript:void(0)">
+                          <i class="ti ti-brand-github"></i>
+                        </a>
+                      </li>
+                      <li class="position-relative">
+                        <a class="text-secondary d-flex align-items-center justify-content-center p-2 fs-5 rounded-circle fw-semibold " href="javascript:void(0)">
+                          <i class="ti ti-brand-twitter"></i>
+                        </a>
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+                <div class="col-sm-6 col-lg-4">
+                  <div class="card hover-img">
+                    <div class="card-body p-4 text-center border-bottom">
+                      <img src="../assets/images/profile/user-5.jpg" alt="modernize-img" class="rounded-circle mb-3" width="80" height="80">
+                      <h5 class="fw-semibold mb-0">Elijah Perez</h5>
+                      <span class="text-dark fs-2">Special Education Teacher</span>
+                    </div>
+                    <ul class="px-2 py-2 bg-light list-unstyled d-flex align-items-center justify-content-center mb-0">
+                      <li class="position-relative">
+                        <a class="text-primary d-flex align-items-center justify-content-center p-2 fs-5 rounded-circle fw-semibold" href="javascript:void(0)">
+                          <i class="ti ti-brand-facebook"></i>
+                        </a>
+                      </li>
+                      <li class="position-relative">
+                        <a class="text-danger d-flex align-items-center justify-content-center p-2 fs-5 rounded-circle fw-semibold " href="javascript:void(0)">
+                          <i class="ti ti-brand-instagram"></i>
+                        </a>
+                      </li>
+                      <li class="position-relative">
+                        <a class="text-info d-flex align-items-center justify-content-center p-2 fs-5 rounded-circle fw-semibold " href="javascript:void(0)">
+                          <i class="ti ti-brand-github"></i>
+                        </a>
+                      </li>
+                      <li class="position-relative">
+                        <a class="text-secondary d-flex align-items-center justify-content-center p-2 fs-5 rounded-circle fw-semibold " href="javascript:void(0)">
+                          <i class="ti ti-brand-twitter"></i>
+                        </a>
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+                <div class="col-sm-6 col-lg-4">
+                  <div class="card hover-img">
+                    <div class="card-body p-4 text-center border-bottom">
+                      <img src="../assets/images/profile/user-6.jpg" alt="modernize-img" class="rounded-circle mb-3" width="80" height="80">
+                      <h5 class="fw-semibold mb-0">Robert Martin</h5>
+                      <span class="text-dark fs-2">Transportation Manager</span>
+                    </div>
+                    <ul class="px-2 py-2 bg-light list-unstyled d-flex align-items-center justify-content-center mb-0">
+                      <li class="position-relative">
+                        <a class="text-primary d-flex align-items-center justify-content-center p-2 fs-5 rounded-circle fw-semibold" href="javascript:void(0)">
+                          <i class="ti ti-brand-facebook"></i>
+                        </a>
+                      </li>
+                      <li class="position-relative">
+                        <a class="text-danger d-flex align-items-center justify-content-center p-2 fs-5 rounded-circle fw-semibold " href="javascript:void(0)">
+                          <i class="ti ti-brand-instagram"></i>
+                        </a>
+                      </li>
+                      <li class="position-relative">
+                        <a class="text-info d-flex align-items-center justify-content-center p-2 fs-5 rounded-circle fw-semibold " href="javascript:void(0)">
+                          <i class="ti ti-brand-github"></i>
+                        </a>
+                      </li>
+                      <li class="position-relative">
+                        <a class="text-secondary d-flex align-items-center justify-content-center p-2 fs-5 rounded-circle fw-semibold " href="javascript:void(0)">
+                          <i class="ti ti-brand-twitter"></i>
+                        </a>
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+                <div class="col-sm-6 col-lg-4">
+                  <div class="card hover-img">
+                    <div class="card-body p-4 text-center border-bottom">
+                      <img src="../assets/images/profile/user-7.jpg" alt="modernize-img" class="rounded-circle mb-3" width="80" height="80">
+                      <h5 class="fw-semibold mb-0">Elva Wong</h5>
+                      <span class="text-dark fs-2">Logistics Manager</span>
+                    </div>
+                    <ul class="px-2 py-2 bg-light list-unstyled d-flex align-items-center justify-content-center mb-0">
+                      <li class="position-relative">
+                        <a class="text-primary d-flex align-items-center justify-content-center p-2 fs-5 rounded-circle fw-semibold" href="javascript:void(0)">
+                          <i class="ti ti-brand-facebook"></i>
+                        </a>
+                      </li>
+                      <li class="position-relative">
+                        <a class="text-danger d-flex align-items-center justify-content-center p-2 fs-5 rounded-circle fw-semibold " href="javascript:void(0)">
+                          <i class="ti ti-brand-instagram"></i>
+                        </a>
+                      </li>
+                      <li class="position-relative">
+                        <a class="text-info d-flex align-items-center justify-content-center p-2 fs-5 rounded-circle fw-semibold " href="javascript:void(0)">
+                          <i class="ti ti-brand-github"></i>
+                        </a>
+                      </li>
+                      <li class="position-relative">
+                        <a class="text-secondary d-flex align-items-center justify-content-center p-2 fs-5 rounded-circle fw-semibold " href="javascript:void(0)">
+                          <i class="ti ti-brand-twitter"></i>
+                        </a>
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+                <div class="col-sm-6 col-lg-4">
+                  <div class="card hover-img">
+                    <div class="card-body p-4 text-center border-bottom">
+                      <img src="../assets/images/profile/user-8.jpg" alt="modernize-img" class="rounded-circle mb-3" width="80" height="80">
+                      <h5 class="fw-semibold mb-0">Edith Taylor</h5>
+                      <span class="text-dark fs-2">Union Representative</span>
+                    </div>
+                    <ul class="px-2 py-2 bg-light list-unstyled d-flex align-items-center justify-content-center mb-0">
+                      <li class="position-relative">
+                        <a class="text-primary d-flex align-items-center justify-content-center p-2 fs-5 rounded-circle fw-semibold" href="javascript:void(0)">
+                          <i class="ti ti-brand-facebook"></i>
+                        </a>
+                      </li>
+                      <li class="position-relative">
+                        <a class="text-danger d-flex align-items-center justify-content-center p-2 fs-5 rounded-circle fw-semibold " href="javascript:void(0)">
+                          <i class="ti ti-brand-instagram"></i>
+                        </a>
+                      </li>
+                      <li class="position-relative">
+                        <a class="text-info d-flex align-items-center justify-content-center p-2 fs-5 rounded-circle fw-semibold " href="javascript:void(0)">
+                          <i class="ti ti-brand-github"></i>
+                        </a>
+                      </li>
+                      <li class="position-relative">
+                        <a class="text-secondary d-flex align-items-center justify-content-center p-2 fs-5 rounded-circle fw-semibold " href="javascript:void(0)">
+                          <i class="ti ti-brand-twitter"></i>
+                        </a>
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+                <div class="col-sm-6 col-lg-4">
+                  <div class="card hover-img">
+                    <div class="card-body p-4 text-center border-bottom">
+                      <img src="../assets/images/profile/user-9.jpg" alt="modernize-img" class="rounded-circle mb-3" width="80" height="80">
+                      <h5 class="fw-semibold mb-0">Violet Jackson</h5>
+                      <span class="text-dark fs-2">Agricultural Inspector</span>
+                    </div>
+                    <ul class="px-2 py-2 bg-light list-unstyled d-flex align-items-center justify-content-center mb-0">
+                      <li class="position-relative">
+                        <a class="text-primary d-flex align-items-center justify-content-center p-2 fs-5 rounded-circle fw-semibold" href="javascript:void(0)">
+                          <i class="ti ti-brand-facebook"></i>
+                        </a>
+                      </li>
+                      <li class="position-relative">
+                        <a class="text-danger d-flex align-items-center justify-content-center p-2 fs-5 rounded-circle fw-semibold " href="javascript:void(0)">
+                          <i class="ti ti-brand-instagram"></i>
+                        </a>
+                      </li>
+                      <li class="position-relative">
+                        <a class="text-info d-flex align-items-center justify-content-center p-2 fs-5 rounded-circle fw-semibold " href="javascript:void(0)">
+                          <i class="ti ti-brand-github"></i>
+                        </a>
+                      </li>
+                      <li class="position-relative">
+                        <a class="text-secondary d-flex align-items-center justify-content-center p-2 fs-5 rounded-circle fw-semibold " href="javascript:void(0)">
+                          <i class="ti ti-brand-twitter"></i>
+                        </a>
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+                <div class="col-sm-6 col-lg-4">
+                  <div class="card hover-img">
+                    <div class="card-body p-4 text-center border-bottom">
+                      <img src="../assets/images/profile/user-10.jpg" alt="modernize-img" class="rounded-circle mb-3" width="80" height="80">
+                      <h5 class="fw-semibold mb-0">Phoebe Owens</h5>
+                      <span class="text-dark fs-2">Safety Engineer</span>
+                    </div>
+                    <ul class="px-2 py-2 bg-light list-unstyled d-flex align-items-center justify-content-center mb-0">
+                      <li class="position-relative">
+                        <a class="text-primary d-flex align-items-center justify-content-center p-2 fs-5 rounded-circle fw-semibold" href="javascript:void(0)">
+                          <i class="ti ti-brand-facebook"></i>
+                        </a>
+                      </li>
+                      <li class="position-relative">
+                        <a class="text-danger d-flex align-items-center justify-content-center p-2 fs-5 rounded-circle fw-semibold " href="javascript:void(0)">
+                          <i class="ti ti-brand-instagram"></i>
+                        </a>
+                      </li>
+                      <li class="position-relative">
+                        <a class="text-info d-flex align-items-center justify-content-center p-2 fs-5 rounded-circle fw-semibold " href="javascript:void(0)">
+                          <i class="ti ti-brand-github"></i>
+                        </a>
+                      </li>
+                      <li class="position-relative">
+                        <a class="text-secondary d-flex align-items-center justify-content-center p-2 fs-5 rounded-circle fw-semibold " href="javascript:void(0)">
+                          <i class="ti ti-brand-twitter"></i>
+                        </a>
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="tab-pane fade" id="pills-gallery" role="tabpanel" aria-labelledby="pills-gallery-tab" tabindex="0">
+              <div class="d-sm-flex align-items-center justify-content-between mt-3 mb-4">
+                <h3 class="mb-3 mb-sm-0 fw-semibold d-flex align-items-center">Gallery <span class="badge text-bg-secondary fs-2 rounded-4 py-1 px-2 ms-2">12</span>
+                </h3>
+                <form class="position-relative">
+                  <input type="text" class="form-control search-chat py-2 ps-5" id="text-srh" placeholder="Search Friends">
+                  <i class="ti ti-search position-absolute top-50 start-0 translate-middle-y text-dark ms-3"></i>
+                </form>
+              </div>
+              <div class="row">
+                <div class="col-md-6 col-lg-4">
+                  <div class="card hover-img overflow-hidden">
+                    <div class="card-body p-0">
+                      <img src="../assets/images/products/s1.jpg" alt="modernize-img" height="220" class="w-100 object-fit-cover">
+                      <div class="p-4 d-flex align-items-center justify-content-between">
+                        <div>
+                          <h6 class="mb-0">Isuava wakceajo fe.jpg</h6>
+                          <span class="text-dark fs-2">Wed, Dec 14, 2024</span>
+                        </div>
+                        <div class="dropdown">
+                          <a class="text-muted fw-semibold d-flex align-items-center p-1" href="javascript:void(0)" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            <i class="ti ti-dots-vertical"></i>
+                          </a>
+                          <ul class="dropdown-menu overflow-hidden">
+                            <li>
+                              <a class="dropdown-item" href="javascript:void(0)">Isuava wakceajo fe.jpg</a>
+                            </li>
+                          </ul>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md-6 col-lg-4">
+                  <div class="card hover-img overflow-hidden">
+                    <div class="card-body p-0">
+                      <img src="../assets/images/products/s2.jpg" alt="modernize-img" height="220" class="w-100 object-fit-cover">
+                      <div class="p-4 d-flex align-items-center justify-content-between">
+                        <div>
+                          <h6 class="mb-0">Ip docmowe vemremrif.jpg</h6>
+                          <span class="text-dark fs-2">Wed, Dec 14, 2024</span>
+                        </div>
+                        <div class="dropdown">
+                          <a class="text-muted fw-semibold d-flex align-items-center p-1" href="javascript:void(0)" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            <i class="ti ti-dots-vertical"></i>
+                          </a>
+                          <ul class="dropdown-menu overflow-hidden">
+                            <li>
+                              <a class="dropdown-item" href="javascript:void(0)">Ip docmowe vemremrif.jpg</a>
+                            </li>
+                          </ul>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md-6 col-lg-4">
+                  <div class="card hover-img overflow-hidden">
+                    <div class="card-body p-0">
+                      <img src="../assets/images/products/s3.jpg" alt="modernize-img" height="220" class="w-100 object-fit-cover">
+                      <div class="p-4 d-flex align-items-center justify-content-between">
+                        <div>
+                          <h6 class="mb-0">Duan cosudos utaku.jpg</h6>
+                          <span class="text-dark fs-2">Wed, Dec 14, 2024</span>
+                        </div>
+                        <div class="dropdown">
+                          <a class="text-muted fw-semibold d-flex align-items-center p-1" href="javascript:void(0)" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            <i class="ti ti-dots-vertical"></i>
+                          </a>
+                          <ul class="dropdown-menu overflow-hidden">
+                            <li>
+                              <a class="dropdown-item" href="javascript:void(0)">Duan cosudos utaku.jpg</a>
+                            </li>
+                          </ul>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md-6 col-lg-4">
+                  <div class="card hover-img overflow-hidden">
+                    <div class="card-body p-0">
+                      <img src="../assets/images/products/s4.jpg" alt="modernize-img" height="220" class="w-100 object-fit-cover">
+                      <div class="p-4 d-flex align-items-center justify-content-between">
+                        <div>
+                          <h6 class="mb-0">Fu netbuv oggu.jpg</h6>
+                          <span class="text-dark fs-2">Wed, Dec 14, 2024</span>
+                        </div>
+                        <div class="dropdown">
+                          <a class="text-muted fw-semibold d-flex align-items-center p-1" href="javascript:void(0)" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            <i class="ti ti-dots-vertical"></i>
+                          </a>
+                          <ul class="dropdown-menu overflow-hidden">
+                            <li>
+                              <a class="dropdown-item" href="javascript:void(0)">Fu netbuv oggu.jpg</a>
+                            </li>
+                          </ul>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md-6 col-lg-4">
+                  <div class="card hover-img overflow-hidden">
+                    <div class="card-body p-0">
+                      <img src="../assets/images/products/s5.jpg" alt="modernize-img" height="220" class="w-100 object-fit-cover">
+                      <div class="p-4 d-flex align-items-center justify-content-between">
+                        <div>
+                          <h6 class="mb-0">Di sekog do.jpg</h6>
+                          <span class="text-dark fs-2">Wed, Dec 14, 2024</span>
+                        </div>
+                        <div class="dropdown">
+                          <a class="text-muted fw-semibold d-flex align-items-center p-1" href="javascript:void(0)" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            <i class="ti ti-dots-vertical"></i>
+                          </a>
+                          <ul class="dropdown-menu overflow-hidden">
+                            <li>
+                              <a class="dropdown-item" href="javascript:void(0)">Di sekog do.jpg</a>
+                            </li>
+                          </ul>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md-6 col-lg-4">
+                  <div class="card hover-img overflow-hidden">
+                    <div class="card-body p-0">
+                      <img src="../assets/images/products/s6.jpg" alt="modernize-img" height="220" class="w-100 object-fit-cover">
+                      <div class="p-4 d-flex align-items-center justify-content-between">
+                        <div>
+                          <h6 class="mb-0">Lo jogu camhiisi.jpg</h6>
+                          <span class="text-dark fs-2">Thu, Dec 15, 2024</span>
+                        </div>
+                        <div class="dropdown">
+                          <a class="text-muted fw-semibold d-flex align-items-center p-1" href="javascript:void(0)" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            <i class="ti ti-dots-vertical"></i>
+                          </a>
+                          <ul class="dropdown-menu overflow-hidden">
+                            <li>
+                              <a class="dropdown-item" href="javascript:void(0)">Lo jogu camhiisi.jpg</a>
+                            </li>
+                          </ul>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md-6 col-lg-4">
+                  <div class="card hover-img overflow-hidden">
+                    <div class="card-body p-0">
+                      <img src="../assets/images/products/s7.jpg" alt="modernize-img" height="220" class="w-100 object-fit-cover">
+                      <div class="p-4 d-flex align-items-center justify-content-between">
+                        <div>
+                          <h6 class="mb-0">Orewac huosazud robuf.jpg</h6>
+                          <span class="text-dark fs-2">Fri, Dec 16, 2024</span>
+                        </div>
+                        <div class="dropdown">
+                          <a class="text-muted fw-semibold d-flex align-items-center p-1" href="javascript:void(0)" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            <i class="ti ti-dots-vertical"></i>
+                          </a>
+                          <ul class="dropdown-menu overflow-hidden">
+                            <li>
+                              <a class="dropdown-item" href="javascript:void(0)">Orewac huosazud robuf.jpg</a>
+                            </li>
+                          </ul>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md-6 col-lg-4">
+                  <div class="card hover-img overflow-hidden">
+                    <div class="card-body p-0">
+                      <img src="../assets/images/products/s8.jpg" alt="modernize-img" height="220" class="w-100 object-fit-cover">
+                      <div class="p-4 d-flex align-items-center justify-content-between">
+                        <div>
+                          <h6 class="mb-0">Nira biolaizo tuzi.jpg</h6>
+                          <span class="text-dark fs-2">Sat, Dec 17, 2024</span>
+                        </div>
+                        <div class="dropdown">
+                          <a class="text-muted fw-semibold d-flex align-items-center p-1" href="javascript:void(0)" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            <i class="ti ti-dots-vertical"></i>
+                          </a>
+                          <ul class="dropdown-menu overflow-hidden">
+                            <li>
+                              <a class="dropdown-item" href="javascript:void(0)">Nira biolaizo tuzi.jpg</a>
+                            </li>
+                          </ul>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md-6 col-lg-4">
+                  <div class="card hover-img overflow-hidden">
+                    <div class="card-body p-0">
+                      <img src="../assets/images/products/s9.jpg" alt="modernize-img" height="220" class="w-100 object-fit-cover">
+                      <div class="p-4 d-flex align-items-center justify-content-between">
+                        <div>
+                          <h6 class="mb-0">Peri metu ejvu.jpg</h6>
+                          <span class="text-dark fs-2">Sun, Dec 18, 2024</span>
+                        </div>
+                        <div class="dropdown">
+                          <a class="text-muted fw-semibold d-flex align-items-center p-1" href="javascript:void(0)" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            <i class="ti ti-dots-vertical"></i>
+                          </a>
+                          <ul class="dropdown-menu overflow-hidden">
+                            <li>
+                              <a class="dropdown-item" href="javascript:void(0)">Peri metu ejvu.jpg</a>
+                            </li>
+                          </ul>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md-6 col-lg-4">
+                  <div class="card hover-img overflow-hidden">
+                    <div class="card-body p-0">
+                      <img src="../assets/images/products/s10.jpg" alt="modernize-img" height="220" class="w-100 object-fit-cover">
+                      <div class="p-4 d-flex align-items-center justify-content-between">
+                        <div>
+                          <h6 class="mb-0">Vurnohot tajraje isusufuj.jpg</h6>
+                          <span class="text-dark fs-2">Mon, Dec 19, 2024</span>
+                        </div>
+                        <div class="dropdown">
+                          <a class="text-muted fw-semibold d-flex align-items-center p-1" href="javascript:void(0)" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            <i class="ti ti-dots-vertical"></i>
+                          </a>
+                          <ul class="dropdown-menu overflow-hidden">
+                            <li>
+                              <a class="dropdown-item" href="javascript:void(0)">Vurnohot tajraje isusufuj.jpg</a>
+                            </li>
+                          </ul>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md-6 col-lg-4">
+                  <div class="card hover-img overflow-hidden">
+                    <div class="card-body p-0">
+                      <img src="../assets/images/products/s11.jpg" alt="modernize-img" height="220" class="w-100 object-fit-cover">
+                      <div class="p-4 d-flex align-items-center justify-content-between">
+                        <div>
+                          <h6 class="mb-0">Juc oz ma.jpg</h6>
+                          <span class="text-dark fs-2">Tue, Dec 20, 2024</span>
+                        </div>
+                        <div class="dropdown">
+                          <a class="text-muted fw-semibold d-flex align-items-center p-1" href="javascript:void(0)" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            <i class="ti ti-dots-vertical"></i>
+                          </a>
+                          <ul class="dropdown-menu overflow-hidden">
+                            <li>
+                              <a class="dropdown-item" href="javascript:void(0)">Juc oz ma.jpg</a>
+                            </li>
+                          </ul>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md-6 col-lg-4">
+                  <div class="card hover-img overflow-hidden">
+                    <div class="card-body p-0">
+                      <img src="../assets/images/products/s12.jpg" alt="modernize-img" height="220" class="w-100 object-fit-cover">
+                      <div class="p-4 d-flex align-items-center justify-content-between">
+                        <div>
+                          <h6 class="mb-0">Povipvez marjelliz zuuva.jpg</h6>
+                          <span class="text-dark fs-2">Wed, Dec 21, 2024</span>
+                        </div>
+                        <div class="dropdown">
+                          <a class="text-muted fw-semibold d-flex align-items-center p-1" href="javascript:void(0)" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            <i class="ti ti-dots-vertical"></i>
+                          </a>
+                          <ul class="dropdown-menu overflow-hidden">
+                            <li>
+                              <a class="dropdown-item" href="javascript:void(0)">Povipvez marjelliz zuuva.jpg</a>
+                            </li>
+                          </ul>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div> -->
+          </div>
 
 <script>
     document.addEventListener('DOMContentLoaded', () => {
     const kanbanBoard = document.getElementById('kanban-board');
     const clientId = {{ $client->id }}; // Blade variable for client ID
     
-    // Load stages and leads from the server
-    fetch(`/clients/${clientId}/lead-stages`)
-    .then(response => response.json())
-    .then(stages => {
     if (!kanbanBoard) {
     console.error('Kanban board element not found.');
     return;
     }
-    kanbanBoard.innerHTML = ''; // Clear existing content
+    
+    // Load stages and leads from the server
+    fetch(`/clients/${clientId}/lead-stages`)
+    .then(response => response.json())
+    .then(stages => {
     renderKanbanBoard(stages, kanbanBoard); // Render the Kanban board
     initializeDragula(); // Initialize drag-and-drop functionality
     })
@@ -319,20 +1143,29 @@ Clients - {{ $client->name }}
     kanbanBoard.innerHTML = ''; // Clear existing content
     
     stages.forEach(stage => {
+    const column = createKanbanColumn(stage);
+    kanbanBoard.appendChild(column);
+    });
+    }
+    
+    function createKanbanColumn(stage) {
     const column = document.createElement('div');
     column.className = 'kanban-column';
     column.id = `stage-${stage.id}`;
     
+    // Column title
     const title = document.createElement('h3');
     title.innerText = stage.title || 'Untitled Stage';
     column.appendChild(title);
     
+    // Total revenue display
     const revenueTotal = document.createElement('div');
     revenueTotal.className = 'kanban-revenue-total';
     revenueTotal.id = `revenue-total-${stage.id}`;
     revenueTotal.innerHTML = `<strong>Total Revenue: </strong>R0`;
     column.appendChild(revenueTotal);
     
+    // Cards container
     const cardContainer = document.createElement('div');
     cardContainer.className = 'kanban-cards';
     cardContainer.id = `cards-${stage.id}`;
@@ -340,6 +1173,7 @@ Clients - {{ $client->name }}
     
     let totalRevenue = 0;
     
+    // Create cards for each lead
     stage.leads.forEach(lead => {
     const card = createKanbanCard(lead);
     cardContainer.appendChild(card);
@@ -349,8 +1183,7 @@ Clients - {{ $client->name }}
     // Update the total revenue for this stage
     revenueTotal.innerHTML = `<strong>Total Revenue: </strong>R${totalRevenue.toFixed(2)}`;
     
-    kanbanBoard.appendChild(column);
-    });
+    return column;
     }
     
     function createKanbanCard(lead) {
@@ -358,9 +1191,10 @@ Clients - {{ $client->name }}
     card.className = 'kanban-card';
     card.dataset.id = lead.id;
     
-    const randomColor = getRandomColor();
-    card.style.backgroundColor = randomColor;
+    // Random background color
+    card.style.backgroundColor = getRandomColor();
     
+    // Card content
     card.innerHTML = `
     <h4>${lead.title}</h4>
     <p>${lead.description}</p>
@@ -375,7 +1209,7 @@ Clients - {{ $client->name }}
     let color = '#';
     for (let i = 0; i < 6; i++) { color +=letters[Math.floor(Math.random() * 16)]; } return color; } function
         initializeDragula() { const containers=Array.from(document.querySelectorAll('.kanban-cards')); dragula(containers, {
-        moves: (el)=> true,
+        moves: ()=> true,
         accepts: (el, target) => target.classList.contains('kanban-cards'),
         }).on('drop', (el, target, source) => {
         if (!target || !source) {
@@ -406,7 +1240,7 @@ Clients - {{ $client->name }}
         headers: {
         'Content-Type': 'application/json',
         'Accept': 'application/json',
-        'X-CSRF-TOKEN': csrfToken // Add the CSRF token to the headers
+        'X-CSRF-TOKEN': csrfToken, // Add the CSRF token to the headers
         },
         body: JSON.stringify({ leads: updatedLeads }),
         })
@@ -445,56 +1279,56 @@ Clients - {{ $client->name }}
         }
         }
     
-        // Sticky Notes Functions
-        function loadStickyNotes(clientId) {
-        const stickyNotesContainer = document.getElementById('sticky-notes-container');
-        const notes = JSON.parse(localStorage.getItem(`stickyNotes_${clientId}`)) || [];
-        stickyNotesContainer.innerHTML = '';
-        notes.forEach(note => {
-        const stickyNote = createStickyNoteElement(note.content, note.id);
-        stickyNotesContainer.appendChild(stickyNote);
-        });
-        }
+        // Sticky Notes Functionss
+        // function loadStickyNotes(clientId) {
+        // const stickyNotesContainer = document.getElementById('sticky-notes-container');
+        // const notes = JSON.parse(localStorage.getItem(`stickyNotes_${clientId}`)) || [];
+        // stickyNotesContainer.innerHTML = '';
+        // notes.forEach(note => {
+        // const stickyNote = createStickyNoteElement(note.content, note.id);
+        // stickyNotesContainer.appendChild(stickyNote);
+        // });
+        // }
     
-        function createStickyNoteElement(content, id) {
-        const note = document.createElement('div');
-        note.className = 'sticky-note';
-        note.dataset.id = id || Date.now();
-        note.innerHTML = `
-        <h5>Note</h5>
-        <p>${content}</p>
-        <span class="delete-note" onclick="removeStickyNote(this)">×</span>
-        `;
-        return note;
-        }
+        // function createStickyNoteElement(content, id) {
+        // const note = document.createElement('div');
+        // note.className = 'sticky-note';
+        // note.dataset.id = id || Date.now();
+        // note.innerHTML = `
+        // <h5>Note</h5>
+        // <p>${content}</p>
+        // <span class="delete-note" onclick="removeStickyNote(this)">×</span>
+        // `;
+        // return note;
+        // }
     
-        function addStickyNote() {
-        const noteContent = document.getElementById('one-ecom-customer-note').value;
-        const clientId = {{ $client->id }};
-        if (!noteContent) return false;
+        // function addStickyNote() {
+        // const noteContent = document.getElementById('one-ecom-customer-note').value;
+        // const clientId = {{ $client->id }};
+        // if (!noteContent) return false;
     
-        const stickyNotesContainer = document.getElementById('sticky-notes-container');
-        const newNote = createStickyNoteElement(noteContent);
-        stickyNotesContainer.appendChild(newNote);
+        // const stickyNotesContainer = document.getElementById('sticky-notes-container');
+        // const newNote = createStickyNoteElement(noteContent);
+        // stickyNotesContainer.appendChild(newNote);
     
-        const notes = JSON.parse(localStorage.getItem(`stickyNotes_${clientId}`)) || [];
-        notes.push({ id: newNote.dataset.id, content: noteContent });
-        localStorage.setItem(`stickyNotes_${clientId}`, JSON.stringify(notes));
+        // const notes = JSON.parse(localStorage.getItem(`stickyNotes_${clientId}`)) || [];
+        // notes.push({ id: newNote.dataset.id, content: noteContent });
+        // localStorage.setItem(`stickyNotes_${clientId}`, JSON.stringify(notes));
     
-        document.getElementById('one-ecom-customer-note').value = '';
-        return false;
-        }
+        // document.getElementById('one-ecom-customer-note').value = '';
+        // return false;
+        // }
     
-        function removeStickyNote(element) {
-        const note = element.closest('.sticky-note');
-        const noteId = note.dataset.id;
-        const clientId = {{ $client->id }};
+        // function removeStickyNote(element) {
+        // const note = element.closest('.sticky-note');
+        // const noteId = note.dataset.id;
+        // const clientId = {{ $client->id }};
     
-        note.remove();
+        // note.remove();
     
-        const notes = JSON.parse(localStorage.getItem(`stickyNotes_${clientId}`)) || [];
-        const updatedNotes = notes.filter(note => note.id !== noteId);
-        localStorage.setItem(`stickyNotes_${clientId}`, JSON.stringify(updatedNotes));
-        }
+        // const notes = JSON.parse(localStorage.getItem(`stickyNotes_${clientId}`)) || [];
+        // const updatedNotes = notes.filter(note => note.id !== noteId);
+        // localStorage.setItem(`stickyNotes_${clientId}`, JSON.stringify(updatedNotes));
+        // }
 </script>
 @endsection

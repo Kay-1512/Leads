@@ -18,6 +18,7 @@ class LeadController extends Controller
     {
 
         $leads = Lead::all();
+
         return view("pages.leads.index", compact('leads'));
     }
 
@@ -38,7 +39,7 @@ class LeadController extends Controller
     public function store(Request $request, Client $client)
     {
 
-        
+
         $validated = $request->validate([
             'title' => 'required|string|max:255',
             'description' => 'nullable|string',
@@ -50,17 +51,17 @@ class LeadController extends Controller
             'client_id' => 'required|exists:clients,id',
             'user_id' => 'required|exists:users,id',
         ]);
-    
+
         // Find the current highest order in the stage
         $highestOrder = Lead::where('lead_stage_id', $validated['lead_stage_id'])
-                            ->max('order') ?? 0;
-    
+            ->max('order') ?? 0;
+
         // Create the lead with the incremented order
         $lead = Lead::create(array_merge($validated, [
             'order' => $highestOrder + 1,
         ]));
 
-        return redirect()->route('leads')->with('success','');
+        return redirect()->route('leads')->with('success', '');
     }
 
     /**

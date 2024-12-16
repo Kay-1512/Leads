@@ -1,0 +1,141 @@
+.topbar {
+    height: 80px;
+}
+html[data-layout="horizontal"] .left-sidebar {
+    top: 80px;
+}
+/* Kanban board layout */
+.kanban-board {
+    display: flex;
+    gap: 16px;
+    overflow-x: auto;
+    padding: 10px;
+    white-space: nowrap;
+}
+
+.kanban-board::-webkit-scrollbar {
+    height: 8px;
+}
+
+.kanban-board::-webkit-scrollbar-thumb {
+    background-color: #c0c0c0;
+    border-radius: 10px;
+}
+
+.kanban-board::-webkit-scrollbar-track {
+    background-color: #f0f0f0;
+}
+
+/* Kanban column styling with varying light backgrounds */
+.kanban-column {
+    border-radius: 12px;
+    padding: 16px;
+    width: 300px;
+    min-height: 500px; /* Minimum height for uniformity */
+    flex-shrink: 0; /* Prevent shrinking */
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    position: relative;
+    border: 1px solid #e0e0e0; /* Light border */
+}
+
+/* Specific light backgrounds for each column */
+.kanban-column:nth-child(1) {
+    background-color: #f3f8ff; /* Light blue */
+}
+
+.kanban-column:nth-child(2) {
+    background-color: #f8f9fc; /* Soft grey-blue */
+}
+
+.kanban-column:nth-child(3) {
+    background-color: #f9f3ff; /* Light purple */
+}
+
+.kanban-column:nth-child(4) {
+    background-color: #f3fff8; /* Light green */
+}
+
+.kanban-column:nth-child(5) {
+    background-color: #fffaf3; /* Light yellow */
+}
+
+/* Column titles */
+.kanban-column h3 {
+    font-size: 1.2rem;
+    font-weight: bold;
+    margin-bottom: 10px;
+    text-align: center;
+    color: #333; /* Darker text for contrast */
+}
+
+/* Revenue display */
+.kanban-revenue-total {
+    font-size: 0.9rem;
+    font-weight: normal;
+    margin-bottom: 16px;
+    text-align: center;
+    color: #666; /* Grey text */
+}
+
+/* Cards container (drop area) */
+.kanban-cards {
+    min-height: 200px;
+    border: 2px dashed #e5e5e5;
+    padding: 10px;
+    border-radius: 8px;
+    background-color: #ffffff; /* White background for drop area */
+    transition: background-color 0.3s ease;
+}
+
+/* Highlight the drop area when a card is dragged over */
+.kanban-cards.drag-over {
+    background-color: #d3f8e2; /* Light green background */
+    border-color: #28a745; /* Green border */
+}
+
+/* Card styles */
+.kanban-card {
+    background-color: #007bff; /* Default blue background for cards */
+    border: none;
+    border-radius: 8px;
+    padding: 10px;
+    margin-bottom: 10px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    cursor: grab;
+    user-select: none; /* Prevent text selection during drag */
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    color: #ffffff; /* White text for cards */
+}
+
+.kanban-card.dragging {
+    opacity: 0.5;
+    transform: rotate(5deg); /* Slight rotation for drag effect */
+}
+
+.kanban-card:hover {
+    transform: scale(1.02);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+}
+
+/* Customize text inside cards */
+.kanban-card h4,
+.kanban-card p {
+    color: #ffffff; /* Ensure all text is white */
+    margin: 0;
+    line-height: 1.5;
+}
+
+/* Optional: Adjust card content spacing */
+.kanban-card h4 {
+    margin-bottom: 5px;
+    font-size: 1rem;
+    font-weight: bold;
+}
+
+.kanban-card p {
+    font-size: 0.9rem;
+}
+.footer {
+    border-top: 4px solid #000;
+    width: 100%;
+}
