@@ -9,177 +9,187 @@ Clients - {{ $client->name }}
 <script src="https://cdnjs.cloudflare.com/ajax/libs/dragula/3.7.3/dragula.min.js"></script>
 
 <style>
-    /* Sticky Notes Container */
-    #sticky-notes-container {
-        display: flex;
-        flex-wrap: wrap;
-        gap: 10px;
-        margin-top: 20px;
-    }
+  /* Sticky Notes Container */
+  #sticky-notes-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-top: 20px;
+  }
 
-    /* Visual feedback for drop areas */
-    .gu-mirror {
-        position: fixed !important;
-        z-index: 9999 !important;
-        opacity: 0.8;
-    }
+  /* Visual feedback for drop areas */
+  .gu-mirror {
+    position: fixed !important;
+    z-index: 9999 !important;
+    opacity: 0.8;
+  }
 
-    /* Sticky Note Styling */
-    .sticky-note {
-        background-color: #fdfd96;
-        /* Classic sticky note yellow */
-        width: 220px;
-        min-height: 150px;
-        padding: 15px;
-        border-radius: 10px;
-        box-shadow: 4px 4px 6px rgba(0, 0, 0, 0.2);
-        font-family: 'Comic Sans MS', sans-serif;
-        /* Playful font for sticky notes */
-        color: #333;
-        position: relative;
-        transform: rotate(-2deg);
-        /* Slight tilt for a casual look */
-        transition: transform 0.2s ease, box-shadow 0.2s ease;
-    }
+  /* Sticky Note Styling */
+  .sticky-note {
+    background-color: #fdfd96;
+    /* Classic sticky note yellow */
+    width: 220px;
+    min-height: 150px;
+    padding: 15px;
+    border-radius: 10px;
+    box-shadow: 4px 4px 6px rgba(0, 0, 0, 0.2);
+    font-family: 'Comic Sans MS', sans-serif;
+    /* Playful font for sticky notes */
+    color: #333;
+    position: relative;
+    transform: rotate(-2deg);
+    /* Slight tilt for a casual look */
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+  }
 
-    /* Slight Hover Effect */
-    .sticky-note:hover {
-        transform: rotate(0deg) scale(1.05);
-        /* Straighten and enlarge slightly */
-        box-shadow: 6px 6px 8px rgba(0, 0, 0, 0.3);
-    }
+  /* Slight Hover Effect */
+  .sticky-note:hover {
+    transform: rotate(0deg) scale(1.05);
+    /* Straighten and enlarge slightly */
+    box-shadow: 6px 6px 8px rgba(0, 0, 0, 0.3);
+  }
 
-    /* Sticky Note Title */
-    .sticky-note h5 {
-        font-size: 16px;
-        margin-bottom: 10px;
-        text-align: center;
-        font-weight: bold;
-        text-transform: uppercase;
-        color: #555;
-    }
+  /* Sticky Note Title */
+  .sticky-note h5 {
+    font-size: 16px;
+    margin-bottom: 10px;
+    text-align: center;
+    font-weight: bold;
+    text-transform: uppercase;
+    color: #555;
+  }
 
-    /* Sticky Note Text */
-    .sticky-note p {
-        font-size: 14px;
-        margin: 0;
-        line-height: 1.4;
-        word-wrap: break-word;
-    }
+  /* Sticky Note Text */
+  .sticky-note p {
+    font-size: 14px;
+    margin: 0;
+    line-height: 1.4;
+    word-wrap: break-word;
+  }
 
-    /* Delete Button */
-    .sticky-note .delete-note {
-        position: absolute;
-        top: 8px;
-        right: 8px;
-        font-size: 20px;
-        color: #d9534f;
-        cursor: pointer;
-        transition: color 0.2s;
-    }
+  /* Delete Button */
+  .sticky-note .delete-note {
+    position: absolute;
+    top: 8px;
+    right: 8px;
+    font-size: 20px;
+    color: #d9534f;
+    cursor: pointer;
+    transition: color 0.2s;
+  }
 
-    .sticky-note .delete-note:hover {
-        color: #c9302c;
-    }
+  .sticky-note .delete-note:hover {
+    color: #c9302c;
+  }
 
-    /* Optional Variants for Colors */
-    .sticky-note.blue {
-        background-color: #a2d5f2;
-        /* Light blue */
-    }
+  /* Optional Variants for Colors */
+  .sticky-note.blue {
+    background-color: #a2d5f2;
+    /* Light blue */
+  }
 
-    .sticky-note.green {
-        background-color: #b2f2a2;
-        /* Light green */
-    }
+  .sticky-note.green {
+    background-color: #b2f2a2;
+    /* Light green */
+  }
 
-    .sticky-note.pink {
-        background-color: #f2a2c2;
-        /* Light pink */
-    }
+  .sticky-note.pink {
+    background-color: #f2a2c2;
+    /* Light pink */
+  }
 </style>
 
 <div class="card overflow-hidden">
-    <div class="card-body p-0">
-        <img src="../assets/images/backgrounds/profilebg.jpg" alt="modernize-img" class="img-fluid">
-        <div class="row align-items-center">
-            <div class="col-lg-4 order-lg-1 order-2">
-                <div class="d-flex align-items-center justify-content-around m-4">
-                    <div class="text-center">
-                        <i class="ti ti-file-description fs-6 d-block mb-2"></i>
-                        <h4 class="mb-0 lh-1">{{ $client->leads->count() }}</h4>
-                        <p class="mb-0 ">Leads</p>
-                    </div>
-                    <div class="text-center">
-                        <i class="ti ti-user-circle fs-6 d-block mb-2"></i>
-                        <h4 class="mb-0 lh-1">0</h4>
-                        <p class="mb-0 ">Projects</p>
-                    </div>
-                    <!-- <div class="text-center">
+  <div class="card-body p-0">
+    <img src="../assets/images/backgrounds/profilebg.jpg" alt="modernize-img" class="img-fluid">
+    <div class="row align-items-center">
+      <div class="col-lg-4 order-lg-1 order-2">
+        <div class="d-flex align-items-center justify-content-around m-4">
+          <div class="text-center">
+            <i class="ti ti-file-description fs-6 d-block mb-2"></i>
+            <h4 class="mb-0 lh-1">{{ $client->leads->count() }}</h4>
+            <p class="mb-0 ">Leads</p>
+          </div>
+          <div class="text-center">
+            <i class="ti ti-user-circle fs-6 d-block mb-2"></i>
+            <h4 class="mb-0 lh-1">0</h4>
+            <p class="mb-0 ">Projects</p>
+          </div>
+          <!-- <div class="text-center">
                       <i class="ti ti-user-check fs-6 d-block mb-2"></i>
                       <h4 class="mb-0 lh-1">2,659</h4>
                       <p class="mb-0 ">Following</p>
                     </div> -->
-                </div>
-            </div>
-            <div class="col-lg-4 mt-n3 order-lg-2 order-1">
-                <div class="mt-n5">
-                    <div class="d-flex align-items-center justify-content-center mb-2">
-                        <div class="d-flex align-items-center justify-content-center round-110">
-                            <div
-                                class="border border-4 border-white d-flex align-items-center justify-content-center rounded-circle overflow-hidden round-100">
-                                <img src="../assets/images/profile/user-1.jpg" alt="modernize-img" class="w-100 h-100">
-                            </div>
-                        </div>
-                    </div>
-                    <div class="text-center">
-                        <h5 class="mb-0">{{ $client->name }}</h5>
-                        <p class="mb-0">{{ $client->email }}</p>
-                    </div>
-                </div>
-            </div>
-            <div class="col-lg-4 order-last">
-                <ul
-                    class="list-unstyled d-flex align-items-center justify-content-center justify-content-lg-end my-3 mx-4 pe-xxl-4 gap-3">
-                    <li>
-                        <a class="btn btn-primary text-center" href="{{ route('lead.new-lead', $client)}}">
-                            Add Lead
-                        </a>
-                    </li>
-                    @role('Admin')
-                    <li>
-                        <a class="btn btn-primary text-center" href="{{ route('edit-client', $client) }}">
-                            Edit Client
-                        </a>
-                    </li>
-                    <li>
-                        <a class="btn btn-primary text-center" href="javascript:void(0)">
-                            Add Representative
-                        </a>
-                    </li>
-                    @endrole
-                </ul>
-            </div>
         </div>
-        <ul class="nav nav-pills user-profile-tab justify-content-end mt-2 bg-primary-subtle rounded-2 rounded-top-0"
-            id="pills-tab" role="tablist">
-            <li class="nav-item" role="presentation">
-                <button class="nav-link active hstack gap-2 rounded-0 py-6" id="pills-leads-tab" data-bs-toggle="pill"
-                    data-bs-target="#pills-leads" type="button" role="tab" aria-controls="pills-leads"
-                    aria-selected="true">
-                    <i class="ti ti-user-circle fs-5"></i>
-                    <span class="d-none d-md-block">Leads</span>
-                </button>
-            </li>
-            <li class="nav-item" role="presentation">
-                <button class="nav-link hstack gap-2 rounded-0 py-6" id="pills-notes-tab" data-bs-toggle="pill"
-                    data-bs-target="#pills-notes" type="button" role="tab" aria-controls="pills-notes"
-                    aria-selected="false">
-                    <i class="ti ti-notes fs-5"></i>
-                    <span class="d-none d-md-block">Notes</span>
-                </button>
-            </li>
-            <!-- <li class="nav-item" role="presentation">
+      </div>
+      <div class="col-lg-4 mt-n3 order-lg-2 order-1">
+        <div class="mt-n5">
+          <div class="d-flex align-items-center justify-content-center mb-2">
+            <div class="d-flex align-items-center justify-content-center round-110">
+              <div
+                class="border border-4 border-white d-flex align-items-center justify-content-center rounded-circle overflow-hidden round-100">
+                <div class="position-relative" style="width: 100%; height: 100%;">
+                  <img src="{{ asset('assets/images/profile/user-1.jpg') }}" alt="{{ $client->name }}"
+                    class="w-100 h-100 rounded border">
+
+                  <!-- Hover Icon -->
+                  <div class="hover-overlay d-flex justify-content-center align-items-center" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; 
+                background: rgba(0, 0, 0, 0.5); opacity: 0; transition: opacity 0.3s ease-in-out;">
+                    <button type="button" class="btn btn-light rounded-circle p-2" data-bs-toggle="modal"
+                      data-bs-target="#updateImageModal">
+                      <i class="fas fa-camera"></i>
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="text-center">
+            <h5 class="mb-0">{{ $client->name }}</h5>
+            <p class="mb-0">{{ $client->email }}</p>
+          </div>
+        </div>
+      </div>
+      <div class="col-lg-4 order-last">
+        <ul
+          class="list-unstyled d-flex align-items-center justify-content-center justify-content-lg-end my-3 mx-4 pe-xxl-4 gap-3">
+          <li>
+            <a class="btn btn-primary text-center" href="{{ route('lead.new-lead', $client)}}">
+              Add Lead
+            </a>
+          </li>
+          @role('Admin')
+          <li>
+            <a class="btn btn-primary text-center" href="{{ route('edit-client', $client) }}">
+              Edit Client
+            </a>
+          </li>
+          <!-- <li>
+            <a class="btn btn-primary text-center" href="javascript:void(0)">
+              Add Representative
+            </a>
+          </li> -->
+          @endrole
+        </ul>
+      </div>
+    </div>
+    <ul class="nav nav-pills user-profile-tab justify-content-end mt-2 bg-primary-subtle rounded-2 rounded-top-0"
+      id="pills-tab" role="tablist">
+      <li class="nav-item" role="presentation">
+        <button class="nav-link active hstack gap-2 rounded-0 py-6" id="pills-leads-tab" data-bs-toggle="pill"
+          data-bs-target="#pills-leads" type="button" role="tab" aria-controls="pills-leads" aria-selected="true">
+          <i class="ti ti-user-circle fs-5"></i>
+          <span class="d-none d-md-block">Leads</span>
+        </button>
+      </li>
+      <li class="nav-item" role="presentation">
+        <button class="nav-link hstack gap-2 rounded-0 py-6" id="pills-notes-tab" data-bs-toggle="pill"
+          data-bs-target="#pills-notes" type="button" role="tab" aria-controls="pills-notes" aria-selected="false">
+          <i class="ti ti-notes fs-5"></i>
+          <span class="d-none d-md-block">Notes</span>
+        </button>
+      </li>
+      <!-- <li class="nav-item" role="presentation">
                   <button class="nav-link hstack gap-2 rounded-0 py-6" id="pills-friends-tab" data-bs-toggle="pill" data-bs-target="#pills-friends" type="button" role="tab" aria-controls="pills-friends" aria-selected="false">
                     <i class="ti ti-user-circle fs-5"></i>
                     <span class="d-none d-md-block">Friends</span>
@@ -191,105 +201,104 @@ Clients - {{ $client->name }}
                     <span class="d-none d-md-block">Gallery</span>
                   </button>
                 </li> -->
-        </ul>
-    </div>
+    </ul>
+  </div>
 </div>
 <div class="tab-content" id="pills-tabContent">
-    <div class="tab-pane fade show active" id="pills-leads" role="tabpanel" aria-labelledby="pills-leads-tab"
-        tabindex="0">
-        <div class="block block-rounded">
-            <div id="kanban-board" class="kanban-board">
-                <!-- Columns will be dynamically rendered here -->
+  <div class="tab-pane fade show active" id="pills-leads" role="tabpanel" aria-labelledby="pills-leads-tab"
+    tabindex="0">
+    <div class="block block-rounded">
+      <div id="kanban-board" class="kanban-board">
+        <!-- Columns will be dynamically rendered here -->
+      </div>
+    </div>
+  </div>
+
+  <div class="tab-pane fade" id="pills-notes" role="tabpanel" aria-labelledby="pills-notes-tab" tabindex="0">
+    <button type="button" class="btn mb-1 px-4 fs-4  bg-warning-subtle text-warning float-end" data-bs-toggle="modal"
+      data-bs-target="#samedata-modal" data-bs-whatever="@getbootstrap">
+      Add Note
+    </button>
+
+    <div id="note-full-container" class="note-has-grid row">
+      @foreach ($client->notes as $note)
+      <div class="col-md-4 single-note-item all-category" style="">
+      <div class="card card-body">
+        <span class="side-stick"></span>
+        <h6 class="note-title text-truncate w-75 mb-0" data-noteheading="{{ $note->title }}">
+        {{ $note->title }}
+        </h6>
+        <p class="note-date fs-2">{{ $note->created_at->format('Y-m-d') }}</p>
+        <div class="note-content">
+        <p class="note-inner-content" data-notecontent="{{ $note->content }}">
+          {{ $note->content }}
+        </p>
+        </div>
+        <div class="d-flex align-items-center">
+        <a href="javascript:void(0)" class="link text-primary ms-2 edit-note" data-id="{{ $note->id }}"
+          data-title="{{ $note->title }}" data-content="{{ $note->content }}">
+          <i class="ti ti-pencil fs-4"></i>
+        </a>
+
+        <a href="javascript:void(0)" class="link text-danger ms-2 delete-note" data-id="{{ $note->id }}">
+          <i class="ti ti-trash fs-4 remove-note"></i>
+        </a>
+        <!-- <div class="ms-auto">
+            <div class="category-selector btn-group">
+            <a class="nav-link category-dropdown label-group p-0" data-bs-toggle="dropdown"
+            href="javascript:void(0)" role="button" aria-haspopup="true" aria-expanded="false">
+            <div class="category">
+            <div class="category-business"></div>
+            <div class="category-social"></div>
+            <div class="category-important"></div>
+            <span class="more-options text-dark">
+            <i class="ti ti-dots-vertical fs-5"></i>
+            </span>
             </div>
+            </a>
+            <div class="dropdown-menu dropdown-menu-right category-menu" style="">
+            <a class="
+                  note-business
+                  badge-group-item badge-business
+                  dropdown-item
+                  position-relative
+                  category-business
+                  d-flex
+                  align-items-center
+                  "
+            href="javascript:void(0);">Business</a>
+            <a class="
+                  note-social
+                  badge-group-item badge-social
+                  dropdown-item
+                  position-relative
+                  category-social
+                  d-flex
+                  align-items-center
+                  "
+            href="javascript:void(0);">
+            Social</a>
+            <a class="
+                  note-important
+                  badge-group-item badge-important
+                  dropdown-item
+                  position-relative
+                  category-important
+                  d-flex
+                  align-items-center
+                  "
+            href="javascript:void(0);">
+            Important</a>
+            </div>
+            </div>
+            </div> -->
         </div>
+      </div>
+      </div>
+    @endforeach
     </div>
-
-    <div class="tab-pane fade" id="pills-notes" role="tabpanel" aria-labelledby="pills-notes-tab" tabindex="0">
-        <button type="button" class="btn mb-1 px-4 fs-4  bg-warning-subtle text-warning" data-bs-toggle="modal"
-            data-bs-target="#samedata-modal" data-bs-whatever="@getbootstrap">
-            Add Note
-        </button>
-
-        <div id="note-full-container" class="note-has-grid row">
-            @foreach ($client->notes as $note)
-                <div class="col-md-4 single-note-item all-category" style="">
-                    <div class="card card-body">
-                        <span class="side-stick"></span>
-                        <h6 class="note-title text-truncate w-75 mb-0" data-noteheading="{{ $note->title }}">
-                            {{ $note->title }}
-                        </h6>
-                        <p class="note-date fs-2">{{ $note->created_at->format('Y-m-d') }}</p>
-                        <div class="note-content">
-                            <p class="note-inner-content" data-notecontent="{{ $note->content }}">
-                                {{ $note->content }}
-                            </p>
-                        </div>
-                        <div class="d-flex align-items-center">
-                            <a href="javascript:void(0)" class="link text-primary ms-2 edit-note" data-id="{{ $note->id }}"
-                                data-title="{{ $note->title }}" data-content="{{ $note->content }}">
-                                <i class="ti ti-pencil fs-4"></i>
-                            </a>
-
-                            <a href="javascript:void(0)" class="link text-danger ms-2 delete-note"
-                                data-id="{{ $note->id }}">
-                                <i class="ti ti-trash fs-4 remove-note"></i>
-                            </a>
-                            <!-- <div class="ms-auto">
-                                                                                                                <div class="category-selector btn-group">
-                                                                                                                    <a class="nav-link category-dropdown label-group p-0" data-bs-toggle="dropdown"
-                                                                                                                        href="javascript:void(0)" role="button" aria-haspopup="true" aria-expanded="false">
-                                                                                                                        <div class="category">
-                                                                                                                            <div class="category-business"></div>
-                                                                                                                            <div class="category-social"></div>
-                                                                                                                            <div class="category-important"></div>
-                                                                                                                            <span class="more-options text-dark">
-                                                                                                                                <i class="ti ti-dots-vertical fs-5"></i>
-                                                                                                                            </span>
-                                                                                                                        </div>
-                                                                                                                    </a>
-                                                                                                                    <div class="dropdown-menu dropdown-menu-right category-menu" style="">
-                                                                                                                        <a class="
-                                                                                                                                                                                                                      note-business
-                                                                                                                                                                                                                      badge-group-item badge-business
-                                                                                                                                                                                                                      dropdown-item
-                                                                                                                                                                                                                      position-relative
-                                                                                                                                                                                                                      category-business
-                                                                                                                                                                                                                      d-flex
-                                                                                                                                                                                                                      align-items-center
-                                                                                                                                                                                                                    "
-                                                                                                                            href="javascript:void(0);">Business</a>
-                                                                                                                        <a class="
-                                                                                                                                                                                                                      note-social
-                                                                                                                                                                                                                      badge-group-item badge-social
-                                                                                                                                                                                                                      dropdown-item
-                                                                                                                                                                                                                      position-relative
-                                                                                                                                                                                                                      category-social
-                                                                                                                                                                                                                      d-flex
-                                                                                                                                                                                                                      align-items-center
-                                                                                                                                                                                                                    "
-                                                                                                                            href="javascript:void(0);">
-                                                                                                                            Social</a>
-                                                                                                                        <a class="
-                                                                                                                                                                                                                      note-important
-                                                                                                                                                                                                                      badge-group-item badge-important
-                                                                                                                                                                                                                      dropdown-item
-                                                                                                                                                                                                                      position-relative
-                                                                                                                                                                                                                      category-important
-                                                                                                                                                                                                                      d-flex
-                                                                                                                                                                                                                      align-items-center
-                                                                                                                                                                                                                    "
-                                                                                                                            href="javascript:void(0);">
-                                                                                                                            Important</a>
-                                                                                                                    </div>
-                                                                                                                </div>
-                                                                                                            </div> -->
-                        </div>
-                    </div>
-                </div>
-            @endforeach
-        </div>
-    </div>
-    <!-- <div class="tab-pane fade" id="pills-friends" role="tabpanel" aria-labelledby="pills-friends-tab" tabindex="0">
+  </div>
+  <!-- <div class="tab-pane fade" id="pills-friends" role="tabpanel" aria-labelledby="pills-friends-tab" tabindex="0">
               <div class="d-sm-flex align-items-center justify-content-between mt-3 mb-4">
                 <h3 class="mb-3 mb-sm-0 fw-semibold d-flex align-items-center">Friends <span class="badge text-bg-secondary fs-2 rounded-4 py-1 px-2 ms-2">20</span>
                 </h3>
@@ -1212,350 +1221,350 @@ Clients - {{ $client->name }}
 </div>
 
 <div class="modal fade" id="samedata-modal" tabindex="-1" aria-labelledby="exampleModalLabel1">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <form action="{{ route('note.store', $client->id)}}" method="POST">
-                @csrf
-                <div class="modal-header d-flex align-items-center">
-                    <h4 class="modal-title" id="exampleModalLabel1">
-                        New Note
-                    </h4>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-
-                    <div class="mb-3">
-                        <label for="recipient-name" class="">Title</label>
-                        <input type="text" class="form-control" name="title" />
-                    </div>
-                    <div class="mb-3">
-                        <label for="message-text" class="">Content</label>
-                        <textarea class="form-control" id="message-text1" name="content"></textarea>
-                    </div>
-
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn bg-danger-subtle text-danger " data-bs-dismiss="modal">
-                        Close
-                    </button>
-                    <button type="submit" class="btn btn-success">
-                        Save Note
-                    </button>
-                </div>
-            </form>
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <form action="{{ route('note.store', $client->id)}}" method="POST">
+        @csrf
+        <div class="modal-header d-flex align-items-center">
+          <h4 class="modal-title" id="exampleModalLabel1">
+            New Note
+          </h4>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
+        <div class="modal-body">
+
+          <div class="mb-3">
+            <label for="recipient-name" class="">Title</label>
+            <input type="text" class="form-control" name="title" />
+          </div>
+          <div class="mb-3">
+            <label for="message-text" class="">Content</label>
+            <textarea class="form-control" id="message-text1" name="content"></textarea>
+          </div>
+
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn bg-danger-subtle text-danger " data-bs-dismiss="modal">
+            Close
+          </button>
+          <button type="submit" class="btn btn-success">
+            Save Note
+          </button>
+        </div>
+      </form>
     </div>
+  </div>
 </div>
 
 <div class="modal fade" id="edit-note-modal" tabindex="-1" aria-labelledby="editNoteModalLabel">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <form action="" method="POST" id="edit-note-form">
-                @csrf
-                @method('PUT')
-                <div class="modal-header d-flex align-items-center">
-                    <h4 class="modal-title" id="editNoteModalLabel">
-                        Edit Note
-                    </h4>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    <div class="mb-3">
-                        <label for="edit-title" class="">Title</label>
-                        <input type="text" class="form-control" id="edit-title" name="title" />
-                    </div>
-                    <div class="mb-3">
-                        <label for="edit-content" class="">Content</label>
-                        <textarea class="form-control" id="edit-content" name="content"></textarea>
-                    </div>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn bg-danger-subtle text-danger " data-bs-dismiss="modal">
-                        Close
-                    </button>
-                    <button type="submit" class="btn btn-success">
-                        Update Note
-                    </button>
-                </div>
-            </form>
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <form action="" method="POST" id="edit-note-form">
+        @csrf
+        @method('PUT')
+        <div class="modal-header d-flex align-items-center">
+          <h4 class="modal-title" id="editNoteModalLabel">
+            Edit Note
+          </h4>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
+        <div class="modal-body">
+          <div class="mb-3">
+            <label for="edit-title" class="">Title</label>
+            <input type="text" class="form-control" id="edit-title" name="title" />
+          </div>
+          <div class="mb-3">
+            <label for="edit-content" class="">Content</label>
+            <textarea class="form-control" id="edit-content" name="content"></textarea>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn bg-danger-subtle text-danger " data-bs-dismiss="modal">
+            Close
+          </button>
+          <button type="submit" class="btn btn-success">
+            Update Note
+          </button>
+        </div>
+      </form>
     </div>
+  </div>
 </div>
 
 
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
 <script>
-    document.addEventListener('DOMContentLoaded', function () {
-        document.querySelectorAll('.edit-note').forEach(button => {
-            button.addEventListener('click', function () {
-                const noteId = this.getAttribute('data-id');
-                const noteTitle = this.getAttribute('data-title');
-                const noteContent = this.getAttribute('data-content');
+  document.addEventListener('DOMContentLoaded', function () {
+    document.querySelectorAll('.edit-note').forEach(button => {
+      button.addEventListener('click', function () {
+        const noteId = this.getAttribute('data-id');
+        const noteTitle = this.getAttribute('data-title');
+        const noteContent = this.getAttribute('data-content');
 
-                // Set the form action dynamically
-                const form = document.getElementById('edit-note-form');
-                form.setAttribute('action', `/notes/${noteId}`);
+        // Set the form action dynamically
+        const form = document.getElementById('edit-note-form');
+        form.setAttribute('action', `/notes/${noteId}`);
 
-                // Populate the fields in the modal
-                document.getElementById('edit-title').value = noteTitle;
-                document.getElementById('edit-content').value = noteContent;
+        // Populate the fields in the modal
+        document.getElementById('edit-title').value = noteTitle;
+        document.getElementById('edit-content').value = noteContent;
 
-                // Show the modal
-                const editModal = new bootstrap.Modal(document.getElementById('edit-note-modal'));
-                editModal.show();
-            });
-        });
+        // Show the modal
+        const editModal = new bootstrap.Modal(document.getElementById('edit-note-modal'));
+        editModal.show();
+      });
     });
+  });
 
-    document.addEventListener('DOMContentLoaded', function () {
-        document.querySelectorAll('.delete-note').forEach(button => {
-            button.addEventListener('click', function () {
-                const noteId = this.getAttribute('data-id');
+  document.addEventListener('DOMContentLoaded', function () {
+    document.querySelectorAll('.delete-note').forEach(button => {
+      button.addEventListener('click', function () {
+        const noteId = this.getAttribute('data-id');
 
-                // SweetAlert confirmation
-                Swal.fire({
-                    title: 'Are you sure?',
-                    text: "You won't be able to revert this!",
-                    icon: 'warning',
-                    showCancelButton: true,
-                    confirmButtonColor: '#3085d6',
-                    cancelButtonColor: '#d33',
-                    confirmButtonText: 'Yes, delete it!'
-                }).then((result) => {
-                    if (result.isConfirmed) {
-                        // Send AJAX request to delete note
-                        fetch(`/notes/${noteId}`, {
-                            method: 'DELETE',
-                            headers: {
-                                'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content'),
-                                'Content-Type': 'application/json',
-                            },
-                        })
-                            .then(response => response.json())
-                            .then(data => {
-                                if (data.success) {
-                                    // SweetAlert success notification
-                                    Swal.fire(
-                                        'Deleted!',
-                                        'Your note has been deleted.',
-                                        'success'
-                                    );
-
-                                    // Remove note from the DOM
-                                    button.closest('.single-note-item').remove();
-                                } else {
-                                    // SweetAlert error notification
-                                    Swal.fire(
-                                        'Error!',
-                                        'Failed to delete the note.',
-                                        'error'
-                                    );
-                                }
-                            })
-                            .catch(error => {
-                                console.error('Error:', error);
-                                Swal.fire(
-                                    'Error!',
-                                    'Something went wrong.',
-                                    'error'
-                                );
-                            });
-                    }
-                });
-            });
-        });
-    });
-
-    document.addEventListener('DOMContentLoaded', () => {
-        const kanbanBoard = document.getElementById('kanban-board');
-        const clientId = {{ $client->id }}; // Blade variable for client ID
-
-        if (!kanbanBoard) {
-            console.error('Kanban board element not found.');
-            return;
-        }
-
-        // Load stages and leads from the server
-        fetch(`/clients/${clientId}/lead-stages`)
-            .then(response => response.json())
-            .then(stages => {
-                renderKanbanBoard(stages, kanbanBoard); // Render the Kanban board
-                initializeDragula(); // Initialize drag-and-drop functionality
+        // SweetAlert confirmation
+        Swal.fire({
+          title: 'Are you sure?',
+          text: "You won't be able to revert this!",
+          icon: 'warning',
+          showCancelButton: true,
+          confirmButtonColor: '#3085d6',
+          cancelButtonColor: '#d33',
+          confirmButtonText: 'Yes, delete it!'
+        }).then((result) => {
+          if (result.isConfirmed) {
+            // Send AJAX request to delete note
+            fetch(`/notes/${noteId}`, {
+              method: 'DELETE',
+              headers: {
+                'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content'),
+                'Content-Type': 'application/json',
+              },
             })
-            .catch(error => console.error('Error fetching stages:', error));
+              .then(response => response.json())
+              .then(data => {
+                if (data.success) {
+                  // SweetAlert success notification
+                  Swal.fire(
+                    'Deleted!',
+                    'Your note has been deleted.',
+                    'success'
+                  );
 
-        loadStickyNotes(clientId); // Load sticky notes for the specific client
+                  // Remove note from the DOM
+                  button.closest('.single-note-item').remove();
+                } else {
+                  // SweetAlert error notification
+                  Swal.fire(
+                    'Error!',
+                    'Failed to delete the note.',
+                    'error'
+                  );
+                }
+              })
+              .catch(error => {
+                console.error('Error:', error);
+                Swal.fire(
+                  'Error!',
+                  'Something went wrong.',
+                  'error'
+                );
+              });
+          }
+        });
+      });
+    });
+  });
+
+  document.addEventListener('DOMContentLoaded', () => {
+    const kanbanBoard = document.getElementById('kanban-board');
+    const clientId = {{ $client->id }}; // Blade variable for client ID
+
+    if (!kanbanBoard) {
+      console.error('Kanban board element not found.');
+      return;
+    }
+
+    // Load stages and leads from the server
+    fetch(`/clients/${clientId}/lead-stages`)
+      .then(response => response.json())
+      .then(stages => {
+        renderKanbanBoard(stages, kanbanBoard); // Render the Kanban board
+        initializeDragula(); // Initialize drag-and-drop functionality
+      })
+      .catch(error => console.error('Error fetching stages:', error));
+
+    loadStickyNotes(clientId); // Load sticky notes for the specific client
+  });
+
+  // Format currency with spaces
+  function formatCurrency(amount) {
+    return new Intl.NumberFormat('en-ZA', {
+      style: 'currency',
+      currency: 'ZAR',
+      minimumFractionDigits: 2,
+    }).format(amount).replace('ZAR', 'R').trim();
+  }
+
+  function renderKanbanBoard(stages, kanbanBoard) {
+    kanbanBoard.innerHTML = ''; // Clear existing content
+
+    stages.forEach(stage => {
+      const column = createKanbanColumn(stage);
+      kanbanBoard.appendChild(column);
+    });
+  }
+
+  function createKanbanColumn(stage) {
+    const column = document.createElement('div');
+    column.className = 'kanban-column';
+    column.id = `stage-${stage.id}`;
+
+    // Column title
+    const title = document.createElement('h3');
+    title.innerText = stage.title || 'Untitled Stage';
+    column.appendChild(title);
+
+    // Total revenue display
+    const revenueTotal = document.createElement('div');
+    revenueTotal.className = 'kanban-revenue-total';
+    revenueTotal.id = `revenue-total-${stage.id}`;
+    revenueTotal.innerHTML = `<strong>Total Revenue: </strong>R0`;
+    column.appendChild(revenueTotal);
+
+    // Cards container
+    const cardContainer = document.createElement('div');
+    cardContainer.className = 'kanban-cards';
+    cardContainer.id = `cards-${stage.id}`;
+    column.appendChild(cardContainer);
+
+    let totalRevenue = 0;
+
+    // Create cards for each lead
+    stage.leads.forEach(lead => {
+      const card = createKanbanCard(lead);
+      cardContainer.appendChild(card);
+      totalRevenue += parseFloat(lead.revenue || 0);
     });
 
-    // Format currency with spaces
-    function formatCurrency(amount) {
-        return new Intl.NumberFormat('en-ZA', {
-            style: 'currency',
-            currency: 'ZAR',
-            minimumFractionDigits: 2,
-        }).format(amount).replace('ZAR', 'R').trim();
-    }
+    // Update the total revenue for this stage
+    revenueTotal.innerHTML = `<strong>Total Revenue: </strong>${formatCurrency(totalRevenue)}`;
 
-    function renderKanbanBoard(stages, kanbanBoard) {
-        kanbanBoard.innerHTML = ''; // Clear existing content
+    return column;
+  }
 
-        stages.forEach(stage => {
-            const column = createKanbanColumn(stage);
-            kanbanBoard.appendChild(column);
-        });
-    }
+  function createKanbanCard(lead) {
+    const card = document.createElement('div');
+    card.className = 'kanban-card';
+    card.dataset.id = lead.id;
 
-    function createKanbanColumn(stage) {
-        const column = document.createElement('div');
-        column.className = 'kanban-column';
-        column.id = `stage-${stage.id}`;
+    // Random background color
+    card.style.backgroundColor = getRandomColor();
 
-        // Column title
-        const title = document.createElement('h3');
-        title.innerText = stage.title || 'Untitled Stage';
-        column.appendChild(title);
-
-        // Total revenue display
-        const revenueTotal = document.createElement('div');
-        revenueTotal.className = 'kanban-revenue-total';
-        revenueTotal.id = `revenue-total-${stage.id}`;
-        revenueTotal.innerHTML = `<strong>Total Revenue: </strong>R0`;
-        column.appendChild(revenueTotal);
-
-        // Cards container
-        const cardContainer = document.createElement('div');
-        cardContainer.className = 'kanban-cards';
-        cardContainer.id = `cards-${stage.id}`;
-        column.appendChild(cardContainer);
-
-        let totalRevenue = 0;
-
-        // Create cards for each lead
-        stage.leads.forEach(lead => {
-            const card = createKanbanCard(lead);
-            cardContainer.appendChild(card);
-            totalRevenue += parseFloat(lead.revenue || 0);
-        });
-
-        // Update the total revenue for this stage
-        revenueTotal.innerHTML = `<strong>Total Revenue: </strong>${formatCurrency(totalRevenue)}`;
-
-        return column;
-    }
-
-    function createKanbanCard(lead) {
-        const card = document.createElement('div');
-        card.className = 'kanban-card';
-        card.dataset.id = lead.id;
-
-        // Random background color
-        card.style.backgroundColor = getRandomColor();
-
-        // Card content
-        card.innerHTML = `
+    // Card content
+    card.innerHTML = `
     <h4>${lead.title}</h4>
     <p>${lead.description}</p>
     <p>${formatCurrency(parseFloat(lead.revenue || 0))}</p>
   `;
 
-        return card;
-    }
+    return card;
+  }
 
-    function getRandomColor() {
-        const letters = '0123456789ABCDEF';
-        let color = '#';
-        for (let i = 0; i < 6; i++) {
-            color += letters[Math.floor(Math.random() * 16)];
+  function getRandomColor() {
+    const letters = '0123456789ABCDEF';
+    let color = '#';
+    for (let i = 0; i < 6; i++) {
+      color += letters[Math.floor(Math.random() * 16)];
+    }
+    return color;
+  }
+
+  function initializeDragula() {
+    const containers = Array.from(document.querySelectorAll('.kanban-cards'));
+
+    dragula(containers, {
+      moves: () => true,
+      accepts: (el, target) => target.classList.contains('kanban-cards'),
+    }).on('drop', (el, target, source) => {
+      if (!target || !source) {
+        console.error('Invalid drag-and-drop operation.');
+        return;
+      }
+
+      const newStageId = target.id.split('-')[1];
+      const updatedLeads = Array.from(target.children).map((child, index) => ({
+        id: child.dataset.id,
+        lead_stage_id: newStageId,
+        order: index,
+      }));
+
+      // Update leads on the server
+      updateLeadsOnServer(updatedLeads);
+
+      // Immediately update revenue totals for both source and target columns
+      updateRevenueTotal(source.closest('.kanban-column'));
+      updateRevenueTotal(target.closest('.kanban-column'));
+    });
+  }
+
+  function updateLeadsOnServer(updatedLeads) {
+    const csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
+
+    fetch('/lead/stage/update', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Accept': 'application/json',
+        'X-CSRF-TOKEN': csrfToken, // Add the CSRF token to the headers
+      },
+      body: JSON.stringify({ leads: updatedLeads }),
+    })
+      .then(response => {
+        if (!response.ok) {
+          throw new Error('Network response was not ok');
         }
-        return color;
+        return response.json();
+      })
+      .then(data => console.log(data.message))
+      .catch(error => console.error('Error updating leads:', error));
+  }
+
+  function updateRevenueTotal(stageElement) {
+    if (!stageElement) {
+      console.error('Stage element is null or undefined');
+      return;
     }
 
-    function initializeDragula() {
-        const containers = Array.from(document.querySelectorAll('.kanban-cards'));
-
-        dragula(containers, {
-            moves: () => true,
-            accepts: (el, target) => target.classList.contains('kanban-cards'),
-        }).on('drop', (el, target, source) => {
-            if (!target || !source) {
-                console.error('Invalid drag-and-drop operation.');
-                return;
-            }
-
-            const newStageId = target.id.split('-')[1];
-            const updatedLeads = Array.from(target.children).map((child, index) => ({
-                id: child.dataset.id,
-                lead_stage_id: newStageId,
-                order: index,
-            }));
-
-            // Update leads on the server
-            updateLeadsOnServer(updatedLeads);
-
-            // Immediately update revenue totals for both source and target columns
-            updateRevenueTotal(source.closest('.kanban-column'));
-            updateRevenueTotal(target.closest('.kanban-column'));
-        });
+    const cardContainer = stageElement.querySelector('.kanban-cards');
+    if (!cardContainer) {
+      console.error('No .kanban-cards container found in stage:', stageElement);
+      return;
     }
 
-    function updateLeadsOnServer(updatedLeads) {
-        const csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
+    let totalRevenue = 0;
 
-        fetch('/lead/stage/update', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-                'Accept': 'application/json',
-                'X-CSRF-TOKEN': csrfToken, // Add the CSRF token to the headers
-            },
-            body: JSON.stringify({ leads: updatedLeads }),
-        })
-            .then(response => {
-                if (!response.ok) {
-                    throw new Error('Network response was not ok');
-                }
-                return response.json();
-            })
-            .then(data => console.log(data.message))
-            .catch(error => console.error('Error updating leads:', error));
+    // Sum up all card revenues
+    cardContainer.querySelectorAll('.kanban-card').forEach(card => {
+      const revenueText = card.querySelector('p:last-of-type').innerText;
+      const cleanedRevenue = revenueText.replace(/[^\d.-]/g, ''); // Remove non-numeric characters
+      const revenue = parseFloat(cleanedRevenue);
+
+      if (!isNaN(revenue)) {
+        totalRevenue += revenue;
+      }
+    });
+
+    const revenueTotal = stageElement.querySelector('.kanban-revenue-total');
+    if (revenueTotal) {
+      revenueTotal.innerHTML = `<strong>Total Revenue: </strong>${formatCurrency(totalRevenue)}`;
     }
+  }
 
-    function updateRevenueTotal(stageElement) {
-        if (!stageElement) {
-            console.error('Stage element is null or undefined');
-            return;
-        }
-
-        const cardContainer = stageElement.querySelector('.kanban-cards');
-        if (!cardContainer) {
-            console.error('No .kanban-cards container found in stage:', stageElement);
-            return;
-        }
-
-        let totalRevenue = 0;
-
-        // Sum up all card revenues
-        cardContainer.querySelectorAll('.kanban-card').forEach(card => {
-            const revenueText = card.querySelector('p:last-of-type').innerText;
-            const cleanedRevenue = revenueText.replace(/[^\d.-]/g, ''); // Remove non-numeric characters
-            const revenue = parseFloat(cleanedRevenue);
-
-            if (!isNaN(revenue)) {
-                totalRevenue += revenue;
-            }
-        });
-
-        const revenueTotal = stageElement.querySelector('.kanban-revenue-total');
-        if (revenueTotal) {
-            revenueTotal.innerHTML = `<strong>Total Revenue: </strong>${formatCurrency(totalRevenue)}`;
-        }
-    }
-
-    function loadStickyNotes(clientId) {
-        console.log(`Loading sticky notes for client ${clientId}...`);
-        // Placeholder for sticky notes logic
-    }
+  function loadStickyNotes(clientId) {
+    console.log(`Loading sticky notes for client ${clientId}...`);
+    // Placeholder for sticky notes logic
+  }
 
 
 </script>
