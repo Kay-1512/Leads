@@ -34,7 +34,7 @@
   </div> --}}
   <!-- Preloader -->
   <div class="preloader">
-    <img src="" alt="loader" class="lds-ripple img-fluid" />
+    <img src="{{ asset('assets/images/logo-dark.png') }}" alt="loader" class="lds-ripple img-fluid" />
   </div>
   <div id="main-wrapper">
     <!-- Mobile Menu -->

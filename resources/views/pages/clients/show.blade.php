@@ -153,23 +153,24 @@ Clients - {{ $client->name }}
       <div class="col-lg-4 order-last">
         <ul
           class="list-unstyled d-flex align-items-center justify-content-center justify-content-lg-end my-3 mx-4 pe-xxl-4 gap-3">
-          <li>
-            <a class="btn btn-primary text-center" href="{{ route('lead.new-lead', $client)}}">
-              Add Lead
-            </a>
-          </li>
-          @role('Admin')
-          <li>
-            <a class="btn btn-primary text-center" href="{{ route('edit-client', $client) }}">
-              Edit Client
-            </a>
-          </li>
+          @if ($isSalesPerson)
+
+        <li>
+        <a class="btn btn-primary text-center" href="{{ route('lead.new-lead', $client)}}">
+          Add Lead
+        </a>
+        </li>
+        <li>
+        <a class="btn btn-primary text-center" href="{{ route('edit-client', $client) }}">
+          Edit Client
+        </a>
+        </li>
+      @endif
           <!-- <li>
             <a class="btn btn-primary text-center" href="javascript:void(0)">
               Add Representative
             </a>
           </li> -->
-          @endrole
         </ul>
       </div>
     </div>
@@ -215,10 +216,13 @@ Clients - {{ $client->name }}
   </div>
 
   <div class="tab-pane fade" id="pills-notes" role="tabpanel" aria-labelledby="pills-notes-tab" tabindex="0">
+    @if ($isSalesPerson)
     <button type="button" class="btn mb-1 px-4 fs-4  bg-warning-subtle text-warning float-end" data-bs-toggle="modal"
       data-bs-target="#samedata-modal" data-bs-whatever="@getbootstrap">
       Add Note
     </button>
+  @endif
+
 
     <div id="note-full-container" class="note-has-grid row">
       @foreach ($client->notes as $note)
@@ -244,54 +248,54 @@ Clients - {{ $client->name }}
           <i class="ti ti-trash fs-4 remove-note"></i>
         </a>
         <!-- <div class="ms-auto">
-            <div class="category-selector btn-group">
-            <a class="nav-link category-dropdown label-group p-0" data-bs-toggle="dropdown"
-            href="javascript:void(0)" role="button" aria-haspopup="true" aria-expanded="false">
-            <div class="category">
-            <div class="category-business"></div>
-            <div class="category-social"></div>
-            <div class="category-important"></div>
-            <span class="more-options text-dark">
-            <i class="ti ti-dots-vertical fs-5"></i>
-            </span>
-            </div>
-            </a>
-            <div class="dropdown-menu dropdown-menu-right category-menu" style="">
-            <a class="
-                  note-business
-                  badge-group-item badge-business
-                  dropdown-item
-                  position-relative
-                  category-business
-                  d-flex
-                  align-items-center
-                  "
-            href="javascript:void(0);">Business</a>
-            <a class="
-                  note-social
-                  badge-group-item badge-social
-                  dropdown-item
-                  position-relative
-                  category-social
-                  d-flex
-                  align-items-center
-                  "
-            href="javascript:void(0);">
-            Social</a>
-            <a class="
-                  note-important
-                  badge-group-item badge-important
-                  dropdown-item
-                  position-relative
-                  category-important
-                  d-flex
-                  align-items-center
-                  "
-            href="javascript:void(0);">
-            Important</a>
-            </div>
-            </div>
-            </div> -->
+        <div class="category-selector btn-group">
+        <a class="nav-link category-dropdown label-group p-0" data-bs-toggle="dropdown"
+        href="javascript:void(0)" role="button" aria-haspopup="true" aria-expanded="false">
+        <div class="category">
+        <div class="category-business"></div>
+        <div class="category-social"></div>
+        <div class="category-important"></div>
+        <span class="more-options text-dark">
+        <i class="ti ti-dots-vertical fs-5"></i>
+        </span>
+        </div>
+        </a>
+        <div class="dropdown-menu dropdown-menu-right category-menu" style="">
+        <a class="
+            note-business
+            badge-group-item badge-business
+            dropdown-item
+            position-relative
+            category-business
+            d-flex
+            align-items-center
+            "
+        href="javascript:void(0);">Business</a>
+        <a class="
+            note-social
+            badge-group-item badge-social
+            dropdown-item
+            position-relative
+            category-social
+            d-flex
+            align-items-center
+            "
+        href="javascript:void(0);">
+        Social</a>
+        <a class="
+            note-important
+            badge-group-item badge-important
+            dropdown-item
+            position-relative
+            category-important
+            d-flex
+            align-items-center
+            "
+        href="javascript:void(0);">
+        Important</a>
+        </div>
+        </div>
+        </div> -->
         </div>
       </div>
       </div>

@@ -6,6 +6,7 @@ use App\Models\Client;
 use App\Models\Lead;
 use App\Models\Province;
 use Illuminate\Http\Request;
+use Auth;
 
 class ClientController extends Controller
 {
@@ -64,7 +65,14 @@ class ClientController extends Controller
     {
         $client->load(['leads', 'notes']);
 
-        return view("pages.clients.show", compact("client"));
+        $isSalesPerson = false;
+
+
+        if ($client->sales_person_id == Auth::user()->id) {
+            $isSalesPerson = true;
+        }
+
+        return view('pages.clients.show', compact("client", "isSalesPerson"));
     }
 
     /**
