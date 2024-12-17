@@ -26,7 +26,7 @@
 <body>
   <!-- Preloader -->
   <div class="preloader">
-    <img src="" alt="loader" class="lds-ripple img-fluid" />
+    <img src="{{ asset('assets/images/logo-dark.png') }}" alt="loader" class="lds-ripple img-fluid" />
   </div>
   <div id="main-wrapper" class="auth-customizer-none">
     <div
@@ -42,14 +42,14 @@
               <div class="card-body">
                 <div class="position-relative text-center my-4">
                   @if ($errors->any())
-                  <div class="alert alert-danger">
-                    <ul>
-                      @foreach ($errors->all() as $error)
-                      <li>{{ $error }}</li>
-                      @endforeach
-                    </ul>
-                  </div>
-                  @endif
+            <div class="alert alert-danger">
+            <ul>
+              @foreach ($errors->all() as $error)
+          <li>{{ $error }}</li>
+        @endforeach
+            </ul>
+            </div>
+          @endif
                   {{-- <p class="mb-0 fs-4 px-3 d-inline-block bg-body text-dark z-index-5 position-relative">or sign in
                     with
                   </p>
