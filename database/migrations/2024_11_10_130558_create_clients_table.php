@@ -14,11 +14,13 @@ return new class extends Migration {
             $table->id();
             $table->string(column: 'name');
             $table->string(column: 'colour')->nullable();
-            $table->foreignId('contact_person_id')->nullable()->constrained('users', 'id')->onDelete('cascade');
+            $table->foreignId(column: 'cover_image_id')->nullable()->constrained()->cascadeOnDelete();
+            $table->string('logo')->nullable();
+            $table->foreignId('contact_person_id')->nullable()->constrained('users', 'id')->cascadeOnDelete();
             $table->string('phone');
             $table->string('email');
-            $table->foreignId('province_id')->constrained()->onDelete('cascade');
-            $table->foreignId('sales_person_id')->constrained('users', 'id')->onDelete('cascade');
+            $table->foreignId('province_id')->constrained()->cascadeOnDelete();
+            $table->foreignId('sales_person_id')->constrained('users', 'id')->cascadeOnDelete();
             $table->timestamps();
         });
     }
