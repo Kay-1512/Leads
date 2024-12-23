@@ -6,16 +6,53 @@ use App\Http\Controllers\UserController;
 use App\Http\Controllers\ClientController;
 use App\Http\Controllers\NoteController;
 use App\Http\Controllers\LeadStageController;
-
-
-use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\SsoController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
     return redirect('dashboard');
 })->name('/');
 
+Route::post('/sso/share', function (Request $request) {
+    $request->validate(['email' => 'required|email']);
+
+    $user = \App\Models\User::where('email', $request->email)->first();
+
+    if ($user) {
+        $token = Str::random(60);
+        Cache::put("sso_token_{$token}", $request->email, 600); // Store token for 10 minutes
+
+        return response()->json([
+            'email' => $user->email,
+            'token' => $token,
+            'success' => true,
+        ]);
+    }
+
+    return response()->json(['success' => false, 'message' => 'Email not found'], 404);
+});
+
+Route::post('/sso/validate', function (Request $request) {
+    $request->validate(['email' => 'required|email', 'token' => 'required']);
+
+    $email = Cache::pull("sso_token_{$request->token}");
+
+    if ($email && $email === $request->email) {
+        $user = \App\Models\User::where('email', $email)->first();
+
+        if ($user) {
+            Auth::login($user);
+            return response()->json(['success' => true]);
+        }
+    }
+
+    return response()->json(['success' => false, 'message' => 'Invalid token or email'], 401);
+});
+
+
 Route::middleware('auth')->group(function () {
+    Route::get('/sso/switch-to-pandabot', [SsoController::class, 'redirectToPandaBot'])->name('sso.switch_to_pandabot');
+
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
     Route::get('/create-user', [UserController::class, 'create'])->name('user.create');
     Route::get('/leads', [LeadController::class, 'index'])->name('leads');

@@ -34,6 +34,16 @@
 
                 </li>
 
+                <li class="sidebar-item">
+                    <a class="sidebar-link" href="{{ route('sso.switch_to_pandabot') }}" aria-expanded="false">
+                        <span>
+                            <i class="ti ti-home-2"></i>
+                        </span>
+                        <span class="hide-menu">Programs</span>
+                    </a>
+
+                </li>
+
             </ul>
         </nav>
         <!-- End Sidebar navigation -->
