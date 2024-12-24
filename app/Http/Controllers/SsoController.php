@@ -17,11 +17,12 @@ class SsoController extends Controller
         }
 
         // Generate a token for the user
-        $user = Auth::user();
-        $token = $user->createToken('SSO Token')->plainTextToken;
+        $token = Auth::user()->createToken('SSO Token')->plainTextToken;
 
-        // Redirect to App B with the token
+        Log::info('Generated Token:', ['token' => $token]);
+
         return redirect(env('PANDABOT_URL') . '/sso/validate?token=' . $token);
+
     }
 
 }
