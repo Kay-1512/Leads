@@ -9,7 +9,9 @@ use App\Http\Controllers\LeadStageController;
 use App\Http\Controllers\SsoController;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Http\Request;
-
+use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Auth;
+use Laravel\Sanctum\PersonalAccessToken;
 
 Route::get('/', function () {
     return redirect('dashboard');
@@ -21,14 +23,17 @@ Route::post('/sso/share', function (Request $request) {
     ]);
 })->middleware('auth:sanctum');
 
+
 Route::get('/sso/validate', function (Request $request) {
-    $token = $request->query('token');
+    $request->validate([
+        'token' => 'required',
+    ]);
+
+    $token = $request->input('token');
+
     Log::info('Received Token:', ['token' => $token]);
 
-    if (!$token) {
-        return response()->json(['message' => 'Token is missing.'], 401);
-    }
-
+    // Retrieve the token and check its validity
     $personalAccessToken = PersonalAccessToken::findToken($token);
 
     if (!$personalAccessToken) {
@@ -36,10 +41,12 @@ Route::get('/sso/validate', function (Request $request) {
         return response()->json(['message' => 'Invalid or expired token.'], 401);
     }
 
+    // Get the user associated with the token
     $user = $personalAccessToken->tokenable;
 
     Log::info('Token valid for user.', ['user_id' => $user->id]);
 
+    // Log in the user
     Auth::login($user);
 
     return redirect('/dashboard');
