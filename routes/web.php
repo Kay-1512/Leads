@@ -8,6 +8,8 @@ use App\Http\Controllers\NoteController;
 use App\Http\Controllers\LeadStageController;
 use App\Http\Controllers\SsoController;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Http\Request;
+
 
 Route::get('/', function () {
     return redirect('dashboard');
