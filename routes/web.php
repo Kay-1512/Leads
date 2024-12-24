@@ -22,17 +22,25 @@ Route::post('/sso/share', function (Request $request) {
 })->middleware('auth:sanctum');
 
 Route::get('/sso/validate', function (Request $request) {
-    $request->validate(['token' => 'required']);
+    $token = $request->query('token');
+    Log::info('Received Token:', ['token' => $token]);
 
-    // Extract and validate the token
-    $user = \Laravel\Sanctum\PersonalAccessToken::findToken($request->token);
-
-    if (!$user) {
-        return redirect('/login')->withErrors(['message' => 'Invalid or expired token.']);
+    if (!$token) {
+        return response()->json(['message' => 'Token is missing.'], 401);
     }
 
-    // Log the user into App B
-    Auth::loginUsingId($user->tokenable_id);
+    $personalAccessToken = PersonalAccessToken::findToken($token);
+
+    if (!$personalAccessToken) {
+        Log::warning('Invalid or expired token.', ['token' => $token]);
+        return response()->json(['message' => 'Invalid or expired token.'], 401);
+    }
+
+    $user = $personalAccessToken->tokenable;
+
+    Log::info('Token valid for user.', ['user_id' => $user->id]);
+
+    Auth::login($user);
 
     return redirect('/dashboard');
 });
