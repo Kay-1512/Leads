@@ -14,43 +14,29 @@ Route::get('/', function () {
 })->name('/');
 
 Route::post('/sso/share', function (Request $request) {
-    $request->validate(['email' => 'required|email']);
+    return response()->json([
+        'email' => Auth::user()->email,
+    ]);
+})->middleware('auth:sanctum');
 
-    $user = \App\Models\User::where('email', $request->email)->first();
+Route::get('/sso/validate', function (Request $request) {
+    $request->validate(['token' => 'required']);
 
-    if ($user) {
-        $token = Str::random(60);
-        Cache::put("sso_token_{$token}", $request->email, 600); // Store token for 10 minutes
+    // Extract and validate the token
+    $user = \Laravel\Sanctum\PersonalAccessToken::findToken($request->token);
 
-        return response()->json([
-            'email' => $user->email,
-            'token' => $token,
-            'success' => true,
-        ]);
+    if (!$user) {
+        return redirect('/login')->withErrors(['message' => 'Invalid or expired token.']);
     }
 
-    return response()->json(['success' => false, 'message' => 'Email not found'], 404);
-});
+    // Log the user into App B
+    Auth::loginUsingId($user->tokenable_id);
 
-Route::post('/sso/validate', function (Request $request) {
-    $request->validate(['email' => 'required|email', 'token' => 'required']);
-
-    $email = Cache::pull("sso_token_{$request->token}");
-
-    if ($email && $email === $request->email) {
-        $user = \App\Models\User::where('email', $email)->first();
-
-        if ($user) {
-            Auth::login($user);
-            return response()->json(['success' => true]);
-        }
-    }
-
-    return response()->json(['success' => false, 'message' => 'Invalid token or email'], 401);
+    return redirect('/dashboard');
 });
 
 
-Route::middleware('auth')->group(function () {
+Route::middleware(['auth', 'auth:sanctum'])->group(function () {
     Route::get('/sso/switch-to-pandabot', [SsoController::class, 'redirectToPandaBot'])->name('sso.switch_to_pandabot');
 
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');

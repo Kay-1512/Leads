@@ -5,21 +5,23 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Http;
+use Laravel\Sanctum\NewAccessToken;
+
 
 class SsoController extends Controller
 {
     public function redirectToPandaBot()
     {
-        $response = Http::post(env('PANDABOT_URL') . '/sso/share', [
-            'email' => Auth::user()->email,
-        ]);
-
-        if ($response->successful()) {
-            $data = $response->json();
-            return redirect(env('PANDABOT_URL') . '/sso/validate?email=' . $data['email'] . '&token=' . $data['token']);
+        if (!Auth::check()) {
+            return back()->withErrors(['message' => 'User is not authenticated.']);
         }
 
-        return back()->withErrors(['message' => 'Unable to switch to Panda BOT']);
+        // Generate a token for the user
+        $user = Auth::user();
+        $token = $user->createToken('SSO Token')->plainTextToken;
+
+        // Redirect to App B with the token
+        return redirect(env('PANDABOT_URL') . '/sso/validate?token=' . $token);
     }
 
 }
