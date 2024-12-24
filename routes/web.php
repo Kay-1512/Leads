@@ -30,10 +30,9 @@ Route::get('/sso/validate', function (Request $request) {
     ]);
 
     $token = $request->input('token');
-
     Log::info('Received Token:', ['token' => $token]);
 
-    // Retrieve the token and check its validity
+    // Validate the token by hashing it and comparing it with the database
     $personalAccessToken = PersonalAccessToken::findToken($token);
 
     if (!$personalAccessToken) {
@@ -41,15 +40,20 @@ Route::get('/sso/validate', function (Request $request) {
         return response()->json(['message' => 'Invalid or expired token.'], 401);
     }
 
-    // Get the user associated with the token
+    // Retrieve the user associated with the token
     $user = $personalAccessToken->tokenable;
+
+    if (!$user) {
+        Log::error('No user associated with the token.', ['token' => $token]);
+        return response()->json(['message' => 'No user associated with the token.'], 401);
+    }
 
     Log::info('Token valid for user.', ['user_id' => $user->id]);
 
-    // Log in the user
+    // Log the user into App B
     Auth::login($user);
 
-    return redirect('/dashboard');
+    return redirect('/programs');
 });
 
 
