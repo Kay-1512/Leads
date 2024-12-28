@@ -55,9 +55,12 @@ Route::get('/sso/validate', function (\Illuminate\Http\Request $request) {
     return redirect('/dashboard');
 });
 
-Route::middleware(['auth', 'auth:sanctum'])->group(function () {
-    Route::get('/sso/switch-to-pandabot', [SsoController::class, 'redirectToPandaBot'])->name('sso.switch_to_pandabot');
+Route::get('/sso/switch-to-pandabot', function () {
+    $token = Auth::user()->createToken('SP Portal Token')->plainTextToken;
+    return redirect(env('PANDABOT_URL') . '/sso/validate?token=' . $token);
+})->middleware('auth')->name('sso.switch_to_pandabot');
 
+Route::middleware(['auth', 'auth:sanctum'])->group(function () {
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
     Route::get('/create-user', [UserController::class, 'create'])->name('user.create');
     Route::get('/leads', [LeadController::class, 'index'])->name('leads');
