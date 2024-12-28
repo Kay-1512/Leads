@@ -50,7 +50,7 @@ Route::get('/sso/validate', function (\Illuminate\Http\Request $request) {
         'name' => $data['user']['name'],
     ]);
 
-    Auth::login($user);
+    Auth::guard('web')->login($user);
 
     return redirect('/dashboard');
 });
