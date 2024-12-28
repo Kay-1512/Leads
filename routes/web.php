@@ -32,7 +32,7 @@ Route::get('/sso/validate', function (\Illuminate\Http\Request $request) {
     Log::info('Received Token:', ['token' => $token]);
 
     // Call App A to validate the token
-    $response = Http::post(env('APP_A_URL') . '/api/sso/validate-token', [
+    $response = Http::post(env('PANDABOT_URL') . '/api/sso/validate-token', [
         'token' => $token,
     ]);
 
