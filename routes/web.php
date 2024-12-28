@@ -23,8 +23,7 @@ Route::post('/sso/share', function (Request $request) {
     ]);
 })->middleware('auth:sanctum');
 
-
-Route::get('/sso/validate', function (Request $request) {
+Route::get('/sso/validate', function (\Illuminate\Http\Request $request) {
     $request->validate([
         'token' => 'required',
     ]);
@@ -32,30 +31,29 @@ Route::get('/sso/validate', function (Request $request) {
     $token = $request->input('token');
     Log::info('Received Token:', ['token' => $token]);
 
-    // Validate the token by hashing it and comparing it with the database
-    $personalAccessToken = PersonalAccessToken::findToken($token);
+    // Call App A to validate the token
+    $response = Http::post(env('APP_A_URL') . '/api/sso/validate-token', [
+        'token' => $token,
+    ]);
 
-    if (!$personalAccessToken) {
+    if ($response->status() !== 200) {
         Log::warning('Invalid or expired token.', ['token' => $token]);
         return response()->json(['message' => 'Invalid or expired token.'], 401);
     }
 
-    // Retrieve the user associated with the token
-    $user = $personalAccessToken->tokenable;
+    $data = $response->json();
 
-    if (!$user) {
-        Log::error('No user associated with the token.', ['token' => $token]);
-        return response()->json(['message' => 'No user associated with the token.'], 401);
-    }
+    // Log the user into App B using the validated user data
+    $user = \App\Models\User::firstOrCreate([
+        'email' => $data['user']['email'],
+    ], [
+        'name' => $data['user']['name'],
+    ]);
 
-    Log::info('Token valid for user.', ['user_id' => $user->id]);
-
-    // Log the user into App B
     Auth::login($user);
 
-    return redirect('/programs');
+    return redirect('/dashboard');
 });
-
 
 Route::middleware(['auth', 'auth:sanctum'])->group(function () {
     Route::get('/sso/switch-to-pandabot', [SsoController::class, 'redirectToPandaBot'])->name('sso.switch_to_pandabot');
