@@ -28,6 +28,13 @@ class AuthenticatedSessionController extends Controller
 
         $request->session()->regenerate();
 
+        $user = Auth::user();
+
+        // Create a Sanctum token
+        $token = $user->createToken('SP Portal Token')->plainTextToken;
+
+        Log::info('Generated Token:', ['token' => $token]);
+
         return redirect()->intended(route('dashboard', absolute: false));
     }
 

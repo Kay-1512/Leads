@@ -350,7 +350,11 @@
         </li>
 
         <li class="nav-item dropdown-hover d-none d-lg-block">
-          <a class="nav-link" href="{{ route('clients') }}">Clients</a>
+          <a class="nav-link" href="{{ route(name: 'clients') }}">Clients</a>
+        </li>
+
+        <li class="nav-item dropdown-hover d-none d-lg-block">
+          <a class="nav-link" href="{{ route(name: 'sso.switch_to_pandabot') }}">Programs</a>
         </li>
       </ul>
       <div class="d-block d-xl-none">
